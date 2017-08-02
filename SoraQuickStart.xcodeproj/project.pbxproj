@@ -17,6 +17,7 @@
 		9137FC621F0A321700609D39 /* Sora.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9137FC5E1F0A321700609D39 /* Sora.framework */; };
 		9137FC631F0A321700609D39 /* Unbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9137FC5F1F0A321700609D39 /* Unbox.framework */; };
 		9137FC641F0A321700609D39 /* WebRTC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9137FC601F0A321700609D39 /* WebRTC.framework */; };
+		916F4F771F2F702D0022D521 /* SDWebImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 916F4F761F2F702D0022D521 /* SDWebImage.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,6 +45,7 @@
 		9137FC5E1F0A321700609D39 /* Sora.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Sora.framework; path = Carthage/Build/iOS/Sora.framework; sourceTree = "<group>"; };
 		9137FC5F1F0A321700609D39 /* Unbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Unbox.framework; path = Carthage/Build/iOS/Unbox.framework; sourceTree = "<group>"; };
 		9137FC601F0A321700609D39 /* WebRTC.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebRTC.framework; path = Carthage/Build/iOS/WebRTC.framework; sourceTree = "<group>"; };
+		916F4F761F2F702D0022D521 /* SDWebImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDWebImage.framework; path = Carthage/Build/iOS/SDWebImage.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -51,6 +53,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				916F4F771F2F702D0022D521 /* SDWebImage.framework in Frameworks */,
 				9137FC611F0A321700609D39 /* SocketRocket.framework in Frameworks */,
 				9137FC621F0A321700609D39 /* Sora.framework in Frameworks */,
 				9137FC631F0A321700609D39 /* Unbox.framework in Frameworks */,
@@ -112,6 +115,7 @@
 		9137FC531F0A30AE00609D39 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				916F4F761F2F702D0022D521 /* SDWebImage.framework */,
 				9137FC5D1F0A321700609D39 /* SocketRocket.framework */,
 				9137FC5E1F0A321700609D39 /* Sora.framework */,
 				9137FC5F1F0A321700609D39 /* Unbox.framework */,
@@ -232,12 +236,14 @@
 				"$(SRCROOT)/Carthage/Build/iOS/WebRTC.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/Unbox.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/SocketRocket.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/SDWebImage.framework",
 			);
 			outputPaths = (
 				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/Sora.framework",
 				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/WebRTC.framework",
 				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/Unbox.framework",
 				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/SocketRocket.framework",
+				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/SDWebImage.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
