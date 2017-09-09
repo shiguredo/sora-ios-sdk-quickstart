@@ -10,7 +10,7 @@
 - Mac OS X 10.12.6 以降
 - Xcode 8.3.3 以降
 - Swift 3.1
-- WebRTC M59
+- WebRTC M60
 - WebRTC SFU Sora 17.08 以降
 - carthage 0.24.0 以降
 
