@@ -12,23 +12,11 @@
 		9137FC391F0A306000609D39 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9137FC371F0A306000609D39 /* Main.storyboard */; };
 		9137FC3B1F0A306000609D39 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9137FC3A1F0A306000609D39 /* Assets.xcassets */; };
 		9137FC3E1F0A306000609D39 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9137FC3C1F0A306000609D39 /* LaunchScreen.storyboard */; };
-		9137FC491F0A306000609D39 /* SoraQuickStartTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9137FC481F0A306000609D39 /* SoraQuickStartTests.swift */; };
 		9137FC611F0A321700609D39 /* SocketRocket.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9137FC5D1F0A321700609D39 /* SocketRocket.framework */; };
 		9137FC621F0A321700609D39 /* Sora.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9137FC5E1F0A321700609D39 /* Sora.framework */; };
-		9137FC631F0A321700609D39 /* Unbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9137FC5F1F0A321700609D39 /* Unbox.framework */; };
 		9137FC641F0A321700609D39 /* WebRTC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9137FC601F0A321700609D39 /* WebRTC.framework */; };
 		916F4F771F2F702D0022D521 /* SDWebImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 916F4F761F2F702D0022D521 /* SDWebImage.framework */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXContainerItemProxy section */
-		9137FC451F0A306000609D39 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 9137FC281F0A306000609D39 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 9137FC2F1F0A306000609D39;
-			remoteInfo = SoraQuickStart;
-		};
-/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		9137FC301F0A306000609D39 /* SoraQuickStart.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SoraQuickStart.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -38,12 +26,8 @@
 		9137FC3A1F0A306000609D39 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		9137FC3D1F0A306000609D39 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		9137FC3F1F0A306000609D39 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		9137FC441F0A306000609D39 /* SoraQuickStartTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SoraQuickStartTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		9137FC481F0A306000609D39 /* SoraQuickStartTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoraQuickStartTests.swift; sourceTree = "<group>"; };
-		9137FC4A1F0A306000609D39 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9137FC5D1F0A321700609D39 /* SocketRocket.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SocketRocket.framework; path = Carthage/Build/iOS/SocketRocket.framework; sourceTree = "<group>"; };
 		9137FC5E1F0A321700609D39 /* Sora.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Sora.framework; path = Carthage/Build/iOS/Sora.framework; sourceTree = "<group>"; };
-		9137FC5F1F0A321700609D39 /* Unbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Unbox.framework; path = Carthage/Build/iOS/Unbox.framework; sourceTree = "<group>"; };
 		9137FC601F0A321700609D39 /* WebRTC.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebRTC.framework; path = Carthage/Build/iOS/WebRTC.framework; sourceTree = "<group>"; };
 		916F4F761F2F702D0022D521 /* SDWebImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDWebImage.framework; path = Carthage/Build/iOS/SDWebImage.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -56,15 +40,7 @@
 				916F4F771F2F702D0022D521 /* SDWebImage.framework in Frameworks */,
 				9137FC611F0A321700609D39 /* SocketRocket.framework in Frameworks */,
 				9137FC621F0A321700609D39 /* Sora.framework in Frameworks */,
-				9137FC631F0A321700609D39 /* Unbox.framework in Frameworks */,
 				9137FC641F0A321700609D39 /* WebRTC.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		9137FC411F0A306000609D39 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -75,7 +51,6 @@
 			isa = PBXGroup;
 			children = (
 				9137FC321F0A306000609D39 /* SoraQuickStart */,
-				9137FC471F0A306000609D39 /* SoraQuickStartTests */,
 				9137FC311F0A306000609D39 /* Products */,
 				9137FC531F0A30AE00609D39 /* Frameworks */,
 			);
@@ -85,7 +60,6 @@
 			isa = PBXGroup;
 			children = (
 				9137FC301F0A306000609D39 /* SoraQuickStart.app */,
-				9137FC441F0A306000609D39 /* SoraQuickStartTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -103,22 +77,12 @@
 			path = SoraQuickStart;
 			sourceTree = "<group>";
 		};
-		9137FC471F0A306000609D39 /* SoraQuickStartTests */ = {
-			isa = PBXGroup;
-			children = (
-				9137FC481F0A306000609D39 /* SoraQuickStartTests.swift */,
-				9137FC4A1F0A306000609D39 /* Info.plist */,
-			);
-			path = SoraQuickStartTests;
-			sourceTree = "<group>";
-		};
 		9137FC531F0A30AE00609D39 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
 				916F4F761F2F702D0022D521 /* SDWebImage.framework */,
 				9137FC5D1F0A321700609D39 /* SocketRocket.framework */,
 				9137FC5E1F0A321700609D39 /* Sora.framework */,
-				9137FC5F1F0A321700609D39 /* Unbox.framework */,
 				9137FC601F0A321700609D39 /* WebRTC.framework */,
 			);
 			name = Frameworks;
@@ -145,24 +109,6 @@
 			productReference = 9137FC301F0A306000609D39 /* SoraQuickStart.app */;
 			productType = "com.apple.product-type.application";
 		};
-		9137FC431F0A306000609D39 /* SoraQuickStartTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 9137FC501F0A306000609D39 /* Build configuration list for PBXNativeTarget "SoraQuickStartTests" */;
-			buildPhases = (
-				9137FC401F0A306000609D39 /* Sources */,
-				9137FC411F0A306000609D39 /* Frameworks */,
-				9137FC421F0A306000609D39 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				9137FC461F0A306000609D39 /* PBXTargetDependency */,
-			);
-			name = SoraQuickStartTests;
-			productName = SoraQuickStartTests;
-			productReference = 9137FC441F0A306000609D39 /* SoraQuickStartTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -170,19 +116,13 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0830;
-				LastUpgradeCheck = 0830;
+				LastUpgradeCheck = 0900;
 				ORGANIZATIONNAME = "Shiguredo Inc.";
 				TargetAttributes = {
 					9137FC2F1F0A306000609D39 = {
 						CreatedOnToolsVersion = 8.3.2;
 						DevelopmentTeam = DQ232CBKHS;
 						ProvisioningStyle = Automatic;
-					};
-					9137FC431F0A306000609D39 = {
-						CreatedOnToolsVersion = 8.3.2;
-						DevelopmentTeam = DQ232CBKHS;
-						ProvisioningStyle = Automatic;
-						TestTargetID = 9137FC2F1F0A306000609D39;
 					};
 				};
 			};
@@ -200,7 +140,6 @@
 			projectRoot = "";
 			targets = (
 				9137FC2F1F0A306000609D39 /* SoraQuickStart */,
-				9137FC431F0A306000609D39 /* SoraQuickStartTests */,
 			);
 		};
 /* End PBXProject section */
@@ -216,13 +155,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		9137FC421F0A306000609D39 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
@@ -234,15 +166,12 @@
 			inputPaths = (
 				"$(SRCROOT)/Carthage/Build/iOS/Sora.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/WebRTC.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/Unbox.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/SocketRocket.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/SDWebImage.framework",
 			);
 			outputPaths = (
 				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/Sora.framework",
 				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/WebRTC.framework",
-				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/Unbox.framework",
-				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/SocketRocket.framework",
 				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/SDWebImage.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -261,23 +190,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		9137FC401F0A306000609D39 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				9137FC491F0A306000609D39 /* SoraQuickStartTests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		9137FC461F0A306000609D39 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 9137FC2F1F0A306000609D39 /* SoraQuickStart */;
-			targetProxy = 9137FC451F0A306000609D39 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		9137FC371F0A306000609D39 /* Main.storyboard */ = {
@@ -309,7 +222,9 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
@@ -317,7 +232,11 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -349,7 +268,7 @@
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = "1,2";
-				VALID_ARCHS = arm64;
+				VALID_ARCHS = "$(ARCHS_STANDARD)";
 			};
 			name = Debug;
 		};
@@ -363,7 +282,9 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
@@ -371,7 +292,11 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -396,7 +321,7 @@
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
-				VALID_ARCHS = arm64;
+				VALID_ARCHS = "$(ARCHS_STANDARD)";
 			};
 			name = Release;
 		};
@@ -413,7 +338,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = jp.shiguredo.sora.ios.SoraQuickStart;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Debug;
 		};
@@ -430,37 +355,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = jp.shiguredo.sora.ios.SoraQuickStart;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
-			};
-			name = Release;
-		};
-		9137FC511F0A306000609D39 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				DEVELOPMENT_TEAM = DQ232CBKHS;
-				INFOPLIST_FILE = SoraQuickStartTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = jp.shiguredo.sora.ios.SoraQuickStartTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SoraQuickStart.app/SoraQuickStart";
-			};
-			name = Debug;
-		};
-		9137FC521F0A306000609D39 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				DEVELOPMENT_TEAM = DQ232CBKHS;
-				INFOPLIST_FILE = SoraQuickStartTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = jp.shiguredo.sora.ios.SoraQuickStartTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SoraQuickStart.app/SoraQuickStart";
+				SWIFT_VERSION = 4.0;
 			};
 			name = Release;
 		};
@@ -481,15 +376,6 @@
 			buildConfigurations = (
 				9137FC4E1F0A306000609D39 /* Debug */,
 				9137FC4F1F0A306000609D39 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		9137FC501F0A306000609D39 /* Build configuration list for PBXNativeTarget "SoraQuickStartTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				9137FC511F0A306000609D39 /* Debug */,
-				9137FC521F0A306000609D39 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
