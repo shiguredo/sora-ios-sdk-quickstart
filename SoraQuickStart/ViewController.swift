@@ -6,12 +6,13 @@ let SoraServerMediaChannelId = "ios-quickstart"
 
 class ViewController: UIViewController {
 
-    @IBOutlet weak var publisherVideoView: Sora.VideoView!
-    @IBOutlet weak var subscriberVideoView: Sora.VideoView!
+    @IBOutlet weak var publisherVideoView: VideoView!
+    @IBOutlet weak var subscriberVideoView: VideoView!
     @IBOutlet weak var connectButton: UIButton!
     @IBOutlet weak var disconnectButton: UIButton!
     
-    var connection: Sora.Connection!
+    var publisher: MediaChannel!
+    var subscriber: MediaChannel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,60 +29,47 @@ class ViewController: UIViewController {
         connectButton.isEnabled = false
         disconnectButton.isEnabled = false
         
-        connection = Sora.Connection(URL:
-            URL(string: SoraServerURL)!,
-                                     mediaChannelId: SoraServerMediaChannelId)
-        connection.eventLog.debugMode = true
-        
-        connection.mediaPublisher.connect {
-            error in
+        let url = URL(string: SoraServerURL)!
+        let pubConfig = Configuration(url: url,
+                                      channelId: SoraServerMediaChannelId,
+                                      role: .publisher)
+        Sora.shared.connect(configuration: pubConfig) { pub, error in
             if let error = error {
                 print(error.localizedDescription)
                 self.connectButton.isEnabled = true
                 return
             }
-            self.connection.mediaSubscriber.connect {
-                error in
+            
+            let subConfig = Configuration(url: url,
+                                          channelId: SoraServerMediaChannelId,
+                                          role: .subscriber)
+            Sora.shared.connect(configuration: subConfig) {
+                sub, error in
                 if let error = error {
                     print(error.localizedDescription)
                     self.connectButton.isEnabled = true
-                    self.connection.mediaPublisher.disconnect {
-                        error in
-                        if let error = error {
-                            print(error.localizedDescription)
-                        }
-                    }
                     return
                 }
                 self.disconnectButton.isEnabled = true
-                self.connection.mediaPublisher.mainMediaStream!
-                    .videoRenderer = self.publisherVideoView
-                self.connection.mediaSubscriber.mainMediaStream!
-                    .videoRenderer = self.subscriberVideoView
+                
+                self.publisher = pub
+                self.publisher.mainStream!.videoRenderer = self.publisherVideoView
+                self.subscriber = sub
+                self.subscriber.mainStream!.videoRenderer = self.subscriberVideoView
             }
         }
     }
     
     @IBAction func disconnect(_ sender: AnyObject) {
-        connection.mediaPublisher.disconnect {
-            error in
-            if let error = error {
-                print(error.localizedDescription)
-            }
-        }
-        connection.mediaSubscriber.disconnect {
-            error in
-            if let error = error {
-                print(error.localizedDescription)
-            }
-        }
+        publisher.disconnect(error: nil)
+        subscriber.disconnect(error: nil)
         self.connectButton.isEnabled = true
         self.disconnectButton.isEnabled = false
     }
     
     @IBAction func switchCameraPosition(_ sender: AnyObject) {
         if disconnectButton.isEnabled {
-            connection.mediaPublisher.flipCameraPosition()
+            CameraVideoCapturer.shared.flip()
         }
     }
     
