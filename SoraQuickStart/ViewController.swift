@@ -43,7 +43,9 @@ class ViewController: UIViewController {
             // 接続に成功すると error は nil
             if let error = error {
                 print(error.localizedDescription)
-                self.connectButton.isEnabled = true
+                DispatchQueue.main.async {
+                    self.connectButton.isEnabled = true
+                }
                 return
             }
             
@@ -55,10 +57,14 @@ class ViewController: UIViewController {
                 sub, error in
                 if let error = error {
                     print(error.localizedDescription)
-                    self.connectButton.isEnabled = true
+                    DispatchQueue.main.async {
+                        self.connectButton.isEnabled = true
+                    }
                     return
                 }
-                self.disconnectButton.isEnabled = true
+                DispatchQueue.main.async {
+                    self.disconnectButton.isEnabled = true
+                }
                 
                 // 映像を描画するビューをストリームにセットする
                 self.publisher = pub
