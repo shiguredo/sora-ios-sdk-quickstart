@@ -1,17 +1,21 @@
 import UIKit
 import Sora
 
-let SoraServerURL = "ws://192.168.0.2:5000/signaling"
-let SoraServerMediaChannelId = "ios-quickstart"
+// 接続するサーバーのシグナリング URL
+let soraURL = URL(string: "ws://192.168.0.2:5000/signaling")!
+
+// チャネル ID
+let soraChannelId = "ios-quickstart"
 
 class ViewController: UIViewController {
 
-    @IBOutlet weak var publisherVideoView: Sora.VideoView!
-    @IBOutlet weak var subscriberVideoView: Sora.VideoView!
+    @IBOutlet weak var publisherVideoView: VideoView!
+    @IBOutlet weak var subscriberVideoView: VideoView!
     @IBOutlet weak var connectButton: UIButton!
     @IBOutlet weak var disconnectButton: UIButton!
     
-    var connection: Sora.Connection!
+    var publisher: MediaChannel!
+    var subscriber: MediaChannel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,60 +32,59 @@ class ViewController: UIViewController {
         connectButton.isEnabled = false
         disconnectButton.isEnabled = false
         
-        connection = Sora.Connection(URL:
-            URL(string: SoraServerURL)!,
-                                     mediaChannelId: SoraServerMediaChannelId)
-        connection.eventLog.debugMode = true
+        // シグナリング URL とチャネル ID を指定する
+        let pubConfig = Configuration(url: soraURL,
+                                      channelId: soraChannelId,
+                                      role: .publisher)
         
-        connection.mediaPublisher.connect {
-            error in
+        // パブリッシャーを接続する
+        Sora.shared.connect(configuration: pubConfig) { pub, error in
+            // 接続に失敗するとエラーが渡される。
+            // 接続に成功すると error は nil
             if let error = error {
                 print(error.localizedDescription)
-                self.connectButton.isEnabled = true
+                DispatchQueue.main.async {
+                    self.connectButton.isEnabled = true
+                }
                 return
             }
-            self.connection.mediaSubscriber.connect {
-                error in
+            
+            // サブスクライバーを接続する
+            let subConfig = Configuration(url: soraURL,
+                                          channelId: soraChannelId,
+                                          role: .subscriber)
+            Sora.shared.connect(configuration: subConfig) {
+                sub, error in
                 if let error = error {
                     print(error.localizedDescription)
-                    self.connectButton.isEnabled = true
-                    self.connection.mediaPublisher.disconnect {
-                        error in
-                        if let error = error {
-                            print(error.localizedDescription)
-                        }
+                    DispatchQueue.main.async {
+                        self.connectButton.isEnabled = true
                     }
                     return
                 }
-                self.disconnectButton.isEnabled = true
-                self.connection.mediaPublisher.mainMediaStream!
-                    .videoRenderer = self.publisherVideoView
-                self.connection.mediaSubscriber.mainMediaStream!
-                    .videoRenderer = self.subscriberVideoView
+                DispatchQueue.main.async {
+                    self.disconnectButton.isEnabled = true
+                }
+                
+                // 映像を描画するビューをストリームにセットする
+                self.publisher = pub
+                self.publisher.mainStream!.videoRenderer = self.publisherVideoView
+                self.subscriber = sub
+                self.subscriber.mainStream!.videoRenderer = self.subscriberVideoView
             }
         }
     }
     
     @IBAction func disconnect(_ sender: AnyObject) {
-        connection.mediaPublisher.disconnect {
-            error in
-            if let error = error {
-                print(error.localizedDescription)
-            }
-        }
-        connection.mediaSubscriber.disconnect {
-            error in
-            if let error = error {
-                print(error.localizedDescription)
-            }
-        }
+        publisher.disconnect(error: nil)
+        subscriber.disconnect(error: nil)
         self.connectButton.isEnabled = true
         self.disconnectButton.isEnabled = false
     }
     
     @IBAction func switchCameraPosition(_ sender: AnyObject) {
         if disconnectButton.isEnabled {
-            connection.mediaPublisher.flipCameraPosition()
+            CameraVideoCapturer.shared.flip()
         }
     }
     
