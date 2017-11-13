@@ -1,8 +1,11 @@
 import UIKit
 import Sora
 
-let SoraServerURL = "ws://192.168.0.2:5000/signaling"
-let SoraServerMediaChannelId = "ios-quickstart"
+// 接続するサーバーのシグナリング URL
+let soraURL = URL(string: "ws://192.168.0.2:5000/signaling")!
+
+// チャネル ID
+let soraChannelId = "ios-quickstart"
 
 class ViewController: UIViewController {
 
@@ -29,29 +32,41 @@ class ViewController: UIViewController {
         connectButton.isEnabled = false
         disconnectButton.isEnabled = false
         
-        let url = URL(string: SoraServerURL)!
-        let pubConfig = Configuration(url: url,
-                                      channelId: SoraServerMediaChannelId,
+        // シグナリング URL とチャネル ID を指定する
+        let pubConfig = Configuration(url: soraURL,
+                                      channelId: soraChannelId,
                                       role: .publisher)
+        
+        // パブリッシャーを接続する
         Sora.shared.connect(configuration: pubConfig) { pub, error in
+            // 接続に失敗するとエラーが渡される。
+            // 接続に成功すると error は nil
             if let error = error {
                 print(error.localizedDescription)
-                self.connectButton.isEnabled = true
+                DispatchQueue.main.async {
+                    self.connectButton.isEnabled = true
+                }
                 return
             }
             
-            let subConfig = Configuration(url: url,
-                                          channelId: SoraServerMediaChannelId,
+            // サブスクライバーを接続する
+            let subConfig = Configuration(url: soraURL,
+                                          channelId: soraChannelId,
                                           role: .subscriber)
             Sora.shared.connect(configuration: subConfig) {
                 sub, error in
                 if let error = error {
                     print(error.localizedDescription)
-                    self.connectButton.isEnabled = true
+                    DispatchQueue.main.async {
+                        self.connectButton.isEnabled = true
+                    }
                     return
                 }
-                self.disconnectButton.isEnabled = true
+                DispatchQueue.main.async {
+                    self.disconnectButton.isEnabled = true
+                }
                 
+                // 映像を描画するビューをストリームにセットする
                 self.publisher = pub
                 self.publisher.mainStream!.videoRenderer = self.publisherVideoView
                 self.subscriber = sub
