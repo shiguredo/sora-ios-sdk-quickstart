@@ -177,7 +177,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "/usr/local/bin/carthage copy-frameworks";
+			shellScript = "CARTHAGE=/usr/local/bin/carthage\n\nif [ -e $CARTHAGE ]; then\n    $CARTHAGE copy-frameworks\nfi";
 		};
 /* End PBXShellScriptBuildPhase section */
 
