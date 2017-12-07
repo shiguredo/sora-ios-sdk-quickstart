@@ -11,7 +11,6 @@ test:
     # デフォルトでは clean build test なのを clean build にして test を外してる
     - set -o pipefail &&
       xcodebuild
-        #-project 'SoraQuickStart.xcodeproj'
         -workspace 'SoraQuickStart.xcworkspace'
         -scheme 'SoraQuickStart'
         clean build
