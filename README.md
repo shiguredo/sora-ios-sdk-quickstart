@@ -12,7 +12,7 @@
 - Xcode 9.0 以降
 - Swift 4.0
 - Carthage 0.26.2 以降
-- WebRTC SFU Sora 17.08 以降
+- WebRTC SFU Sora 18.02 以降
 
 
 ## ビルド
