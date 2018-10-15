@@ -38,7 +38,7 @@ class ViewController: UIViewController {
                                       role: .publisher)
         
         // パブリッシャーを接続する
-        Sora.shared.connect(configuration: pubConfig) { pub, error in
+        let _ = Sora.shared.connect(configuration: pubConfig) { pub, error in
             // 接続に失敗するとエラーが渡される。
             // 接続に成功すると error は nil
             if let error = error {
@@ -53,7 +53,7 @@ class ViewController: UIViewController {
             let subConfig = Configuration(url: soraURL,
                                           channelId: soraChannelId,
                                           role: .subscriber)
-            Sora.shared.connect(configuration: subConfig) {
+            let _ = Sora.shared.connect(configuration: subConfig) {
                 sub, error in
                 if let error = error {
                     print(error.localizedDescription)
