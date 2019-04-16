@@ -25,7 +25,6 @@ jobs:
               -sdk iphoneos \
               -destination 'generic/platform=iOS' \
               CODE_SIGNING_REQUIRED=NO \
-              CODE_SIGN_IDENTITY= \
               PROVISIONING_PROFILE= | \
             tee $CIRCLE_ARTIFACTS/xcode_raw.log | \
             xcpretty --color --report junit --output $CIRCLE_TEST_REPORTS/xcode/results.xml
