@@ -24,6 +24,7 @@ jobs:
               clean build \
               -sdk iphoneos \
               -destination 'generic/platform=iOS' \
+              -allowProvisioningUpdates \
               CODE_SIGNING_REQUIRED=NO \
               PROVISIONING_PROFILE= | \
             tee $CIRCLE_ARTIFACTS/xcode_raw.log | \
