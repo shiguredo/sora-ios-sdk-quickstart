@@ -5,5 +5,5 @@ platform :ios, '10.0'
 
 target 'SoraQuickStart' do
   use_frameworks!
-  pod 'Sora', '2.3.0'
+  pod 'Sora', '2.3.1'
 end
