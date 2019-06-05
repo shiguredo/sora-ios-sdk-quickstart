@@ -49,6 +49,10 @@ class ViewController: UIViewController {
                 return
             }
             
+            // 映像を描画するビューをストリームにセットする
+            self.publisher = pub
+            self.publisher.mainStream!.videoRenderer = self.publisherVideoView
+            
             // サブスクライバーを接続する
             let subConfig = Configuration(url: soraURL,
                                           channelId: soraChannelId,
@@ -67,8 +71,6 @@ class ViewController: UIViewController {
                 }
                 
                 // 映像を描画するビューをストリームにセットする
-                self.publisher = pub
-                self.publisher.mainStream!.videoRenderer = self.publisherVideoView
                 self.subscriber = sub
                 self.subscriber.mainStream!.videoRenderer = self.subscriberVideoView
             }
