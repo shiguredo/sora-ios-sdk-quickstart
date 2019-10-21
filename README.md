@@ -7,12 +7,12 @@
 ## システム条件
 
 - iOS 10.0 以降
-- アーキテクチャ arm64, armv7 (シミュレーターは非対応)
-- macOS 10.13.2 以降
-- Xcode 9.3
-- Swift 4.1
-- Carthage 0.29.0 以降、または CocoaPods 1.4.0 以降
-- WebRTC SFU Sora 18.04 以降
+- アーキテクチャ arm64, x86_64 (シミュレーターの動作は未保証)
+- macOS 10.15 以降
+- Xcode 11.1
+- Swift 5.1
+- Carthage 0.33.0 以降、または CocoaPods 1.6.1 以降
+- WebRTC SFU Sora 19.04.0 以降
 
 Xcode と Swift のバージョンによっては、 Carthage と CocoaPods で取得できるバイナリに互換性がない可能性があります。詳しくはドキュメントを参照してください。
 
