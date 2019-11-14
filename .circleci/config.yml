@@ -2,7 +2,7 @@ version: 2
 jobs:
   build:
     macos:
-      xcode: "10.2.0"
+      xcode: "11.2.1"
     working_directory: ~/sora-ios-sdk-quickstart
     environment:
       CIRCLE_ARTIFACTS: /tmp/circleci-artifacts
