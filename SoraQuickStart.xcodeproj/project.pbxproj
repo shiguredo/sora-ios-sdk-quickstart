@@ -12,9 +12,6 @@
 		9137FC391F0A306000609D39 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9137FC371F0A306000609D39 /* Main.storyboard */; };
 		9137FC3B1F0A306000609D39 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9137FC3A1F0A306000609D39 /* Assets.xcassets */; };
 		9137FC3E1F0A306000609D39 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9137FC3C1F0A306000609D39 /* LaunchScreen.storyboard */; };
-		9137FC611F0A321700609D39 /* SocketRocket.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9137FC5D1F0A321700609D39 /* SocketRocket.framework */; };
-		9137FC621F0A321700609D39 /* Sora.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9137FC5E1F0A321700609D39 /* Sora.framework */; };
-		9137FC641F0A321700609D39 /* WebRTC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9137FC601F0A321700609D39 /* WebRTC.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -25,9 +22,6 @@
 		9137FC3A1F0A306000609D39 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		9137FC3D1F0A306000609D39 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		9137FC3F1F0A306000609D39 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		9137FC5D1F0A321700609D39 /* SocketRocket.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SocketRocket.framework; path = Carthage/Build/iOS/SocketRocket.framework; sourceTree = "<group>"; };
-		9137FC5E1F0A321700609D39 /* Sora.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Sora.framework; path = Carthage/Build/iOS/Sora.framework; sourceTree = "<group>"; };
-		9137FC601F0A321700609D39 /* WebRTC.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebRTC.framework; path = Carthage/Build/iOS/WebRTC.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -35,9 +29,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9137FC611F0A321700609D39 /* SocketRocket.framework in Frameworks */,
-				9137FC621F0A321700609D39 /* Sora.framework in Frameworks */,
-				9137FC641F0A321700609D39 /* WebRTC.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -77,9 +68,6 @@
 		9137FC531F0A30AE00609D39 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				9137FC5D1F0A321700609D39 /* SocketRocket.framework */,
-				9137FC5E1F0A321700609D39 /* Sora.framework */,
-				9137FC601F0A321700609D39 /* WebRTC.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -94,7 +82,6 @@
 				9137FC2C1F0A306000609D39 /* Sources */,
 				9137FC2D1F0A306000609D39 /* Frameworks */,
 				9137FC2E1F0A306000609D39 /* Resources */,
-				9137FC5C1F0A30B700609D39 /* Run Script */,
 			);
 			buildRules = (
 			);
@@ -155,7 +142,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		9137FC5C1F0A30B700609D39 /* Run Script */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -165,15 +151,10 @@
 				"$(SRCROOT)/Carthage/Build/iOS/WebRTC.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/SocketRocket.framework",
 			);
-			name = "Run Script";
 			outputPaths = (
-				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/Sora.framework",
-				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/WebRTC.framework",
-				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/SocketRocket.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "CARTHAGE=/usr/local/bin/carthage\n\nif [ -e $CARTHAGE ]; then\n    $CARTHAGE copy-frameworks\nfi";
 		};
 /* End PBXShellScriptBuildPhase section */
 
