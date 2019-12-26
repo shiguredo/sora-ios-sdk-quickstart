@@ -11,15 +11,15 @@ jobs:
       - checkout
       - run: mkdir -p $CIRCLE_ARTIFACTS $CIRCLE_TEST_REPORTS
       - run:
-          name: Install Carthage
-          command: carthage update --platform iOS
+          name: Install Pods
+          command: pod install
 
       - run:
           name: Build
           command: |
             set -o pipefail && \
             xcodebuild \
-              -project 'SoraQuickStart.xcodeproj' \
+              -project 'SoraQuickStart.xcworkspace' \
               -scheme 'SoraQuickStart' \
               clean build \
               -sdk iphoneos \
