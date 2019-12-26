@@ -19,7 +19,7 @@ jobs:
           command: |
             set -o pipefail && \
             xcodebuild \
-              -project 'SoraQuickStart.xcworkspace' \
+              -workspace 'SoraQuickStart.xcworkspace' \
               -scheme 'SoraQuickStart' \
               clean build \
               -sdk iphoneos \
