@@ -21,6 +21,7 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         connectButton.isEnabled = true
         disconnectButton.isEnabled = false
+        Logger.shared.level = .debug
     }
 
     override func didReceiveMemoryWarning() {
