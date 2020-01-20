@@ -21,6 +21,7 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         connectButton.isEnabled = true
         disconnectButton.isEnabled = false
+        Logger.shared.level = .debug
     }
 
     override func didReceiveMemoryWarning() {
@@ -35,7 +36,8 @@ class ViewController: UIViewController {
         // シグナリング URL とチャネル ID を指定する
         let pubConfig = Configuration(url: soraURL,
                                       channelId: soraChannelId,
-                                      role: .publisher)
+                                      role: .sendonly,
+                                      multistreamEnabled: false)
         
         // パブリッシャーを接続する
         let _ = Sora.shared.connect(configuration: pubConfig) { pub, error in
@@ -56,7 +58,8 @@ class ViewController: UIViewController {
             // サブスクライバーを接続する
             let subConfig = Configuration(url: soraURL,
                                           channelId: soraChannelId,
-                                          role: .subscriber)
+                                          role: .recvonly,
+                                          multistreamEnabled: false)
             let _ = Sora.shared.connect(configuration: subConfig) {
                 sub, error in
                 if let error = error {
