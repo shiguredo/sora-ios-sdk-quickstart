@@ -1,7 +1,5 @@
 # Sora iOS SDK クイックスタート
 
-[![CircleCI](https://circleci.com/gh/shiguredo/sora-ios-sdk-quickstart/tree/develop.svg?style=svg)](https://circleci.com/gh/shiguredo/sora-ios-sdk-quickstart/tree/develop)
-
 このアプリケーションは [Sora iOS SDK](https://github.com/shiguredo/sora-ios-sdk) のサンプルです。
 
 ## About Support
