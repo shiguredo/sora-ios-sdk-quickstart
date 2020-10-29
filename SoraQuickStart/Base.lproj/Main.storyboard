@@ -46,7 +46,10 @@
                                 </connections>
                             </button>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bordered" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="cJF-Kr-J9l">
-                                <rect key="frame" x="228.66666666666666" y="96" width="90.333333333333343" height="32"/>
+                                <rect key="frame" x="228" y="96" width="91" height="32"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="91" id="oC2-Ks-acy"/>
+                                </constraints>
                                 <segments>
                                     <segment title="" image="person.fill" catalog="system"/>
                                     <segment title="" image="person.2.fill" catalog="system"/>
@@ -56,7 +59,6 @@
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="配信" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Yrl-cz-Acc">
                                 <rect key="frame" x="16" y="100" width="41" height="24"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="35" id="HhY-Ba-WHW"/>
                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="21" id="TRb-dG-fdu"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
@@ -76,6 +78,9 @@
                             </button>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bordered" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="mDh-UT-v1r">
                                 <rect key="frame" x="228" y="403" width="91" height="32"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="91" id="Dky-6E-1Ft"/>
+                                </constraints>
                                 <segments>
                                     <segment title="" image="person.fill" catalog="system"/>
                                     <segment title="" image="person.2.fill" catalog="system"/>
@@ -86,7 +91,6 @@
                                 <rect key="frame" x="16" y="407" width="41" height="24"/>
                                 <constraints>
                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="21" id="C0G-CA-vRd"/>
-                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="35" id="nRF-tl-QGb"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <color key="textColor" systemColor="darkTextColor"/>
@@ -125,6 +129,7 @@
                             <constraint firstItem="q7m-bU-XV5" firstAttribute="leading" secondItem="mDh-UT-v1r" secondAttribute="trailing" constant="12" id="Jsx-Dy-0Xb"/>
                             <constraint firstItem="668-DK-9LW" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" id="N51-Vn-d2g"/>
                             <constraint firstItem="QFe-mz-Beo" firstAttribute="top" secondItem="2h7-KS-GO5" secondAttribute="bottom" constant="8" id="Pce-T5-rTT"/>
+                            <constraint firstItem="cJF-Kr-J9l" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Yrl-cz-Acc" secondAttribute="trailing" constant="8" symbolic="YES" id="Pd9-V7-4vo"/>
                             <constraint firstItem="HeN-Xc-A4g" firstAttribute="top" secondItem="QFe-mz-Beo" secondAttribute="bottom" constant="12" id="QHp-bH-ikn"/>
                             <constraint firstAttribute="trailingMargin" secondItem="w0z-fp-Nsc" secondAttribute="trailing" id="Tcl-xt-CgY"/>
                             <constraint firstItem="2h7-KS-GO5" firstAttribute="top" secondItem="cJF-Kr-J9l" secondAttribute="bottom" constant="8" id="Vvh-pX-Trq"/>
@@ -139,6 +144,7 @@
                             <constraint firstItem="yEk-wo-i1h" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="rbz-1x-jC8"/>
                             <constraint firstItem="2h7-KS-GO5" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="t2p-N0-W5K"/>
                             <constraint firstAttribute="trailing" secondItem="yEk-wo-i1h" secondAttribute="trailing" constant="12" id="wil-jM-vMS"/>
+                            <constraint firstItem="mDh-UT-v1r" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="HeN-Xc-A4g" secondAttribute="trailing" constant="8" symbolic="YES" id="wpo-S2-P4P"/>
                         </constraints>
                     </view>
                     <toolbarItems/>
