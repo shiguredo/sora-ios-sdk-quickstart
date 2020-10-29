@@ -94,7 +94,7 @@
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3Vu-8h-ehO" userLabel="Speaker">
                                 <rect key="frame" x="16" y="699" width="24" height="22"/>
-                                <state key="normal" image="speaker.2.fill" catalog="system"/>
+                                <state key="normal" image="speaker.wave.2.fill" catalog="system"/>
                                 <connections>
                                     <action selector="muteSpeaker:" destination="BYZ-38-t0r" eventType="touchUpInside" id="7kL-Sh-N45"/>
                                 </connections>
@@ -186,7 +186,7 @@
         <image name="person.2.fill" catalog="system" width="128" height="80"/>
         <image name="person.fill" catalog="system" width="128" height="120"/>
         <image name="play.fill" catalog="system" width="116" height="128"/>
-        <image name="speaker.2.fill" catalog="system" width="128" height="90"/>
+        <image name="speaker.wave.2.fill" catalog="system" width="128" height="90"/>
         <systemColor name="darkTextColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
