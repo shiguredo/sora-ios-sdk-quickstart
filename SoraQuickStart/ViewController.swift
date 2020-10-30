@@ -122,11 +122,8 @@ class ViewController: UIViewController {
         alert.addAction(.init(title: "デフォルト（スピーカー）", style: .default) { _ in
             let _ = Sora.shared.setAudioMode(.default(category: .playAndRecord, output: .speaker))
         })
-        alert.addAction(.init(title: "ビデオチャット（通話）", style: .default) { _ in
-            let _ = Sora.shared.setAudioMode(.videoChat(output: .default))
-        })
         alert.addAction(.init(title: "ビデオチャット（スピーカー）", style: .default) { _ in
-            let _ = Sora.shared.setAudioMode(.videoChat(output: .speaker))
+            let _ = Sora.shared.setAudioMode(.videoChat)
         })
         alert.addAction(.init(title: "ボイスチャット（通話）", style: .default) { _ in
             let _ = Sora.shared.setAudioMode(.voiceChat(output: .default))
