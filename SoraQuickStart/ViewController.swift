@@ -20,6 +20,8 @@ class ViewController: UIViewController {
     @IBOutlet weak var speakerButton: UIButton!
     @IBOutlet weak var volumeSlider: UISlider!
     
+    @IBOutlet weak var audioModeButton: UIBarButtonItem!
+    
     var senderMediaChannel: MediaChannel?
     var receiverMediaChannel: MediaChannel?
     var isMuted: Bool = false
@@ -28,10 +30,11 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         Logger.shared.level = .debug
         
-        navigationItem.title = "チャネルID: \(soraChannelId)"
+        navigationItem.title = "\(soraChannelId)"
         
         speakerButton.isEnabled = false
         volumeSlider.isEnabled = false
+        audioModeButton.isEnabled = false
     }
     
     @IBAction func switchCameraPosition(_ sender: AnyObject) {
@@ -76,6 +79,7 @@ class ViewController: UIViewController {
                     self.speakerButton.isEnabled = true
                     self.volumeSlider.isEnabled = true
                     self.volumeSlider.value = Float(MediaStreamAudioVolume.max)
+                    self.audioModeButton.isEnabled = true
                 }
             }
         }
@@ -106,6 +110,34 @@ class ViewController: UIViewController {
         receiverMediaChannel?.mainStream?.remoteAudioVolume = Double(volumeSlider.value)
     }
     
+    @IBAction func changeSpeakerMode(_ sender: Any) {
+        guard senderMediaChannel != nil || receiverMediaChannel != nil else {
+            return
+        }
+        
+        let alert = UIAlertController(title: "音声モードを選択してください", message: nil, preferredStyle: .actionSheet)
+        alert.addAction(.init(title: "デフォルト（通話）", style: .default) { _ in
+            let _ = Sora.shared.setAudioMode(.default(category: .playAndRecord, output: .default))
+        })
+        alert.addAction(.init(title: "デフォルト（スピーカー）", style: .default) { _ in
+            let _ = Sora.shared.setAudioMode(.default(category: .playAndRecord, output: .speaker))
+        })
+        alert.addAction(.init(title: "ビデオチャット（通話）", style: .default) { _ in
+            let _ = Sora.shared.setAudioMode(.videoChat(output: .default))
+        })
+        alert.addAction(.init(title: "ビデオチャット（スピーカー）", style: .default) { _ in
+            let _ = Sora.shared.setAudioMode(.videoChat(output: .speaker))
+        })
+        alert.addAction(.init(title: "ボイスチャット（通話）", style: .default) { _ in
+            let _ = Sora.shared.setAudioMode(.voiceChat(output: .default))
+        })
+        alert.addAction(.init(title: "ボイスチャット（スピーカー）", style: .default) { _ in
+            let _ = Sora.shared.setAudioMode(.voiceChat(output: .speaker))
+        })
+        alert.addAction(.init(title: "キャンセル", style: .cancel, handler: nil))
+        present(alert, animated: true)
+    }
+    
     func connect(role: Role,
                  multiplicityControl: UISegmentedControl,
                  connectButton: UIButton,
@@ -114,6 +146,7 @@ class ViewController: UIViewController {
         DispatchQueue.main.async {
             connectButton.isEnabled = false
             multiplicityControl.isEnabled = false
+            self.audioModeButton.isEnabled = false
         }
         
         // 接続の設定を行います。
@@ -132,6 +165,7 @@ class ViewController: UIViewController {
                 DispatchQueue.main.async {
                     connectButton.isEnabled = true
                     multiplicityControl.isEnabled = true
+                    self.audioModeButton.isEnabled = false
                 }
                 completionHandler(nil)
                 return
@@ -166,6 +200,7 @@ class ViewController: UIViewController {
             multiplicityControl.isEnabled = true
             connectButton.setImage(UIImage(systemName: "play.fill"),
                                    for: .normal)
+            self.audioModeButton.isEnabled = false
         }
     }
     
