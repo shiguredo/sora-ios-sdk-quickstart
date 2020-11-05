@@ -149,6 +149,11 @@
                     </view>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="bt3-Hg-Umw">
+                        <barButtonItem key="leftBarButtonItem" image="speaker.wave.3" catalog="system" id="pKs-M5-n1E">
+                            <connections>
+                                <action selector="changeSpeakerMode:" destination="BYZ-38-t0r" id="rHl-BF-9UA"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="camera" id="e7A-TF-tmP">
                             <connections>
                                 <action selector="switchCameraPosition:" destination="BYZ-38-t0r" id="g4Y-Vm-yMP"/>
@@ -157,6 +162,7 @@
                     </navigationItem>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
+                        <outlet property="audioModeButton" destination="pKs-M5-n1E" id="KMf-Eu-RhL"/>
                         <outlet property="receiverConnectButton" destination="q7m-bU-XV5" id="sa1-uq-3vh"/>
                         <outlet property="receiverMultiplicityControl" destination="mDh-UT-v1r" id="ohq-LV-FBK"/>
                         <outlet property="receiverVideoView" destination="yEk-wo-i1h" id="aaS-gm-GWc"/>
@@ -193,6 +199,7 @@
         <image name="person.fill" catalog="system" width="128" height="120"/>
         <image name="play.fill" catalog="system" width="116" height="128"/>
         <image name="speaker.wave.2.fill" catalog="system" width="128" height="90"/>
+        <image name="speaker.wave.3" catalog="system" width="128" height="86"/>
         <systemColor name="darkTextColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
