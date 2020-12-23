@@ -33,4 +33,4 @@ Xcode と Swift のバージョンによっては、 Carthage と CocoaPods で�
    $ pod install
    ```
 
-2. ``SoraQuickStart.xcodeproj`` を Xcode で開いてビルドします。
+2. ``SoraQuickStart.xcworkspace`` を Xcode で開いてビルドします。

@@ -132,6 +132,9 @@ class ViewController: UIViewController {
             let _ = Sora.shared.setAudioMode(.voiceChat(output: .speaker))
         })
         alert.addAction(.init(title: "キャンセル", style: .cancel, handler: nil))
+        alert.popoverPresentationController?.sourceView = self.view
+        let screenSize = UIScreen.main.bounds
+        alert.popoverPresentationController?.sourceRect = CGRect(x: screenSize.size.width/2, y: screenSize.size.height, width: 0, height: 0)
         present(alert, animated: true)
     }
     
