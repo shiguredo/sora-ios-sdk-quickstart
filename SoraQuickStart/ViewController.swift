@@ -67,6 +67,7 @@ class ViewController: UIViewController {
                        multiplicityControl: receiverMultiplicityControl,
                        connectButton: receiverConnectButton)
             receiverMediaChannel = nil
+            receiverVideoView.clear()
         } else {
             connect(role: .recvonly,
                     multiplicityControl: receiverMultiplicityControl,
