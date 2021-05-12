@@ -10,7 +10,7 @@ Please read https://github.com/shiguredo/oss before use.
 
 ## 時雨堂のオープンソースソフトウェアについて
 
-利用前に https://github.com/shiguredo/oss をお読みください。さい。
+利用前に https://github.com/shiguredo/oss をお読みください。
 
 ## システム条件
 
@@ -22,7 +22,7 @@ Please read https://github.com/shiguredo/oss before use.
 - CocoaPods 1.6.1 以降
 - WebRTC SFU Sora 2020.3 以降
 
-Xcode と Swift のバージョンによっては、 Carthage と CocoaPods で取得できるバイナリに互換性がない可能性があります。詳しくはドキュメントを参照してください。
+Xcode と Swift のバージョンによっては、 Carthage と CocoaPods で取得できるバイナリに互換性がない可能性があります。詳しくは[ Sora iOS SDK ドキュメント](https://sora-ios-sdk.shiguredo.jp/)を参照してください。
 
 ## ビルド
 
