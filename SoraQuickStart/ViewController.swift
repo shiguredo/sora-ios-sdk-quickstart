@@ -67,6 +67,7 @@ class ViewController: UIViewController {
                        multiplicityControl: receiverMultiplicityControl,
                        connectButton: receiverConnectButton)
             receiverMediaChannel = nil
+            receiverVideoView.clear()
         } else {
             connect(role: .recvonly,
                     multiplicityControl: receiverMultiplicityControl,
@@ -154,6 +155,12 @@ class ViewController: UIViewController {
                                    channelId: soraChannelId,
                                    role: role,
                                    multistreamEnabled: multiplicityControl.selectedSegmentIndex == 1)
+
+        if role == .recvonly {
+            config.peerChannelHandlers.onAddStream = { mediaStream -> Void in
+                mediaStream.videoRenderer = videoView
+            }
+        }
         
         // 接続します。
         // connect() の戻り値 ConnectionTask はここでは使いませんが、
