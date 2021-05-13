@@ -150,11 +150,27 @@ class ViewController: UIViewController {
         }
         
         // 接続の設定を行います。
-        let config = Configuration(url: soraURL,
+        var config = Configuration(url: soraURL,
                                    channelId: soraChannelId,
                                    role: role,
                                    multistreamEnabled: multiplicityControl.selectedSegmentIndex == 1)
         
+        // サイマルキャストの有効化
+        config.simulcastEnabled = true
+
+        
+        // 動画のコーデックには .h264 または .vp8 を指定します
+        // .vp9 を指定すると Sora への接続時にエラーになります
+        config.videoCodec = .vp8
+        
+        // 十分な解像度、ビット・レートを指定しないとサイマルキャストが3本になりません
+        // 詳細は https://sora-doc.shiguredo.jp/simulcast#id4 を参照してください
+        config.videoBitRate = 15000
+        
+        // 解像度、フレームレートの設定
+        let cameraSettings = CameraVideoCapturer.Settings(resolution: .hd1080p, frameRate: 30, canStop: true)
+        config.videoCapturerDevice = VideoCapturerDevice.camera(settings: cameraSettings)
+
         // 接続します。
         // connect() の戻り値 ConnectionTask はここでは使いませんが、
         // 接続試行中の状態を強制的に終了させることができます。

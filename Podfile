@@ -5,5 +5,5 @@ platform :ios, '10.0'
 
 target 'SoraQuickStart' do
   use_frameworks!
-  pod 'Sora', '2020.7.1'
+  pod 'Sora', :git => 'https://github.com/shiguredo/sora-ios-sdk.git', :commit => '33d21b2'
 end
