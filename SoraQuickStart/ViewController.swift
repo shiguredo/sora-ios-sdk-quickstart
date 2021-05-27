@@ -25,7 +25,9 @@ class ViewController: UIViewController {
     var senderMediaChannel: MediaChannel?
     var receiverMediaChannel: MediaChannel?
     var isMuted: Bool = false
-    
+
+    var customCapturer: CameraVideoCapturer?
+
     override func viewDidLoad() {
         super.viewDidLoad()
         Logger.shared.level = .debug
@@ -40,7 +42,12 @@ class ViewController: UIViewController {
     @IBAction func switchCameraPosition(_ sender: AnyObject) {
         if senderMediaChannel?.isAvailable ?? false {
             // カメラの位置（前面と背面）を切り替えます。
-            CameraVideoCapturer.shared.flip()
+            let capturer = customCapturer != nil ? customCapturer : CameraVideoCapturer.shared
+            capturer?.flip(completionHandler: { error in
+                if let err = error {
+                    print(err.localizedDescription)
+                }
+            })
         }
     }
     
@@ -151,17 +158,98 @@ class ViewController: UIViewController {
         }
         
         // 接続の設定を行います。
-        let config = Configuration(url: soraURL,
+        var config = Configuration(url: soraURL,
                                    channelId: soraChannelId,
                                    role: role,
                                    multistreamEnabled: multiplicityControl.selectedSegmentIndex == 1)
+
+        
+        enum TestCase {
+            case defaultCapturer
+            case customCapturer
+        }
+        let testCase = TestCase.defaultCapturer
+        
+        switch testCase {
+        case .defaultCapturer:
+            // 背面カメラからスタートするバターン
+            var cameraSettings = CameraVideoCapturer.Settings.default
+            cameraSettings.position = .back
+            config.cameraSettings = cameraSettings
+        case .customCapturer:
+            // 手動でカメラを起動するパターン
+            var settings = CameraVideoCapturer.Settings.default
+            settings.position = .back
+            // 最適なフォーマットとフレームレートを取得
+            // device のカメラ位置と settings.position が異なる可能性があるが無視する
+            // 厳密にチェックするメリットはない
+            guard let device = CameraVideoCapturer.captureDevice(for: settings.position) else {
+                print("TEST: device is not found")
+                return
+            }
+            guard let format = CameraVideoCapturer.suitableFormat(for: device, settings: settings) else {
+                print("TEST: suitable format is not found")
+                return
+            }
+            
+            // let format = CameraVideoCapturer.suitableFormat(for: device, settings: settings)
+            guard let frameRate = CameraVideoCapturer.suitableFrameRate(for: format, settings: settings) else {
+                print("TEST: suitable frame rate is not found")
+                return
+            }
+            customCapturer = CameraVideoCapturer()
+            config.videoCapturer = customCapturer
+            
+            // ハンドラー類
+            if role == .sendonly {
+                customCapturer?.handlers.onCapture = {
+                    (frame: VideoFrame) -> VideoFrame in
+                    // print("TEST: onCapture")
+                    return frame
+                }
+            }
+            customCapturer?.handlers.onStart = {
+                print("TEST: onStart")
+            }
+            customCapturer?.handlers.onStop = {
+                print("TEST: onStop")
+            }
+            
+            // 手動でカメラを起動するパターン
+            customCapturer?.start(with: device, format: format, frameRate: frameRate, stopWhenDone: false, completionHandler: { (error: Error?) in
+                guard error == nil else {
+                    print("TEST: error on start => \(String(describing: error))")
+                    return
+                }
+                print("TEST: started")
+            })
+            
+            /*
+            // restart や stop は Sora に接続した後に試す必要がある
+            capturer.restart { (error: Error?) in
+                guard error == nil else {
+                    print("TEST: error on restart => \(String(describing: error))")
+                    return
+                }
+                print("TEST: restarted")
+            }
+            
+            capturer.stop { (error: Error?) in
+                guard error == nil else {
+                    print("TEST: error on stop => \(String(describing: error))")
+                    return
+                }
+                print("TEST: stopped")
+            }
+            */
+        }
 
         if role == .recvonly {
             config.peerChannelHandlers.onAddStream = { mediaStream -> Void in
                 mediaStream.videoRenderer = videoView
             }
         }
-        
+
         // 接続します。
         // connect() の戻り値 ConnectionTask はここでは使いませんが、
         // 接続試行中の状態を強制的に終了させることができます。
