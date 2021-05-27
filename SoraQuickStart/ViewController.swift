@@ -25,7 +25,7 @@ class ViewController: UIViewController {
     var senderMediaChannel: MediaChannel?
     var receiverMediaChannel: MediaChannel?
     var isMuted: Bool = false
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         Logger.shared.level = .debug
@@ -39,7 +39,6 @@ class ViewController: UIViewController {
     
     @IBAction func switchCameraPosition(_ sender: AnyObject) {
         if senderMediaChannel?.isAvailable ?? false {
-            // カメラの位置（前面と背面）を切り替えます。
             CameraVideoCapturer.shared.flip()
         }
     }
@@ -151,17 +150,35 @@ class ViewController: UIViewController {
         }
         
         // 接続の設定を行います。
-        let config = Configuration(url: soraURL,
+        var config = Configuration(url: soraURL,
                                    channelId: soraChannelId,
                                    role: role,
                                    multistreamEnabled: multiplicityControl.selectedSegmentIndex == 1)
+
+        // spotlight 関連の event_type をテストするために soitlight を有効化するコード
+        config.spotlightEnabled = .enabled
+        config.videoCodec = .h264
+        config.videoBitRate = 15000
+        let cameraSettings = CameraVideoCapturer.Settings(resolution: .hd1080p, frameRate: 30, canStop: true)
+        config.videoCapturerDevice = VideoCapturerDevice.camera(settings: cameraSettings)
+        
+        // notify で受信した内容を出力する
+        config.signalingChannelHandlers.onReceive = { signaling in
+            switch signaling {
+            case .notify(let message):
+                print("NOTIFY_DEBUG: message.eventType => \(message.eventType)")
+                print("NOTIFY_DEBUG: message => \(message)")
+            default:
+                break
+            }
+        }
 
         if role == .recvonly {
             config.peerChannelHandlers.onAddStream = { mediaStream -> Void in
                 mediaStream.videoRenderer = videoView
             }
         }
-        
+
         // 接続します。
         // connect() の戻り値 ConnectionTask はここでは使いませんが、
         // 接続試行中の状態を強制的に終了させることができます。
