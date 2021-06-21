@@ -5,7 +5,7 @@ import Sora
 let soraURL = URL(string: "ws://192.168.0.2:5000/signaling")!
 
 // チャネル ID
-let soraChannelId = "ios-quickstart"
+let soraChannelId = "sora"
 
 class ViewController: UIViewController {
     
