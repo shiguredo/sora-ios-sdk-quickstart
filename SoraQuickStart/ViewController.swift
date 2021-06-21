@@ -10,14 +10,13 @@ let soraChannelId = "sora"
 class ViewController: UIViewController {
     
     @IBOutlet weak var senderVideoView: VideoView!
-    @IBOutlet weak var senderConnectButton: UIButton!
-    
     @IBOutlet weak var receiverVideoView: VideoView!
-    @IBOutlet weak var receiverConnectButton: UIButton!
+    @IBOutlet weak var connectImageView: UIImageView!
     
     var senderMediaChannel: MediaChannel?
     var receiverMediaChannel: MediaChannel?
-    
+    var connecting = false
+
     override func viewDidLoad() {
         super.viewDidLoad()
         Logger.shared.level = .debug
@@ -25,38 +24,18 @@ class ViewController: UIViewController {
         navigationItem.title = "\(soraChannelId)"
     }
 
-    @IBAction func connectSender(_ sender: AnyObject) {
-        if let mediaChannel = senderMediaChannel {
-            disconnect(mediaChannel: mediaChannel,
-                       connectButton: senderConnectButton)
-            senderMediaChannel = nil
-        } else {
-            connect(role: .sendonly,
-                    connectButton: senderConnectButton,
-                    videoView: senderVideoView)
-            { mediaChannel in
-                self.senderMediaChannel = mediaChannel
-            }
-        }
-    }
-    
-    @IBAction func connectReceiver(_ sender: AnyObject) {
-        if let mediaChannel = receiverMediaChannel {
-            disconnect(mediaChannel: mediaChannel,
-                       connectButton: receiverConnectButton)
-            receiverMediaChannel = nil
-            receiverVideoView.clear()
-        } else {
-            connect(role: .recvonly,
-                    connectButton: receiverConnectButton,
-                    videoView: receiverVideoView)
-            { mediaChannel in
-                self.receiverMediaChannel = mediaChannel
+    @IBAction func connect(_ sender: AnyObject) {
+        if connecting {
+            connectImageView.image = UIImage(systemName: "play.circle.fill")
+            connectImageView.tintColor = .systemGreen
 
-            }
+        } else {
+            connectImageView.image = UIImage(systemName: "stop.circle.fill")
+            connectImageView.tintColor = .systemRed
         }
+        connecting = !connecting
     }
-    
+
     func connect(role: Role,
                  connectButton: UIButton,
                  videoView: VideoView,
