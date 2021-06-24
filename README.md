@@ -1,34 +1,37 @@
 # Sora iOS SDK クイックスタート
 
-[![CircleCI](https://circleci.com/gh/shiguredo/sora-ios-sdk-quickstart/tree/develop.svg?style=svg)](https://circleci.com/gh/shiguredo/sora-ios-sdk-quickstart/tree/develop)
-
 このアプリケーションは [Sora iOS SDK](https://github.com/shiguredo/sora-ios-sdk) のサンプルです。
+
+## About Shiguredo's open source software
+
+We will not respond to PRs or issues that have not been discussed on Discord. Also, Discord is only available in Japanese.
+
+Please read https://github.com/shiguredo/oss before use.
+
+## 時雨堂のオープンソースソフトウェアについて
+
+利用前に https://github.com/shiguredo/oss をお読みください。
 
 ## システム条件
 
 - iOS 10.0 以降
-- アーキテクチャ arm64, armv7 (シミュレーターは非対応)
-- Mac OS X 10.12.6 以降
-- Xcode 9.0 以降
-- Swift 4.0
-- Carthage 0.26.2 以降
-- WebRTC SFU Sora 17.08 以降
+- アーキテクチャ arm64, x86_64 (シミュレーターの動作は未保証)
+- macOS 11.3 以降
+- Xcode 12.5
+- Swift 5.4
+- CocoaPods 1.10.1 以降
+- WebRTC SFU Sora 2021.1 以降
 
+Xcode と Swift のバージョンによっては、 Carthage と CocoaPods で取得できるバイナリに互換性がない可能性があります。詳しくは[ Sora iOS SDK ドキュメント](https://sora-ios-sdk.shiguredo.jp/) を参照してください。
 
 ## ビルド
 
-1. クローンし、 Carthage でライブラリを取得します。
+1. クローンし、 CocoaPods でライブラリを取得します。
 
    ```
    $ git clone https://github.com/shiguredo/sora-ios-sdk-quickstart
    $ cd sora-ios-sdk-quickstart
-   $ carthage update --platform iOS
+   $ pod install
    ```
 
-2. ``SoraQuickStart.xcodeproj`` を Xcode で開いてビルドします。
-
-## 注意
-
-Carthage のパスは ``/usr/local/bin/carthage`` を前提としています。
-他のパスにインストールされている場合は Xcode プロジェクトのビルドフェーズを変更するか、シンボリックリンクをはってください。
-
+2. ``SoraQuickStart.xcworkspace`` を Xcode で開いてビルドします。
