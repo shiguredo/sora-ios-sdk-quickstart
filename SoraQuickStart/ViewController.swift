@@ -39,8 +39,13 @@ class ViewController: UIViewController {
     
     @IBAction func switchCameraPosition(_ sender: AnyObject) {
         if senderMediaChannel?.isAvailable ?? false {
-            // カメラの位置（前面と背面）を切り替えます。
-            CameraVideoCapturer.shared.flip()
+            let current = CameraVideoCapturer.current!
+            CameraVideoCapturer.flip(current) { error in
+                guard error != nil else {
+                    print("\(String(describing: error))")
+                    return
+                }
+            }
         }
     }
     
