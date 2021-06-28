@@ -19,14 +19,14 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yEk-wo-i1h" customClass="VideoView" customModule="Sora">
+                            <view contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="yEk-wo-i1h" customClass="VideoView" customModule="Sora">
                                 <rect key="frame" x="0.0" y="88" width="375" height="517"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="h7L-ZK-wCL">
                                 <rect key="frame" x="247" y="413" width="120" height="180"/>
                                 <subviews>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2h7-KS-GO5" customClass="VideoView" customModule="Sora">
+                                    <view contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="2h7-KS-GO5" customClass="VideoView" customModule="Sora">
                                         <rect key="frame" x="4" y="4" width="112" height="172"/>
                                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                     </view>
