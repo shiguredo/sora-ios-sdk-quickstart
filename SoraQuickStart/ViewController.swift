@@ -70,12 +70,6 @@ class ViewController: UIViewController {
                                    role: .sendrecv,
                                    multistreamEnabled: true)
 
-        // 受信した映像を描画する設定を行います。
-        // マルチストリームで接続しますが、最初に同チャネルに接続された 1 つの受信ストリームにのみ対応しています。
-        config.peerChannelHandlers.onAddStream = { mediaStream in
-            mediaStream.videoRenderer = self.receiverVideoView
-        }
-
         // 接続します。
         // connect() の戻り値 ConnectionTask を使うと
         // 接続試行中の状態を強制的に終了させることができます。
@@ -98,6 +92,12 @@ class ViewController: UIViewController {
             // すでに他のユーザーからの接続があれば受信用の VideoView をストリームにセットします。
             // このアプリでは 1 つのストリームのみを描画します。
             if let stream = mediaChannel!.receiverStreams.first {
+                stream.videoRenderer = self.receiverVideoView
+            }
+
+            // 他のユーザーが接続したら、そのストリームを受信用の VideoView にセットします。
+            // このアプリでは、複数のユーザーが接続した場合は最後のユーザーの映像のみ描画します。
+            mediaChannel!.handlers.onAddStream = { stream in
                 stream.videoRenderer = self.receiverVideoView
             }
 
