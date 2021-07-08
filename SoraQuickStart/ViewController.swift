@@ -2,7 +2,7 @@ import UIKit
 import Sora
 
 // 接続するサーバーのシグナリング URL
-let soraURL = URL(string: "ws://192.168.0.4:5000/signaling")!
+let soraURL = URL(string: "wss://sora.example.com/signaling")!
 
 // チャネル ID
 let soraChannelId = "sora"
@@ -69,6 +69,19 @@ class ViewController: UIViewController {
                                    channelId: soraChannelId,
                                    role: .sendrecv,
                                    multistreamEnabled: true)
+        
+        // ストリームが追加されたら受信用の VideoView をストリームにセットします。
+        // このアプリでは、複数のユーザーが接続した場合は最後のユーザーの映像のみ描画します。
+        config.mediaChannelHandlers.onAddStream = {stream in
+            stream.videoRenderer = self.receiverVideoView
+        }
+        // 接続先から接続を解除されたときに行う処理です。
+        config.mediaChannelHandlers.onDisconnect = { error in
+            if let error = error {
+                NSLog(error.localizedDescription)
+            }
+            self.updateUI(false)
+        }
 
         // 接続します。
         // connect() の戻り値 ConnectionTask を使うと
@@ -87,26 +100,6 @@ class ViewController: UIViewController {
             // 接続できたら配信用の VideoView をストリームにセットします。
             if let stream = mediaChannel!.senderStream {
                 stream.videoRenderer = self.senderVideoView
-            }
-
-            // すでに他のユーザーからの接続があれば受信用の VideoView をストリームにセットします。
-            // このアプリでは 1 つのストリームのみを描画します。
-            if let stream = mediaChannel!.receiverStreams.first {
-                stream.videoRenderer = self.receiverVideoView
-            }
-
-            // 他のユーザーが接続したら、そのストリームを受信用の VideoView にセットします。
-            // このアプリでは、複数のユーザーが接続した場合は最後のユーザーの映像のみ描画します。
-            mediaChannel!.handlers.onAddStream = { stream in
-                stream.videoRenderer = self.receiverVideoView
-            }
-
-            // 接続先から接続を解除されたときに行う処理です。
-            mediaChannel!.handlers.onDisconnect = { error in
-                if let error = error {
-                    NSLog(error.localizedDescription)
-                }
-                self.updateUI(false)
             }
         }
     }
