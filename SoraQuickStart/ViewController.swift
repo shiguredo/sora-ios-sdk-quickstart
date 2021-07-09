@@ -2,214 +2,107 @@ import UIKit
 import Sora
 
 // 接続するサーバーのシグナリング URL
-let soraURL = URL(string: "ws://192.168.0.2:5000/signaling")!
+let soraURL = URL(string: "wss://sora.example.com/signaling")!
 
 // チャネル ID
-let soraChannelId = "ios-quickstart"
+let soraChannelId = "sora"
 
 class ViewController: UIViewController {
     
     @IBOutlet weak var senderVideoView: VideoView!
-    @IBOutlet weak var senderMultiplicityControl: UISegmentedControl!
-    @IBOutlet weak var senderConnectButton: UIButton!
-    
     @IBOutlet weak var receiverVideoView: VideoView!
-    @IBOutlet weak var receiverMultiplicityControl: UISegmentedControl!
-    @IBOutlet weak var receiverConnectButton: UIButton!
-    
-    @IBOutlet weak var speakerButton: UIButton!
-    @IBOutlet weak var volumeSlider: UISlider!
-    
-    @IBOutlet weak var audioModeButton: UIBarButtonItem!
-    
-    var senderMediaChannel: MediaChannel?
-    var receiverMediaChannel: MediaChannel?
-    var isMuted: Bool = false
-    
+    @IBOutlet weak var connectImageView: UIImageView!
+
+    // 接続済みの MediaChannel です。
+    var mediaChannel: MediaChannel?
+
+    // 接続試行中にキャンセルするためのオブジェクトです。
+    var connectionTask: ConnectionTask?
+
+    // 接続済みであれば true を返します。
+    var connecting: Bool {
+        mediaChannel?.isAvailable == true
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         Logger.shared.level = .debug
         
         navigationItem.title = "\(soraChannelId)"
-        
-        speakerButton.isEnabled = false
-        volumeSlider.isEnabled = false
-        audioModeButton.isEnabled = false
     }
-    
-    @IBAction func switchCameraPosition(_ sender: AnyObject) {
-        if senderMediaChannel?.isAvailable ?? false {
-            // カメラの位置（前面と背面）を切り替えます。
-            CameraVideoCapturer.shared.flip()
-        }
-    }
-    
-    @IBAction func connectSender(_ sender: AnyObject) {
-        if let mediaChannel = senderMediaChannel {
-            disconnect(mediaChannel: mediaChannel,
-                       multiplicityControl: senderMultiplicityControl,
-                       connectButton: senderConnectButton)
-            senderMediaChannel = nil
-        } else {
-            connect(role: .sendonly,
-                    multiplicityControl: senderMultiplicityControl,
-                    connectButton: senderConnectButton,
-                    videoView: senderVideoView)
-            { mediaChannel in
-                self.senderMediaChannel = mediaChannel
-            }
-        }
-    }
-    
-    @IBAction func connectReceiver(_ sender: AnyObject) {
-        if let mediaChannel = receiverMediaChannel {
-            disconnect(mediaChannel: mediaChannel,
-                       multiplicityControl: receiverMultiplicityControl,
-                       connectButton: receiverConnectButton)
-            receiverMediaChannel = nil
-            receiverVideoView.clear()
-        } else {
-            connect(role: .recvonly,
-                    multiplicityControl: receiverMultiplicityControl,
-                    connectButton: receiverConnectButton,
-                    videoView: receiverVideoView)
-            { mediaChannel in
-                self.receiverMediaChannel = mediaChannel
-                
-                DispatchQueue.main.async {
-                    self.speakerButton.isEnabled = true
-                    self.volumeSlider.isEnabled = true
-                    self.volumeSlider.value = Float(MediaStreamAudioVolume.max)
-                    self.audioModeButton.isEnabled = true
-                }
-            }
-        }
-    }
-    
-    @IBAction func muteSpeaker(_ sender: AnyObject) {
-        guard receiverMediaChannel != nil else {
-            return
-        }
-        
-        isMuted = !isMuted
-        receiverMediaChannel!.mainStream?.audioEnabled = !isMuted
-        if isMuted {
-            DispatchQueue.main.async {
-                self.speakerButton.setImage(UIImage(systemName: "speaker.slash.fill"),
-                                            for: .normal)
-            }
-        } else {
-            DispatchQueue.main.async {
-                self.speakerButton.setImage(UIImage(systemName: "speaker.2.fill"),
-                                            
-                                            for: .normal)
-            }
-        }
-    }
-    
-    @IBAction func changeVolume(_ sender: Any) {
-        receiverMediaChannel?.mainStream?.remoteAudioVolume = Double(volumeSlider.value)
-    }
-    
-    @IBAction func changeSpeakerMode(_ sender: Any) {
-        guard senderMediaChannel != nil || receiverMediaChannel != nil else {
-            return
-        }
-        
-        let alert = UIAlertController(title: "音声モードを選択してください", message: nil, preferredStyle: .actionSheet)
-        alert.addAction(.init(title: "デフォルト（通話）", style: .default) { _ in
-            let _ = Sora.shared.setAudioMode(.default(category: .playAndRecord, output: .default))
-        })
-        alert.addAction(.init(title: "デフォルト（スピーカー）", style: .default) { _ in
-            let _ = Sora.shared.setAudioMode(.default(category: .playAndRecord, output: .speaker))
-        })
-        alert.addAction(.init(title: "ビデオチャット（スピーカー）", style: .default) { _ in
-            let _ = Sora.shared.setAudioMode(.videoChat)
-        })
-        alert.addAction(.init(title: "ボイスチャット（通話）", style: .default) { _ in
-            let _ = Sora.shared.setAudioMode(.voiceChat(output: .default))
-        })
-        alert.addAction(.init(title: "ボイスチャット（スピーカー）", style: .default) { _ in
-            let _ = Sora.shared.setAudioMode(.voiceChat(output: .speaker))
-        })
-        alert.addAction(.init(title: "キャンセル", style: .cancel, handler: nil))
-        alert.popoverPresentationController?.sourceView = self.view
-        let screenSize = UIScreen.main.bounds
-        alert.popoverPresentationController?.sourceRect = CGRect(x: screenSize.size.width/2, y: screenSize.size.height, width: 0, height: 0)
-        present(alert, animated: true)
-    }
-    
-    func connect(role: Role,
-                 multiplicityControl: UISegmentedControl,
-                 connectButton: UIButton,
-                 videoView: VideoView,
-                 completionHandler: @escaping (MediaChannel?) -> Void) {
+
+    // 接続ボタンの UI を更新します。
+    func updateUI(_ connect: Bool) {
         DispatchQueue.main.async {
-            connectButton.isEnabled = false
-            multiplicityControl.isEnabled = false
-            self.audioModeButton.isEnabled = false
+            if connect {
+                // 接続時の処理です。
+                self.connectImageView.image = UIImage(systemName: "stop.circle.fill")
+                self.connectImageView.tintColor = .systemRed
+            } else {
+                // 接続解除時の処理です。
+                self.connectImageView.image = UIImage(systemName: "play.circle.fill")
+                self.connectImageView.tintColor = .systemGreen
+            }
         }
-        
+    }
+
+    @IBAction func connect(_ sender: AnyObject) {
+        // 接続試行中のタスクが残っていればキャンセルします。
+        connectionTask?.cancel()
+
+        if connecting {
+            // 接続済みであれば接続を解除します。
+            if mediaChannel?.isAvailable == true {
+                mediaChannel?.disconnect(error: nil)
+            }
+            updateUI(false)
+        } else {
+            // 未接続なら接続します。
+            connect()
+            updateUI(true)
+        }
+    }
+
+    func connect() {
         // 接続の設定を行います。
         let config = Configuration(url: soraURL,
                                    channelId: soraChannelId,
-                                   role: role,
-                                   multistreamEnabled: multiplicityControl.selectedSegmentIndex == 1)
-
-        if role == .recvonly {
-            config.peerChannelHandlers.onAddStream = { mediaStream -> Void in
-                mediaStream.videoRenderer = videoView
-            }
-        }
+                                   role: .sendrecv,
+                                   multistreamEnabled: true)
         
+        // ストリームが追加されたら受信用の VideoView をストリームにセットします。
+        // このアプリでは、複数のユーザーが接続した場合は最後のユーザーの映像のみ描画します。
+        config.mediaChannelHandlers.onAddStream = {stream in
+            stream.videoRenderer = self.receiverVideoView
+        }
+        // 接続先から接続を解除されたときに行う処理です。
+        config.mediaChannelHandlers.onDisconnect = { error in
+            if let error = error {
+                NSLog(error.localizedDescription)
+            }
+            self.updateUI(false)
+        }
+
         // 接続します。
-        // connect() の戻り値 ConnectionTask はここでは使いませんが、
+        // connect() の戻り値 ConnectionTask を使うと
         // 接続試行中の状態を強制的に終了させることができます。
-        let _ = Sora.shared.connect(configuration: config) { mediaChannel, error in
+        connectionTask = Sora.shared.connect(configuration: config) { mediaChannel, error in
             // 接続に失敗するとエラーが渡されます。
             if let error = error {
-                print(error.localizedDescription)
-                DispatchQueue.main.async {
-                    connectButton.isEnabled = true
-                    multiplicityControl.isEnabled = true
-                    self.audioModeButton.isEnabled = false
-                }
-                completionHandler(nil)
+                NSLog(error.localizedDescription)
+                self.updateUI(false)
                 return
             }
-            
-            // 接続できたら VideoView をストリームにセットします。
-            // マルチストリームの場合、最初に接続したストリームが mainStream です。
-            // 受信専用で接続したとき、何も配信されていなければ mainStream は nil です。
-            if let stream = mediaChannel!.mainStream {
-                stream.videoRenderer = videoView
+
+            // 接続に成功した MediaChannel を保持しておきます。
+            self.mediaChannel = mediaChannel
+
+            // 接続できたら配信用の VideoView をストリームにセットします。
+            if let stream = mediaChannel!.senderStream {
+                stream.videoRenderer = self.senderVideoView
             }
-            
-            DispatchQueue.main.async {
-                connectButton.isEnabled = true
-                connectButton.setImage(UIImage(systemName: "stop.fill"),
-                                       for: .normal)
-            }
-            
-            completionHandler(mediaChannel!)
         }
     }
-    
-    func disconnect(mediaChannel: MediaChannel,
-                    multiplicityControl: UISegmentedControl,
-                    connectButton: UIButton) {
-        if mediaChannel.isAvailable {
-            // 接続解除します。
-            mediaChannel.disconnect(error: nil)
-        }
-        
-        DispatchQueue.main.async {
-            multiplicityControl.isEnabled = true
-            connectButton.setImage(UIImage(systemName: "play.fill"),
-                                   for: .normal)
-            self.audioModeButton.isEnabled = false
-        }
-    }
-    
+
 }
 
