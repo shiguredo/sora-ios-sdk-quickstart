@@ -73,7 +73,9 @@ class ViewController: UIViewController {
         // ストリームが追加されたら受信用の VideoView をストリームにセットします。
         // このアプリでは、複数のユーザーが接続した場合は最後のユーザーの映像のみ描画します。
         config.mediaChannelHandlers.onAddStream = {stream in
-            stream.videoRenderer = self.receiverVideoView
+            if stream.streamId != config.publisherStreamId {
+                stream.videoRenderer = self.receiverVideoView
+            }
         }
         // 接続先から接続を解除されたときに行う処理です。
         config.mediaChannelHandlers.onDisconnect = { error in
