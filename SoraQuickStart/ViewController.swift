@@ -68,11 +68,8 @@ class ViewController: UIViewController {
             let session = RTCAudioSession.sharedInstance()
             print("20210811: before session.category => \(session.category)")
             session.lockForConfiguration()
-            
-            let newCategory = session.category == AVAudioSession.Category.soloAmbient.rawValue ? AVAudioSession.Category.playAndRecord.rawValue : AVAudioSession.Category.soloAmbient.rawValue
             do {
-                try session.setCategory(newCategory)
-                try session.setActive(true)
+                try session.setActive(!session.isActive)
             } catch {
                 print("20210811: error => \(error)")
             }
