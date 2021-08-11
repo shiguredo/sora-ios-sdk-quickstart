@@ -1,6 +1,8 @@
 import UIKit
 import Sora
 
+import WebRTC
+
 // 接続するサーバーのシグナリング URL
 let soraURL = URL(string: "wss://sora.example.com/signaling")!
 
@@ -51,11 +53,34 @@ class ViewController: UIViewController {
         connectionTask?.cancel()
 
         if connecting {
+            /*
             // 接続済みであれば接続を解除します。
             if mediaChannel?.isAvailable == true {
                 mediaChannel?.disconnect(error: nil)
             }
             updateUI(false)
+            */
+
+            
+            
+            // category を soloAmbient にしたら音も聞こえなくなる
+            // soloAmbient にしてから playAndRecord にしたら何故かハウリングが起きる
+            let session = RTCAudioSession.sharedInstance()
+            print("20210811: before session.category => \(session.category)")
+            session.lockForConfiguration()
+            
+            let newCategory = session.category == AVAudioSession.Category.soloAmbient.rawValue ? AVAudioSession.Category.playAndRecord.rawValue : AVAudioSession.Category.soloAmbient.rawValue
+            do {
+                try session.setCategory(newCategory)
+                try session.setActive(true)
+            } catch {
+                print("20210811: error => \(error)")
+            }
+            session.unlockForConfiguration()
+
+            
+            print("20210811: after session.category => \(session.category)")
+            print("20210811: session: \(String(describing: session).replacingOccurrences(of: "\n", with: ""))")
         } else {
             // 未接続なら接続します。
             connect()
