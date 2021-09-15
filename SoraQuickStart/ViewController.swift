@@ -55,6 +55,7 @@ class ViewController: UIViewController {
             if mediaChannel?.isAvailable == true {
                 mediaChannel?.disconnect(error: nil)
             }
+            mediaChannel = nil
             updateUI(false)
         } else {
             // 未接続なら接続します。
