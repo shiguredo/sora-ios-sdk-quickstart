@@ -55,6 +55,7 @@ class ViewController: UIViewController {
             if mediaChannel?.isAvailable == true {
                 mediaChannel?.disconnect(error: nil)
             }
+            mediaChannel = nil
             updateUI(false)
         } else {
             // 未接続なら接続します。
@@ -72,17 +73,23 @@ class ViewController: UIViewController {
         
         // ストリームが追加されたら受信用の VideoView をストリームにセットします。
         // このアプリでは、複数のユーザーが接続した場合は最後のユーザーの映像のみ描画します。
-        config.mediaChannelHandlers.onAddStream = {stream in
+        config.mediaChannelHandlers.onAddStream = { [weak self] stream in
+            guard let strongSelf = self else {
+                return
+            }
             if stream.streamId != config.publisherStreamId {
-                stream.videoRenderer = self.receiverVideoView
+                stream.videoRenderer = strongSelf.receiverVideoView
             }
         }
         // 接続先から接続を解除されたときに行う処理です。
-        config.mediaChannelHandlers.onDisconnect = { error in
+        config.mediaChannelHandlers.onDisconnect = { [weak self] error in
+            guard let strongSelf = self else {
+                return
+            }
             if let error = error {
                 NSLog(error.localizedDescription)
             }
-            self.updateUI(false)
+            strongSelf.updateUI(false)
         }
 
         // 接続します。
