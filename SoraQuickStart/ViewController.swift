@@ -134,6 +134,7 @@ class ViewController: UIViewController {
 //        CameraVideoCapturer.front.handlers = frontCameraHandlers
 //        CameraVideoCapturer.back.handlers = backCameraHandlers
 
+        /*
         CameraVideoCapturer.handlers.onStart = { capturer in
             // カメラ位置ごとの処理
             switch capturer.position {
@@ -182,6 +183,7 @@ class ViewController: UIViewController {
             NSLog("# capturer capture => \(capturer), frame => \(frame)")
             return frame
         }
+         */
 
         // 接続します。
         // connect() の戻り値 ConnectionTask を使うと
