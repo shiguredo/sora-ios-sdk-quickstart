@@ -252,8 +252,7 @@ class ViewController: UIViewController {
     }
     
     @IBAction func restart(_ sender: Any) {
-        let capturer = previousCapturer ?? .front
-        capturer?.restart() { error in
+        CameraVideoCapturer.current?.restart() { error in
             if let error = error {
                 NSLog(error.localizedDescription)
             }
