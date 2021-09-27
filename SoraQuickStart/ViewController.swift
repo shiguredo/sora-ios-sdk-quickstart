@@ -165,20 +165,22 @@ class ViewController: UIViewController {
             // カメラ位置に依存しない処理
             NSLog("# capturer stop => \(capturer)")
         }
-        CameraVideoCapturer.handlers.onCapture = { capturer in
+
+        CameraVideoCapturer.handlers.onCapture = { capturer, frame in
             // カメラ位置ごとの処理
             switch capturer.position {
             case .front:
                 // 前面カメラ時
-                NSLog("# front camera stop")
+                NSLog("# front camera capture")
             case .back:
                 // 背面カメラ時
-                NSLog("# back camera stop")
+                NSLog("# back camera capture")
             default:
                 break
             }
             // カメラ位置に依存しない処理
-            NSLog("# capturer stop => \(capturer)")
+            NSLog("# capturer capture => \(capturer), frame => \(frame)")
+            return frame
         }
 
         // 接続します。
