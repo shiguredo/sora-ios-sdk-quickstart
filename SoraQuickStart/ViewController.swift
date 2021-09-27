@@ -99,6 +99,7 @@ class ViewController: UIViewController {
         // カメラを起動しない
         config.cameraSettings = CameraSettings(isEnabled: false)
 
+        config.cameraSettings.position = .back
 //        let frontCameraHandlers = CameraVideoCapturerHandlers()
 //        frontCameraHandlers.onCapture = {
 //            frame in
@@ -215,7 +216,7 @@ class ViewController: UIViewController {
         }
 
         stream.videoRenderer = self.senderVideoView
-        let vga = CameraSettings.Resolution.vga480p
+        let vga = CameraSettings.Resolution.vga480p        
         guard let format = CameraVideoCapturer.format(width: vga.width, height: vga.height, for: capturer.device) else {
             return
         }
