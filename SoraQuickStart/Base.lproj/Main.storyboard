@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="gpf-dC-V6Q">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19162" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="gpf-dC-V6Q">
     <device id="retina5_9" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19144"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -49,7 +50,7 @@
                                 </constraints>
                             </view>
                             <imageView clipsSubviews="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="play.circle.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="Pnc-ij-UF5">
-                                <rect key="frame" x="0.0" y="622" width="100" height="98.666666666666629"/>
+                                <rect key="frame" x="20" y="622" width="100" height="98.666666666666629"/>
                                 <color key="tintColor" systemColor="systemGreenColor"/>
                                 <gestureRecognizers/>
                                 <constraints>
@@ -60,56 +61,61 @@
                                     <outletCollection property="gestureRecognizers" destination="ZgX-8n-0vR" appends="YES" id="gbG-7K-ts8"/>
                                 </connections>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xOG-5Q-MH5">
-                                <rect key="frame" x="100" y="643" width="50" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xOG-5Q-MH5">
+                                <rect key="frame" x="140" y="643" width="30" height="30"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="50" id="NYh-kI-f5t"/>
-                                    <constraint firstAttribute="height" constant="30" id="bMD-Bt-IjS"/>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="30" id="bMD-Bt-IjS"/>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="30" id="pse-Hw-Vgk"/>
                                 </constraints>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                 <state key="normal" title="stop"/>
                                 <connections>
                                     <action selector="stop:" destination="BYZ-38-t0r" eventType="touchUpInside" id="rBY-lH-ZDA"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Eln-LZ-2sK">
-                                <rect key="frame" x="100" y="613" width="50" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Eln-LZ-2sK">
+                                <rect key="frame" x="140" y="613" width="31" height="30"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="30" id="i25-1A-bCe"/>
-                                    <constraint firstAttribute="width" constant="50" id="vi0-4i-5FO"/>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="31" id="d0w-XN-3ME"/>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="30" id="i25-1A-bCe"/>
                                 </constraints>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                 <state key="normal" title="start"/>
                                 <connections>
                                     <action selector="start:" destination="BYZ-38-t0r" eventType="touchUpInside" id="nuJ-Iy-R6b"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Dax-Ji-Auz">
-                                <rect key="frame" x="150" y="613" width="50" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Dax-Ji-Auz">
+                                <rect key="frame" x="211" y="613" width="30" height="30"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="50" id="4yo-Zp-bPu"/>
-                                    <constraint firstAttribute="height" constant="30" id="ARj-6a-JpC"/>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="30" id="ARj-6a-JpC"/>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="30" id="X67-Ji-Xut"/>
                                 </constraints>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                 <state key="normal" title="flip"/>
                                 <connections>
                                     <action selector="flip:" destination="BYZ-38-t0r" eventType="touchUpInside" id="jKJ-gs-CCV"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NuW-hk-D4l">
-                                <rect key="frame" x="100" y="673" width="50" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NuW-hk-D4l">
+                                <rect key="frame" x="140" y="673" width="43" height="30"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="50" id="bBI-Oe-p6i"/>
-                                    <constraint firstAttribute="height" constant="30" id="fZo-dc-ewI"/>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="43" id="SS1-Te-M7w"/>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="30" id="fZo-dc-ewI"/>
                                 </constraints>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                 <state key="normal" title="restart"/>
                                 <connections>
                                     <action selector="restart:" destination="BYZ-38-t0r" eventType="touchUpInside" id="qEW-YC-Z4t"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3FG-XU-6qg">
-                                <rect key="frame" x="150" y="643" width="50" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3FG-XU-6qg">
+                                <rect key="frame" x="210" y="643" width="48" height="30"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="50" id="3oW-er-r1G"/>
-                                    <constraint firstAttribute="height" constant="30" id="7mt-aq-LIc"/>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="30" id="7mt-aq-LIc"/>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="48" id="hRg-dQ-qrN"/>
                                 </constraints>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                 <state key="normal" title="change"/>
                                 <connections>
                                     <action selector="change:" destination="BYZ-38-t0r" eventType="touchUpInside" id="D7P-od-n7b"/>
@@ -119,9 +125,11 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="yEk-wo-i1h" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="1cM-QB-vlJ"/>
-                            <constraint firstItem="3FG-XU-6qg" firstAttribute="leading" secondItem="xOG-5Q-MH5" secondAttribute="trailing" id="3a4-3w-drs"/>
+                            <constraint firstItem="3FG-XU-6qg" firstAttribute="leading" secondItem="xOG-5Q-MH5" secondAttribute="trailing" constant="40" id="3a4-3w-drs"/>
                             <constraint firstAttribute="trailing" secondItem="QFe-mz-Beo" secondAttribute="trailing" id="82U-gL-lsn"/>
-                            <constraint firstItem="Eln-LZ-2sK" firstAttribute="leading" secondItem="Pnc-ij-UF5" secondAttribute="trailing" id="AZ2-ig-nvH"/>
+                            <constraint firstAttribute="trailingMargin" relation="lessThanOrEqual" secondItem="NuW-hk-D4l" secondAttribute="trailing" constant="176" id="AGK-Aq-dwV"/>
+                            <constraint firstItem="Eln-LZ-2sK" firstAttribute="leading" secondItem="Pnc-ij-UF5" secondAttribute="trailing" constant="20" id="AZ2-ig-nvH"/>
+                            <constraint firstAttribute="trailingMargin" relation="lessThanOrEqual" secondItem="3FG-XU-6qg" secondAttribute="trailing" constant="121" id="BZD-jm-Eqp"/>
                             <constraint firstItem="QFe-mz-Beo" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="C9I-7Q-6eJ"/>
                             <constraint firstItem="xOG-5Q-MH5" firstAttribute="top" secondItem="Eln-LZ-2sK" secondAttribute="bottom" id="Em2-J2-3gV"/>
                             <constraint firstItem="Dax-Ji-Auz" firstAttribute="top" secondItem="Eln-LZ-2sK" secondAttribute="top" id="F0g-yj-2dA"/>
@@ -134,12 +142,13 @@
                             <constraint firstAttribute="trailing" secondItem="yEk-wo-i1h" secondAttribute="trailing" id="XRJ-uo-KyE"/>
                             <constraint firstItem="3FG-XU-6qg" firstAttribute="top" secondItem="xOG-5Q-MH5" secondAttribute="top" id="Xpt-HK-ZCs"/>
                             <constraint firstItem="Eln-LZ-2sK" firstAttribute="top" secondItem="QFe-mz-Beo" secondAttribute="bottom" id="Zfo-YC-Nxp"/>
+                            <constraint firstAttribute="trailingMargin" relation="lessThanOrEqual" secondItem="Dax-Ji-Auz" secondAttribute="trailing" constant="129" id="egq-ZV-KmZ"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="Pnc-ij-UF5" secondAttribute="bottom" constant="8" id="fZl-6X-bre"/>
                             <constraint firstItem="xOG-5Q-MH5" firstAttribute="leading" secondItem="Eln-LZ-2sK" secondAttribute="leading" id="iqm-A0-h0Z"/>
                             <constraint firstItem="QFe-mz-Beo" firstAttribute="top" secondItem="yEk-wo-i1h" secondAttribute="bottom" id="kQZ-V2-7aE"/>
-                            <constraint firstItem="Dax-Ji-Auz" firstAttribute="leading" secondItem="Eln-LZ-2sK" secondAttribute="trailing" id="uSU-Hx-GUd"/>
+                            <constraint firstItem="Dax-Ji-Auz" firstAttribute="leading" secondItem="Eln-LZ-2sK" secondAttribute="trailing" constant="40" id="uSU-Hx-GUd"/>
                             <constraint firstItem="yEk-wo-i1h" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="vW6-u4-Psy"/>
-                            <constraint firstItem="Pnc-ij-UF5" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="zJz-YP-vVs"/>
+                            <constraint firstItem="Pnc-ij-UF5" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="20" id="zJz-YP-vVs"/>
                         </constraints>
                     </view>
                     <toolbarItems/>
