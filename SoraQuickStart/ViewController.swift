@@ -223,7 +223,7 @@ class ViewController: UIViewController {
                 NSLog(error.localizedDescription)
                 return
             }
-            CameraVideoCapturer.current!.stream = stream
+            capturer.stream = stream
         }
     }
     
