@@ -204,19 +204,28 @@ class ViewController: UIViewController {
 
     private var previousCapturer: CameraVideoCapturer?
     
-    @IBAction func start(_ sender: Any) {
+    @IBAction func startFrontCamera(_ sender: Any) {
+        if let capturer = CameraVideoCapturer.front {
+            start(with: capturer)
+        }
+    }
+
+    @IBAction func startBackCamera(_ sender: Any) {
+        if let capturer = CameraVideoCapturer.back {
+            start(with: capturer)
+        }
+    }
+
+    func  start(with capturer: CameraVideoCapturer) {
         guard let stream = mediaChannel?.senderStream else {
             return
         }
         guard CameraVideoCapturer.current == nil else {
             return
         }
-        guard let capturer = CameraVideoCapturer.front ?? .back else {
-            return
-        }
 
         stream.videoRenderer = self.senderVideoView
-        let vga = CameraSettings.Resolution.vga480p        
+        let vga = CameraSettings.Resolution.vga480p
         guard let format = CameraVideoCapturer.format(width: vga.width, height: vga.height, for: capturer.device) else {
             return
         }
