@@ -5,8 +5,7 @@ platform :ios, '12.1'
 
 target 'SoraQuickStart' do
   use_frameworks!
-  pod 'Sora', '2021.1'
-
+  pod 'Sora', :git => 'https://github.com/shiguredo/sora-ios-sdk', :branch => 'feature/camera-video-capturer-device'
 # シミュレーターのビルド用の設定です。 arm64 を除いてビルドします。
 # Sora iOS SDK はシミュレーターでのビルドと動作をサポートしませんので、
 # あくまで参考例としてご利用ください。
