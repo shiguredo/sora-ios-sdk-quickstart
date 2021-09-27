@@ -201,6 +201,7 @@ class ViewController: UIViewController {
         }
     }
 
+    private var previousCapturer: CameraVideoCapturer?
     
     @IBAction func start(_ sender: Any) {
         guard let stream = mediaChannel?.senderStream else {
@@ -224,6 +225,7 @@ class ViewController: UIViewController {
                 return
             }
             capturer.stream = stream
+            self.previousCapturer = capturer
         }
     }
     
@@ -249,7 +251,8 @@ class ViewController: UIViewController {
     }
     
     @IBAction func restart(_ sender: Any) {
-        CameraVideoCapturer.current?.restart() { error in
+        let capturer = previousCapturer ?? .front
+        capturer?.restart() { error in
             if let error = error {
                 NSLog(error.localizedDescription)
             }
