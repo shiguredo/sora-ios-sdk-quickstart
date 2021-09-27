@@ -207,7 +207,7 @@ class ViewController: UIViewController {
 
     
     @IBAction func start(_ sender: Any) {
-        guard let stream = mediaChannel!.senderStream else {
+        guard let stream = mediaChannel?.senderStream else {
             return
         }
         stream.videoRenderer = self.senderVideoView
