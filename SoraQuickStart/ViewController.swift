@@ -12,9 +12,6 @@ class ViewController: UIViewController {
     @IBOutlet weak var senderVideoView: VideoView!
     @IBOutlet weak var receiverVideoView: VideoView!
     @IBOutlet weak var connectImageView: UIImageView!
-    //
-    var camera: CameraVideoCapturer?
-    var isFront = true
 
     // 接続済みの MediaChannel です。
     var mediaChannel: MediaChannel?
@@ -55,19 +52,16 @@ class ViewController: UIViewController {
 
         if connecting {
             // 接続済みであれば接続を解除します。
-            if mediaChannel?.isAvailable == true {
-                mediaChannel?.disconnect(error: nil)
-                if CameraVideoCapturer.front.isRunning {
-                    CameraVideoCapturer.front.stop() { error in
-                        if let error = error {
-                            NSLog(error.localizedDescription)
-                        }
-                    }
-                }
-                if CameraVideoCapturer.back.isRunning {
-                    CameraVideoCapturer.back.stop { error in
-                        if let error = error {
-                            NSLog(error.localizedDescription)
+            if let mediaChannel = mediaChannel {
+                if mediaChannel.isAvailable {
+                    mediaChannel.disconnect(error: nil)
+                    if let capturer = CameraVideoCapturer.current {
+                        if capturer.isRunning {
+                            capturer.stop() { error in
+                                if let error = error {
+                                    NSLog(error.localizedDescription)
+                                }
+                            }
                         }
                     }
                 }
@@ -212,11 +206,19 @@ class ViewController: UIViewController {
         guard let stream = mediaChannel?.senderStream else {
             return
         }
+        guard CameraVideoCapturer.current == nil else {
+            return
+        }
+        guard let capturer = CameraVideoCapturer.front ?? .back else {
+            return
+        }
+
         stream.videoRenderer = self.senderVideoView
         let vga = CameraSettings.Resolution.vga480p
-        self.camera = isFront ? CameraVideoCapturer.front : CameraVideoCapturer.back
-        let format = CameraVideoCapturer.format(width: vga.width, height: vga.height, for: self.camera!.device!)
-        self.camera!.start(format: format!, frameRate: 30) { error in
+        guard let format = CameraVideoCapturer.format(width: vga.width, height: vga.height, for: capturer.device) else {
+            return
+        }
+        capturer.start(format: format, frameRate: 30) { error in
             if let error = error {
                 NSLog(error.localizedDescription)
                 return
@@ -234,44 +236,40 @@ class ViewController: UIViewController {
     }
     
     @IBAction func flip(_ sender: Any) {
-        CameraVideoCapturer.flip(CameraVideoCapturer.current!) { error in
+        guard let capturer = CameraVideoCapturer.current else {
+            return
+        }
+        CameraVideoCapturer.flip(capturer) { error in
             if let error = error {
                 NSLog(error.localizedDescription)
                 return
             }
-            self.isFront = self.isFront ? false : true
+            NSLog("flip camera")
         }
-        NSLog("flip camera")
     }
     
     @IBAction func restart(_ sender: Any) {
-        if self.isFront == true{
-            CameraVideoCapturer.front.restart() { error in
-                if let error = error {
-                    NSLog(error.localizedDescription)
-                }
+        CameraVideoCapturer.current?.restart() { error in
+            if let error = error {
+                NSLog(error.localizedDescription)
             }
-            NSLog("restart front camera")
-        } else {
-            CameraVideoCapturer.back.restart() { error in
-                if let error = error {
-                    NSLog(error.localizedDescription)
-                }
-            }
-            NSLog("restart back camera")
+            NSLog("restart camera")
         }
     }
     
     @IBAction func change(_ sender: Any) {
+        guard let capturer = CameraVideoCapturer.current else {
+            return
+        }
         let hd = CameraSettings.Resolution.hd1080p
-        let format = CameraVideoCapturer.format(width: hd.width, height: hd.height, for: CameraVideoCapturer.current!.device!)
-        CameraVideoCapturer.current?.change(format: format, frameRate: 1) { error in
+        let format = CameraVideoCapturer.format(width: hd.width, height: hd.height, for: capturer.device)
+        capturer.change(format: format, frameRate: 1) { error in
             if let error = error {
                 NSLog(error.localizedDescription)
                 return
             }
+            NSLog("change camera")
         }
-        NSLog("change camera")
     }
 }
 
