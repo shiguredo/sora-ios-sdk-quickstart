@@ -2,7 +2,7 @@ import UIKit
 import Sora
 
 // 接続するサーバーのシグナリング URL
-let soraURL = URL(string: "wss://sora.example.com/signaling")!
+let soraURL = URL(string: "wss://sora.fine-clue.com/signaling")!
 
 // チャネル ID
 let soraChannelId = "sora"
@@ -129,7 +129,6 @@ class ViewController: UIViewController {
 //        CameraVideoCapturer.front.handlers = frontCameraHandlers
 //        CameraVideoCapturer.back.handlers = backCameraHandlers
 
-        /*
         CameraVideoCapturer.handlers.onStart = { capturer in
             // カメラ位置ごとの処理
             switch capturer.position {
@@ -164,6 +163,7 @@ class ViewController: UIViewController {
 
         CameraVideoCapturer.handlers.onCapture = { capturer, frame in
             // カメラ位置ごとの処理
+/*
             switch capturer.position {
             case .front:
                 // 前面カメラ時
@@ -176,9 +176,9 @@ class ViewController: UIViewController {
             }
             // カメラ位置に依存しない処理
             NSLog("# capturer capture => \(capturer), frame => \(frame)")
+*/
             return frame
         }
-         */
 
         // 接続します。
         // connect() の戻り値 ConnectionTask を使うと
@@ -256,12 +256,14 @@ class ViewController: UIViewController {
                 NSLog(error.localizedDescription)
                 return
             }
+            self.previousCapturer = CameraVideoCapturer.current
             NSLog("flip camera")
         }
     }
     
     @IBAction func restart(_ sender: Any) {
-        CameraVideoCapturer.current?.restart() { error in
+        let capturer = previousCapturer ?? .front
+        capturer?.restart() { error in
             if let error = error {
                 NSLog(error.localizedDescription)
             }
