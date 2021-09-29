@@ -5,7 +5,7 @@ platform :ios, '12.1'
 
 target 'SoraQuickStart' do
   use_frameworks!
-  pod 'Sora', '2021.2'
+  pod 'Sora', '2021.2.1'
 
 # シミュレーターのビルド用の設定です。 arm64 を除いてビルドします。
 # Sora iOS SDK はシミュレーターでのビルドと動作をサポートしませんので、
