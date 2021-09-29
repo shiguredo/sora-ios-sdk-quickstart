@@ -3,31 +3,31 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 51;
+	objectVersion = 50;
 	objects = {
 
 /* Begin PBXBuildFile section */
-		9162AB0523B1F1B600F4C755 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9162AB0423B1F1B600F4C755 /* AppDelegate.swift */; };
-		9162AB0723B1F1B600F4C755 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9162AB0623B1F1B600F4C755 /* SceneDelegate.swift */; };
-		9162AB0923B1F1B600F4C755 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9162AB0823B1F1B600F4C755 /* ViewController.swift */; };
-		9162AB0C23B1F1B600F4C755 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9162AB0A23B1F1B600F4C755 /* Main.storyboard */; };
-		9162AB0E23B1F1B800F4C755 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9162AB0D23B1F1B800F4C755 /* Assets.xcassets */; };
-		9162AB1123B1F1B800F4C755 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9162AB0F23B1F1B800F4C755 /* LaunchScreen.storyboard */; };
+		91A4844226F9BB5100C18B76 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91A4844126F9BB5100C18B76 /* AppDelegate.swift */; };
+		91A4844426F9BB5100C18B76 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91A4844326F9BB5100C18B76 /* SceneDelegate.swift */; };
+		91A4844626F9BB5100C18B76 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91A4844526F9BB5100C18B76 /* ViewController.swift */; };
+		91A4844926F9BB5100C18B76 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 91A4844726F9BB5100C18B76 /* Main.storyboard */; };
+		91A4844B26F9BB5100C18B76 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 91A4844A26F9BB5100C18B76 /* Assets.xcassets */; };
+		91A4844E26F9BB5100C18B76 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 91A4844C26F9BB5100C18B76 /* LaunchScreen.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		9162AB0123B1F1B600F4C755 /* SoraQuickStart.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SoraQuickStart.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		9162AB0423B1F1B600F4C755 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		9162AB0623B1F1B600F4C755 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		9162AB0823B1F1B600F4C755 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		9162AB0B23B1F1B600F4C755 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		9162AB0D23B1F1B800F4C755 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		9162AB1023B1F1B800F4C755 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		9162AB1223B1F1B800F4C755 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		91A4843E26F9BB5100C18B76 /* SoraQuickStart.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SoraQuickStart.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		91A4844126F9BB5100C18B76 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		91A4844326F9BB5100C18B76 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		91A4844526F9BB5100C18B76 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		91A4844826F9BB5100C18B76 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		91A4844A26F9BB5100C18B76 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		91A4844D26F9BB5100C18B76 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		91A4844F26F9BB5100C18B76 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		9162AAFE23B1F1B600F4C755 /* Frameworks */ = {
+		91A4843B26F9BB5100C18B76 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -37,32 +37,32 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		9162AAF823B1F1B600F4C755 = {
+		91A4843526F9BB5000C18B76 = {
 			isa = PBXGroup;
 			children = (
-				9162AB0323B1F1B600F4C755 /* SoraQuickStart */,
-				9162AB0223B1F1B600F4C755 /* Products */,
+				91A4844026F9BB5100C18B76 /* SoraQuickStart */,
+				91A4843F26F9BB5100C18B76 /* Products */,
 			);
 			sourceTree = "<group>";
 		};
-		9162AB0223B1F1B600F4C755 /* Products */ = {
+		91A4843F26F9BB5100C18B76 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				9162AB0123B1F1B600F4C755 /* SoraQuickStart.app */,
+				91A4843E26F9BB5100C18B76 /* SoraQuickStart.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		9162AB0323B1F1B600F4C755 /* SoraQuickStart */ = {
+		91A4844026F9BB5100C18B76 /* SoraQuickStart */ = {
 			isa = PBXGroup;
 			children = (
-				9162AB0423B1F1B600F4C755 /* AppDelegate.swift */,
-				9162AB0623B1F1B600F4C755 /* SceneDelegate.swift */,
-				9162AB0823B1F1B600F4C755 /* ViewController.swift */,
-				9162AB0A23B1F1B600F4C755 /* Main.storyboard */,
-				9162AB0D23B1F1B800F4C755 /* Assets.xcassets */,
-				9162AB0F23B1F1B800F4C755 /* LaunchScreen.storyboard */,
-				9162AB1223B1F1B800F4C755 /* Info.plist */,
+				91A4844126F9BB5100C18B76 /* AppDelegate.swift */,
+				91A4844326F9BB5100C18B76 /* SceneDelegate.swift */,
+				91A4844526F9BB5100C18B76 /* ViewController.swift */,
+				91A4844726F9BB5100C18B76 /* Main.storyboard */,
+				91A4844A26F9BB5100C18B76 /* Assets.xcassets */,
+				91A4844C26F9BB5100C18B76 /* LaunchScreen.storyboard */,
+				91A4844F26F9BB5100C18B76 /* Info.plist */,
 			);
 			path = SoraQuickStart;
 			sourceTree = "<group>";
@@ -70,13 +70,13 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		9162AB0023B1F1B600F4C755 /* SoraQuickStart */ = {
+		91A4843D26F9BB5100C18B76 /* SoraQuickStart */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 9162AB1523B1F1B800F4C755 /* Build configuration list for PBXNativeTarget "SoraQuickStart" */;
+			buildConfigurationList = 91A4845226F9BB5100C18B76 /* Build configuration list for PBXNativeTarget "SoraQuickStart" */;
 			buildPhases = (
-				9162AAFD23B1F1B600F4C755 /* Sources */,
-				9162AAFE23B1F1B600F4C755 /* Frameworks */,
-				9162AAFF23B1F1B600F4C755 /* Resources */,
+				91A4843A26F9BB5100C18B76 /* Sources */,
+				91A4843B26F9BB5100C18B76 /* Frameworks */,
+				91A4843C26F9BB5100C18B76 /* Resources */,
 			);
 			buildRules = (
 			);
@@ -84,25 +84,24 @@
 			);
 			name = SoraQuickStart;
 			productName = SoraQuickStart;
-			productReference = 9162AB0123B1F1B600F4C755 /* SoraQuickStart.app */;
+			productReference = 91A4843E26F9BB5100C18B76 /* SoraQuickStart.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		9162AAF923B1F1B600F4C755 /* Project object */ = {
+		91A4843626F9BB5000C18B76 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1130;
-				LastUpgradeCheck = 1200;
-				ORGANIZATIONNAME = "Shiguredo Inc.";
+				LastSwiftUpdateCheck = 1250;
+				LastUpgradeCheck = 1250;
 				TargetAttributes = {
-					9162AB0023B1F1B600F4C755 = {
-						CreatedOnToolsVersion = 11.3;
+					91A4843D26F9BB5100C18B76 = {
+						CreatedOnToolsVersion = 12.5.1;
 					};
 				};
 			};
-			buildConfigurationList = 9162AAFC23B1F1B600F4C755 /* Build configuration list for PBXProject "SoraQuickStart" */;
+			buildConfigurationList = 91A4843926F9BB5000C18B76 /* Build configuration list for PBXProject "SoraQuickStart" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -110,55 +109,55 @@
 				en,
 				Base,
 			);
-			mainGroup = 9162AAF823B1F1B600F4C755;
-			productRefGroup = 9162AB0223B1F1B600F4C755 /* Products */;
+			mainGroup = 91A4843526F9BB5000C18B76;
+			productRefGroup = 91A4843F26F9BB5100C18B76 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				9162AB0023B1F1B600F4C755 /* SoraQuickStart */,
+				91A4843D26F9BB5100C18B76 /* SoraQuickStart */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		9162AAFF23B1F1B600F4C755 /* Resources */ = {
+		91A4843C26F9BB5100C18B76 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9162AB1123B1F1B800F4C755 /* LaunchScreen.storyboard in Resources */,
-				9162AB0E23B1F1B800F4C755 /* Assets.xcassets in Resources */,
-				9162AB0C23B1F1B600F4C755 /* Main.storyboard in Resources */,
+				91A4844E26F9BB5100C18B76 /* LaunchScreen.storyboard in Resources */,
+				91A4844B26F9BB5100C18B76 /* Assets.xcassets in Resources */,
+				91A4844926F9BB5100C18B76 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		9162AAFD23B1F1B600F4C755 /* Sources */ = {
+		91A4843A26F9BB5100C18B76 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9162AB0923B1F1B600F4C755 /* ViewController.swift in Sources */,
-				9162AB0523B1F1B600F4C755 /* AppDelegate.swift in Sources */,
-				9162AB0723B1F1B600F4C755 /* SceneDelegate.swift in Sources */,
+				91A4844626F9BB5100C18B76 /* ViewController.swift in Sources */,
+				91A4844226F9BB5100C18B76 /* AppDelegate.swift in Sources */,
+				91A4844426F9BB5100C18B76 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		9162AB0A23B1F1B600F4C755 /* Main.storyboard */ = {
+		91A4844726F9BB5100C18B76 /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
-				9162AB0B23B1F1B600F4C755 /* Base */,
+				91A4844826F9BB5100C18B76 /* Base */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
 		};
-		9162AB0F23B1F1B800F4C755 /* LaunchScreen.storyboard */ = {
+		91A4844C26F9BB5100C18B76 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
-				9162AB1023B1F1B800F4C755 /* Base */,
+				91A4844D26F9BB5100C18B76 /* Base */,
 			);
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
@@ -166,7 +165,7 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-		9162AB1323B1F1B800F4C755 /* Debug */ = {
+		91A4845026F9BB5100C18B76 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -203,6 +202,7 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -217,7 +217,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -227,7 +227,7 @@
 			};
 			name = Debug;
 		};
-		9162AB1423B1F1B800F4C755 /* Release */ = {
+		91A4845126F9BB5100C18B76 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -264,6 +264,8 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				EXCLUDED_ARCHS = "";
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -272,7 +274,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -282,12 +284,11 @@
 			};
 			name = Release;
 		};
-		9162AB1623B1F1B800F4C755 /* Debug */ = {
+		91A4845326F9BB5100C18B76 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 48132B6F4CA8D09CD08B3963 /* Pods-SoraQuickStart.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "Apple Development";
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = DQ232CBKHS;
 				INFOPLIST_FILE = SoraQuickStart/Info.plist;
@@ -297,18 +298,16 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = jp.shiguredo.sora.SoraQuickStart;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
-		9162AB1723B1F1B800F4C755 /* Release */ = {
+		91A4845426F9BB5100C18B76 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = B50E55FBCCE23C94F0EC2B7F /* Pods-SoraQuickStart.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "Apple Development";
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = DQ232CBKHS;
 				INFOPLIST_FILE = SoraQuickStart/Info.plist;
@@ -318,7 +317,6 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = jp.shiguredo.sora.SoraQuickStart;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -327,25 +325,25 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		9162AAFC23B1F1B600F4C755 /* Build configuration list for PBXProject "SoraQuickStart" */ = {
+		91A4843926F9BB5000C18B76 /* Build configuration list for PBXProject "SoraQuickStart" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				9162AB1323B1F1B800F4C755 /* Debug */,
-				9162AB1423B1F1B800F4C755 /* Release */,
+				91A4845026F9BB5100C18B76 /* Debug */,
+				91A4845126F9BB5100C18B76 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		9162AB1523B1F1B800F4C755 /* Build configuration list for PBXNativeTarget "SoraQuickStart" */ = {
+		91A4845226F9BB5100C18B76 /* Build configuration list for PBXNativeTarget "SoraQuickStart" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				9162AB1623B1F1B800F4C755 /* Debug */,
-				9162AB1723B1F1B800F4C755 /* Release */,
+				91A4845326F9BB5100C18B76 /* Debug */,
+				91A4845426F9BB5100C18B76 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
-	rootObject = 9162AAF923B1F1B600F4C755 /* Project object */;
+	rootObject = 91A4843626F9BB5000C18B76 /* Project object */;
 }
