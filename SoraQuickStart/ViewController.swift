@@ -73,11 +73,12 @@ class ViewController: UIViewController {
         
         // ストリームが追加されたら受信用の VideoView をストリームにセットします。
         // このアプリでは、複数のユーザーが接続した場合は最後のユーザーの映像のみ描画します。
+        let publisherStreamId = config.publisherStreamId
         config.mediaChannelHandlers.onAddStream = { [weak self] stream in
             guard let strongSelf = self else {
                 return
             }
-            if stream.streamId != config.publisherStreamId {
+            if stream.streamId != publisherStreamId {
                 stream.videoRenderer = strongSelf.receiverVideoView
             }
         }
