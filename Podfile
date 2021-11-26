@@ -7,6 +7,9 @@ target 'SoraQuickStart' do
   use_frameworks!
   pod 'Sora', '2021.2.1'
 
+  pod 'SwiftLint'
+  pod 'SwiftFormat/CLI'
+  
 # シミュレーターのビルド用の設定です。 arm64 を除いてビルドします。
 # Sora iOS SDK はシミュレーターでのビルドと動作をサポートしませんので、
 # あくまで参考例としてご利用ください。
