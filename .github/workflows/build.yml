@@ -45,6 +45,7 @@ jobs:
             -derivedDataPath build \
             clean build \
             CODE_SIGNING_REQUIRED=NO \
+            CODE_SIGNING_ALLOWED=NO \
             CODE_SIGN_IDENTITY= \
             PROVISIONING_PROFILE=
     - name: Check uncommitted unformatted code
