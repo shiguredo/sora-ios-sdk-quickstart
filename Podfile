@@ -9,7 +9,15 @@ target 'SoraQuickStart' do
 
   pod 'SwiftLint'
   pod 'SwiftFormat/CLI'
-  
+
+  post_install do |installer|
+    installer.pods_project.targets.each do |target|
+      target.build_configurations.each do |config|
+        config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '10.0'
+      end
+    end
+  end
+
 # シミュレーターのビルド用の設定です。 arm64 を除いてビルドします。
 # Sora iOS SDK はシミュレーターでのビルドと動作をサポートしませんので、
 # あくまで参考例としてご利用ください。
