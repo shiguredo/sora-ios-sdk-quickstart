@@ -41,6 +41,7 @@ jobs:
             -workspace 'SoraQuickStart.xcworkspace' \
             -scheme 'SoraQuickStart' \
             -sdk ${{ env.XCODE_SDK }} \
+            -arch arm64 \
             -configuration Release \
             -derivedDataPath build \
             clean build \
