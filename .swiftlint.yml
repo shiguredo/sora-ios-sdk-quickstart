@@ -1,5 +1,5 @@
 included:
-  - Sora
+  - SoraQuickStart
 excluded:
   - Pods
 disabled_rules:
