@@ -1,5 +1,5 @@
-import UIKit
 import Sora
+import UIKit
 
 // 接続するサーバーのシグナリング URL
 let soraURL = URL(string: "wss://sora.example.com/signaling")!
@@ -8,7 +8,6 @@ let soraURL = URL(string: "wss://sora.example.com/signaling")!
 let soraChannelId = "sora"
 
 class ViewController: UIViewController {
-    
     @IBOutlet weak var senderVideoView: VideoView!
     @IBOutlet weak var receiverVideoView: VideoView!
     @IBOutlet weak var connectImageView: UIImageView!
@@ -27,7 +26,7 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         Logger.shared.level = .debug
-        
+
         navigationItem.title = "\(soraChannelId)"
     }
 
@@ -70,7 +69,7 @@ class ViewController: UIViewController {
                                    channelId: soraChannelId,
                                    role: .sendrecv,
                                    multistreamEnabled: true)
-        
+
         // ストリームが追加されたら受信用の VideoView をストリームにセットします。
         // このアプリでは、複数のユーザーが接続した場合は最後のユーザーの映像のみ描画します。
         let publisherStreamId = config.publisherStreamId
@@ -113,6 +112,4 @@ class ViewController: UIViewController {
             }
         }
     }
-
 }
-
