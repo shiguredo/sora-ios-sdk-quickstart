@@ -15,7 +15,7 @@ format=$?
 
 $FORMAT $SRCROOT
 $LINT --fix $SRCROOT
-$LINT --strict $SRCROOT
+$LINT $SRCROOT
 lint=$?
 
 test $format -eq 0 -a $lint -eq 0
