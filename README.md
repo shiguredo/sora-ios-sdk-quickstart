@@ -34,4 +34,6 @@ Xcode と Swift のバージョンによっては、 Carthage と CocoaPods で�
    $ pod install
    ```
 
-2. ``SoraQuickStart.xcworkspace`` を Xcode で開いてビルドします。
+2. (develop ブランチの場合) ``SoraQuickStart/Environment.swift.example`` のファイル名を ``SoraQuickStart/Environment.swift`` に変更し、接続情報を設定します。
+
+３. ``SoraQuickStart.xcworkspace`` を Xcode で開いてビルドします。
