@@ -14,12 +14,12 @@ Please read https://github.com/shiguredo/oss before use.
 
 ## システム条件
 
-- iOS 12.1 以降
+- iOS 13 以降
 - アーキテクチャ arm64, x86_64 (シミュレーターの動作は未保証)
-- macOS 11.3 以降
-- Xcode 12.5
-- Swift 5.4
-- CocoaPods 1.10.1 以降
+- macOS 12.0 以降
+- Xcode 13.1
+- Swift 5.5
+- CocoaPods 1.11.2 以降
 - WebRTC SFU Sora 2021.1 以降
 
 Xcode と Swift のバージョンによっては、 Carthage と CocoaPods で取得できるバイナリに互換性がない可能性があります。詳しくは[ Sora iOS SDK ドキュメント](https://sora-ios-sdk.shiguredo.jp/) を参照してください。
@@ -34,4 +34,6 @@ Xcode と Swift のバージョンによっては、 Carthage と CocoaPods で�
    $ pod install
    ```
 
-2. ``SoraQuickStart.xcworkspace`` を Xcode で開いてビルドします。
+2. (develop ブランチの場合) ``SoraQuickStart/Environment.swift.example`` のファイル名を ``SoraQuickStart/Environment.swift`` に変更し、接続情報を設定します。
+
+３. ``SoraQuickStart.xcworkspace`` を Xcode で開いてビルドします。

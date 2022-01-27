@@ -1,12 +1,6 @@
 import Sora
 import UIKit
 
-// 接続するサーバーのシグナリング URL
-let soraURL = URL(string: "wss://sora.example.com/signaling")!
-
-// チャネル ID
-let soraChannelId = "sora"
-
 class ViewController: UIViewController {
     @IBOutlet weak var senderVideoView: VideoView!
     @IBOutlet weak var receiverVideoView: VideoView!
@@ -27,7 +21,7 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         Logger.shared.level = .debug
 
-        navigationItem.title = "\(soraChannelId)"
+        navigationItem.title = "\(Environment.channelId)"
     }
 
     // 接続ボタンの UI を更新します。
@@ -65,8 +59,8 @@ class ViewController: UIViewController {
 
     func connect() {
         // 接続の設定を行います。
-        let config = Configuration(url: soraURL,
-                                   channelId: soraChannelId,
+        let config = Configuration(url: Environment.url,
+                                   channelId: Environment.channelId,
                                    role: .sendrecv,
                                    multistreamEnabled: true)
 

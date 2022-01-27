@@ -1,11 +1,11 @@
 source 'https://cdn.cocoapods.org/'
 source 'https://github.com/shiguredo/sora-ios-sdk-specs.git'
 
-platform :ios, '12.1'
+platform :ios, '13.0'
 
 target 'SoraQuickStart' do
   use_frameworks!
-  pod 'Sora', '2021.2.1'
+  pod 'Sora', '2021.3.1'
 
   pod 'SwiftLint'
   pod 'SwiftFormat/CLI'
@@ -26,4 +26,5 @@ target 'SoraQuickStart' do
 #   installer.pods_project.build_configurations.each do |config|
 #     config.build_settings["EXCLUDED_ARCHS[sdk=iphonesimulator*]"] = "arm64"
 #   end
+
 end
