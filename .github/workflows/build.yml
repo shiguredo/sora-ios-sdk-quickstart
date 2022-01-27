@@ -34,6 +34,8 @@ jobs:
       run: |
         pod repo update
         pod install
+    - name: Create Environment.swift
+      run: cp SoraQuickStart/Environment.example.swift SoraQuickStart/Environment.swift
     - name: Build Xcode Project
       run: |
         set -o pipefail && \
