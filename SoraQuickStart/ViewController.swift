@@ -1,8 +1,7 @@
-import UIKit
 import Sora
+import UIKit
 
 class ViewController: UIViewController {
-    
     @IBOutlet weak var senderVideoView: VideoView!
     @IBOutlet weak var receiverVideoView: VideoView!
     @IBOutlet weak var connectImageView: UIImageView!
@@ -21,7 +20,7 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         Logger.shared.level = .debug
-        
+
         navigationItem.title = "\(Environment.channelId)"
     }
 
@@ -64,7 +63,7 @@ class ViewController: UIViewController {
                                    channelId: Environment.channelId,
                                    role: .sendrecv,
                                    multistreamEnabled: true)
-        
+
         // ストリームが追加されたら受信用の VideoView をストリームにセットします。
         // このアプリでは、複数のユーザーが接続した場合は最後のユーザーの映像のみ描画します。
         let publisherStreamId = config.publisherStreamId
@@ -107,6 +106,4 @@ class ViewController: UIViewController {
             }
         }
     }
-
 }
-
