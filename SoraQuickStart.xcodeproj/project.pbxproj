@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		91169197273126A80098FBFF /* Environment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91169196273126A80098FBFF /* Environment.swift */; };
 		91A4844226F9BB5100C18B76 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91A4844126F9BB5100C18B76 /* AppDelegate.swift */; };
 		91A4844426F9BB5100C18B76 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91A4844326F9BB5100C18B76 /* SceneDelegate.swift */; };
 		91A4844626F9BB5100C18B76 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91A4844526F9BB5100C18B76 /* ViewController.swift */; };
@@ -16,6 +17,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		91169196273126A80098FBFF /* Environment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Environment.swift; sourceTree = "<group>"; };
 		91A4843E26F9BB5100C18B76 /* SoraQuickStart.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SoraQuickStart.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		91A4844126F9BB5100C18B76 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		91A4844326F9BB5100C18B76 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -63,6 +65,7 @@
 				91A4844A26F9BB5100C18B76 /* Assets.xcassets */,
 				91A4844C26F9BB5100C18B76 /* LaunchScreen.storyboard */,
 				91A4844F26F9BB5100C18B76 /* Info.plist */,
+				91169196273126A80098FBFF /* Environment.swift */,
 			);
 			path = SoraQuickStart;
 			sourceTree = "<group>";
@@ -74,6 +77,8 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 91A4845226F9BB5100C18B76 /* Build configuration list for PBXNativeTarget "SoraQuickStart" */;
 			buildPhases = (
+				915772F6274E183500A17984 /* Run SwiftFormat */,
+				915772F7274E184100A17984 /* Run SwiftLint */,
 				91A4843A26F9BB5100C18B76 /* Sources */,
 				91A4843B26F9BB5100C18B76 /* Frameworks */,
 				91A4843C26F9BB5100C18B76 /* Resources */,
@@ -132,12 +137,52 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		915772F6274E183500A17984 /* Run SwiftFormat */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Run SwiftFormat";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if which \"${PODS_ROOT}/SwiftFormat/CommandLineTool/swiftformat\" >/dev/null; then\n  \"${PODS_ROOT}/SwiftFormat/CommandLineTool/swiftformat\"  \"$SRCROOT\"\nelse\n  echo \"warning: SwiftFormat not installed, download from https://github.com/nicklockwood/SwiftFormat\"\nfi\n";
+		};
+		915772F7274E184100A17984 /* Run SwiftLint */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Run SwiftLint";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if which \"${PODS_ROOT}/SwiftLint/swiftlint\" >/dev/null; then\n    ${PODS_ROOT}/SwiftLint/swiftlint --fix\n    ${PODS_ROOT}/SwiftLint/swiftlint\nelse\n    echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		91A4843A26F9BB5100C18B76 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				91A4844626F9BB5100C18B76 /* ViewController.swift in Sources */,
+				91169197273126A80098FBFF /* Environment.swift in Sources */,
 				91A4844226F9BB5100C18B76 /* AppDelegate.swift in Sources */,
 				91A4844426F9BB5100C18B76 /* SceneDelegate.swift in Sources */,
 			);

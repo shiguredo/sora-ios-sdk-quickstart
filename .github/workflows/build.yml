@@ -1,0 +1,74 @@
+name: Build
+
+on:
+  push:
+    paths-ignore:
+    - 'README.md'
+    - 'CHANGES.md'
+    - 'LICENSE'
+  schedule:
+  - cron: "0 0 * * *"
+
+jobs:
+  build:
+    runs-on: macOS-latest
+    env:
+      XCODE: /Applications/Xcode_12.4.app
+      XCODE_SDK: iphoneos14.4
+    steps:
+    - uses: actions/checkout@v2
+    - name: Select Xcode Version
+      run: sudo xcode-select -s '${{ env.XCODE }}/Contents/Developer'
+    - name: Show Xcode Version
+      run: xcodebuild -version
+    - name: Show CocoaPods Version
+      run: pod --version
+    - name: Restore Pods
+      uses: actions/cache@v2
+      with:
+        path: Pods
+        key: ${{ runner.os }}-pods-${{ hashFiles('**/Podfile.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-pods-
+    - name: Install Dependences
+      run: |
+        pod repo update
+        pod install
+    - name: Create Environment.swift
+      run: cp SoraQuickStart/Environment.example.swift SoraQuickStart/Environment.swift
+    - name: Build Xcode Project
+      run: |
+        set -o pipefail && \
+          xcodebuild \
+            -workspace 'SoraQuickStart.xcworkspace' \
+            -scheme 'SoraQuickStart' \
+            -sdk ${{ env.XCODE_SDK }} \
+            -arch arm64 \
+            -configuration Release \
+            -derivedDataPath build \
+            clean build \
+            CODE_SIGNING_REQUIRED=NO \
+            CODE_SIGNING_ALLOWED=NO \
+            CODE_SIGN_IDENTITY= \
+            PROVISIONING_PROFILE=
+    - name: Check uncommitted unformatted code
+      run: |
+        ./lint-format.sh
+  release:
+    if: contains(github.ref, 'tags/v')
+    needs: [build]
+    runs-on: macOS-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+    - name: Create Release
+      id: create_release
+      uses: actions/create-release@v1.0.0
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: ${{ github.ref }}
+        release_name: Release ${{ github.ref }}
+        draft: false
+        prerelease: false
+
