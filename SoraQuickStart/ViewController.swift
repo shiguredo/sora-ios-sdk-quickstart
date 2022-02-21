@@ -36,10 +36,17 @@ class ViewController: UIViewController {
                 self.connectImageView.image = UIImage(systemName: "play.circle.fill")
                 self.connectImageView.tintColor = .systemGreen
             }
+
+            // ボタンのタップを有効に戻します。
+            self.connectImageView.isUserInteractionEnabled = true
         }
     }
 
     @IBAction func connect(_ sender: AnyObject) {
+        // 処理が終わるまで一時的にボタンのタップを無効にします。
+        connectImageView.isUserInteractionEnabled = false
+        connectImageView.tintColor = .systemGray
+
         // 接続試行中のタスクが残っていればキャンセルします。
         connectionTask?.cancel()
 
@@ -104,6 +111,9 @@ class ViewController: UIViewController {
             if let stream = mediaChannel!.senderStream {
                 stream.videoRenderer = self.senderVideoView
             }
+
+            // 接続完了後にボタンの画像を変更します。
+            self.updateUI(true)
         }
     }
 }
