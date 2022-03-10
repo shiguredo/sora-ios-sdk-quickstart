@@ -59,10 +59,13 @@ class ViewController: UIViewController {
 
     func connect() {
         // 接続の設定を行います。
-        let config = Configuration(url: Environment.url,
+        var config = Configuration(url: Environment.url,
                                    channelId: Environment.channelId,
                                    role: .sendrecv,
                                    multistreamEnabled: true)
+
+        // 接続時に指定したいオプションを以下のように設定します。
+        config.signalingConnectMetadata = Environment.signalingConnectMetadata
 
         // ストリームが追加されたら受信用の VideoView をストリームにセットします。
         // このアプリでは、複数のユーザーが接続した場合は最後のユーザーの映像のみ描画します。
