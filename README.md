@@ -36,4 +36,8 @@ Xcode と Swift のバージョンによっては、 Carthage と CocoaPods で�
 
 2. ``SoraQuickStart/Environment.example.swift`` のファイル名を ``SoraQuickStart/Environment.swift`` に変更し、接続情報を設定します。
 
+   ```
+   $ cp SoraQuickStart/Environment.example.swift SoraQuickStart/Environment.swift
+   ```
+
 3. ``SoraQuickStart.xcworkspace`` を Xcode で開いてビルドします。
