@@ -49,6 +49,7 @@ class ViewController: UIViewController {
 
         // 接続試行中のタスクが残っていればキャンセルします。
         connectionTask?.cancel()
+        connectionTask = nil
 
         if connecting {
             // 接続済みであれば接続を解除します。
