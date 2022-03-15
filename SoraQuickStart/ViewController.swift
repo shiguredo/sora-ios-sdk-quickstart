@@ -61,7 +61,14 @@ class ViewController: UIViewController {
         } else {
             // 未接続なら接続します。
             connect()
-            updateUI(true)
+
+            // 現在の SDK のバージョンでは、接続開始直後のキャンセルは
+            // クラッシュする可能性があるので、 UI の更新を少し遅らせます
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [self] in
+                if mediaChannel?.isAvailable == true {
+                    updateUI(true)
+                }
+            }
         }
     }
 
