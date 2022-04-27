@@ -13,6 +13,7 @@
 		916439AA2819095700A062E9 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 916439A92819095700A062E9 /* Preview Assets.xcassets */; };
 		916439B128190CE000A062E9 /* Environment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 916439B028190CE000A062E9 /* Environment.swift */; };
 		916439B42819125900A062E9 /* Sora in Frameworks */ = {isa = PBXBuildFile; productRef = 916439B32819125900A062E9 /* Sora */; };
+		916439B62819137300A062E9 /* Video.swift in Sources */ = {isa = PBXBuildFile; fileRef = 916439B52819137300A062E9 /* Video.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +23,7 @@
 		916439A62819095700A062E9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		916439A92819095700A062E9 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		916439B028190CE000A062E9 /* Environment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Environment.swift; sourceTree = "<group>"; };
+		916439B52819137300A062E9 /* Video.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Video.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,6 +62,7 @@
 				916439A22819095600A062E9 /* SoraQuickStartApp.swift */,
 				916439A62819095700A062E9 /* Assets.xcassets */,
 				916439A82819095700A062E9 /* Preview Content */,
+				916439B52819137300A062E9 /* Video.swift */,
 			);
 			path = SoraQuickStart;
 			sourceTree = "<group>";
@@ -149,6 +152,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				916439A52819095600A062E9 /* ContentView.swift in Sources */,
+				916439B62819137300A062E9 /* Video.swift in Sources */,
 				916439B128190CE000A062E9 /* Environment.swift in Sources */,
 				916439A32819095600A062E9 /* SoraQuickStartApp.swift in Sources */,
 			);
@@ -279,9 +283,11 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"SoraQuickStart/Preview Content\"";
-				DEVELOPMENT_TEAM = 6J8QF53ZZX;
+				DEVELOPMENT_TEAM = DQ232CBKHS;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSCameraUsageDescription = WebRTC;
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = WebRTC;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -311,6 +317,8 @@
 				DEVELOPMENT_TEAM = 6J8QF53ZZX;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSCameraUsageDescription = WebRTC;
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = WebRTC;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
