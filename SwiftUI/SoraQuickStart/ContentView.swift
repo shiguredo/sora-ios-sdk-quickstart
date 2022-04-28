@@ -18,6 +18,13 @@ struct ContentView: View {
     @State private var receiverStream: MediaStream?
     @State private var receiverRendering = true
 
+    // 接続時のエラーです。
+    @State private var connectionError: Error?
+
+    // アラートを表示する必要がある場合に true にします。
+    // エラーが発生したときに使います。
+    @State private var showAlert = false
+
     // 接続済みであれば true を返します。
     var connecting: Bool {
         mediaChannel?.isAvailable == true
@@ -81,6 +88,20 @@ struct ContentView: View {
                 Spacer()
             }
         }
+
+         // 何らかのエラー時にアラートを表示します。
+         .alert("エラー", isPresented: $showAlert, actions: {
+             Button("OK") {
+                 showAlert = false
+                 connectionError = nil
+             }
+         }, message: {
+             if let error = connectionError {
+                 Text(error.localizedDescription)
+             } else {
+                 Text("エラー内容不明")
+             }
+         })
     }
 
     func connect() {
@@ -109,6 +130,10 @@ struct ContentView: View {
         config.mediaChannelHandlers.onDisconnect = { error in
             if let error = error {
                 NSLog(error.localizedDescription)
+
+                // エラーをプロパティにセットします。
+                showAlert = true
+                connectionError = error
             }
             self.receiverStream = nil
         }
@@ -120,7 +145,10 @@ struct ContentView: View {
             // 接続に失敗するとエラーが渡されます。
             if let error = error {
                 NSLog(error.localizedDescription)
-                // TODO: 画面更新
+
+                // エラーをプロパティにセットします。
+                showAlert = true
+                connectionError = error
                 return
             }
 
@@ -131,6 +159,7 @@ struct ContentView: View {
             // 配信用の Video ビューは senderStream プロパティを参照しているので、
             // 同プロパティにストリームをセットすると映像が表示されます。
             senderStream = mediaChannel!.senderStream
+        }
     }
 
     func disconnect() {
