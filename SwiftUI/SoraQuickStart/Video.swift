@@ -1,49 +1,85 @@
 import Foundation
 import Sora
 import SwiftUI
+import UIKit
 
-struct Video: UIViewRepresentable {
-    typealias UIViewType = VideoView
+public struct Video: UIViewRepresentable {
+    public typealias UIViewType = VideoView
 
-    @Binding var stream: MediaStream?
-    @Binding var rendering: Bool
+    @ObservedObject private var model: VideoModel
 
-    func makeUIView(context: Context) -> VideoView {
-        NSLog("\(#function)")
+    public init(_ model: VideoModel) {
+        self.model = model
+    }
+
+    public func makeUIView(context: Context) -> VideoView {
         let view = VideoView()
+        context.coordinator.video.model.videoView = view
         view.start()
         return view
     }
 
-    func updateUIView(_ uiView: VideoView, context: Context) {
-        NSLog("\(#function)")
+    public func updateUIView(_ uiView: VideoView, context: Context) {}
 
-        // TODO: これだと毎度 renderer がセットされてしまって無駄？
-        if let stream = stream {
-            stream.videoRenderer = uiView
+    public func makeCoordinator() -> Coordinator {
+        Coordinator(self)
+    }
+
+    public final class Coordinator {
+        var video: Video
+
+        init(_ video: Video) {
+            self.video = video
         }
+    }
+}
 
-        if rendering {
-            if uiView.isRendering {
-                uiView.stop()
-            }
-        } else if !uiView.isRendering {
-            uiView.start()
+public class VideoModel: ObservableObject {
+    public var stream: MediaStream? {
+        didSet {
+            stream?.videoRenderer = videoView
         }
     }
 
-    // TODO: 不要？
-    /*
-     func makeCoordinator() -> Coordinator {
-         Coordinator(self)
-     }
+    public var connectionMode: VideoViewConnectionMode = .autoClear {
+        didSet {
+            videoView?.connectionMode = connectionMode
+        }
+    }
 
-     final class Coordinator {
-         var video: Video
+    public var debugMode: Bool = false {
+        didSet {
+            videoView?.debugMode = debugMode
+        }
+    }
 
-         init(_ video: Video) {
-             self.video = video
-         }
-     }
-     */
+    public var backgroundView: UIView? {
+        didSet {
+            videoView?.backgroundView = backgroundView
+        }
+    }
+
+    public var currentVideoFrameSize: CGSize? {
+        videoView?.currentVideoFrameSize
+    }
+
+    public var videoView: VideoView?
+
+    @Published public var isRendering: Bool = true
+
+    public init() {}
+
+    public func start() {
+        videoView?.start()
+        isRendering = true
+    }
+
+    public func stop() {
+        videoView?.stop()
+        isRendering = false
+    }
+
+    public func clear() {
+        videoView?.clear()
+    }
 }

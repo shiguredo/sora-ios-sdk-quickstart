@@ -10,13 +10,8 @@ struct ContentView: View {
     // 接続試行中にキャンセルするためのオブジェクトです。
     @State private var connectionTask: ConnectionTask?
 
-    // 配信ストリームです。
-    @State private var senderStream: MediaStream?
-    @State private var senderRendering = true
-
-    // 受信ストリームです。
-    @State private var receiverStream: MediaStream?
-    @State private var receiverRendering = true
+    @ObservedObject private var senderVideoModel = VideoModel()
+    @ObservedObject private var receiverVideoModel = VideoModel()
 
     // 接続時のエラーです。
     @State private var connectionError: Error?
@@ -35,14 +30,14 @@ struct ContentView: View {
         VStack {
             // 受信映像の上に小さいサイズの配信映像を重ねて表示します。
             ZStack {
-                Video(stream: $receiverStream, rendering: $receiverRendering)
+                Video(receiverVideoModel)
 
                 VStack {
                     // スペースを上と左にいれて右下に映像ビューを配置します。
                     Spacer()
                     HStack {
                         Spacer()
-                        Video(stream: $senderStream, rendering: $senderRendering)
+                        Video(senderVideoModel)
                             .frame(width: 110, height: 170)
                             .border(Color.white, width: 2)
                             .padding(.trailing, 20)
@@ -89,19 +84,19 @@ struct ContentView: View {
             }
         }
 
-         // 何らかのエラー時にアラートを表示します。
-         .alert("エラー", isPresented: $showAlert, actions: {
-             Button("OK") {
-                 showAlert = false
-                 connectionError = nil
-             }
-         }, message: {
-             if let error = connectionError {
-                 Text(error.localizedDescription)
-             } else {
-                 Text("エラー内容不明")
-             }
-         })
+        // 何らかのエラー時にアラートを表示します。
+        .alert("エラー", isPresented: $showAlert, actions: {
+            Button("OK") {
+                showAlert = false
+                connectionError = nil
+            }
+        }, message: {
+            if let error = connectionError {
+                Text(error.localizedDescription)
+            } else {
+                Text("エラー内容不明")
+            }
+        })
     }
 
     func connect() {
@@ -122,7 +117,7 @@ struct ContentView: View {
         let senderStreamId = config.publisherStreamId
         config.mediaChannelHandlers.onAddStream = { stream in
             if stream.streamId != senderStreamId {
-                self.receiverStream = stream
+                self.receiverVideoModel.stream = stream
             }
         }
 
@@ -135,7 +130,7 @@ struct ContentView: View {
                 showAlert = true
                 connectionError = error
             }
-            self.receiverStream = nil
+            self.receiverVideoModel.stream = nil
         }
 
         // 接続します。
@@ -158,7 +153,7 @@ struct ContentView: View {
             // 接続できたら配信ストリームを senderStream プロパティにセットします。
             // 配信用の Video ビューは senderStream プロパティを参照しているので、
             // 同プロパティにストリームをセットすると映像が表示されます。
-            senderStream = mediaChannel!.senderStream
+            senderVideoModel.stream = mediaChannel!.senderStream
         }
     }
 
