@@ -6,15 +6,15 @@ import UIKit
 public struct Video: UIViewRepresentable {
     public typealias UIViewType = VideoView
 
-    @ObservedObject private var model: VideoModel
+    @ObservedObject private var controller: VideoController
 
-    public init(_ model: VideoModel) {
-        self.model = model
+    public init(_ controller: VideoController) {
+        self.controller = controller
     }
 
     public func makeUIView(context: Context) -> VideoView {
         let view = VideoView()
-        context.coordinator.video.model.videoView = view
+        context.coordinator.video.controller.videoView = view
         view.start()
         return view
     }
@@ -34,7 +34,7 @@ public struct Video: UIViewRepresentable {
     }
 }
 
-public class VideoModel: ObservableObject {
+public class VideoController: ObservableObject {
     public var stream: MediaStream? {
         didSet {
             stream?.videoRenderer = videoView
