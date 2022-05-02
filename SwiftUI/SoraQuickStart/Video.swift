@@ -3,8 +3,36 @@ import Sora
 import SwiftUI
 import UIKit
 
-public struct Video: UIViewRepresentable {
-    public typealias UIViewType = VideoView
+public struct Video<Background>: View where Background: View {
+
+    private var background: Background
+
+    @ObservedObject private var controller: VideoController
+
+    public init(_ controller: VideoController) where Background == EmptyView {
+        self.init(controller, background: {
+            EmptyView()
+        })
+    }
+
+    public init(_ controller: VideoController,
+                background: () -> Background) {
+        self.controller = controller
+        self.background = background()
+    }
+
+    public var body: some View {
+        ZStack {
+            background
+                .opacity(controller.isCleared ? 1 : 0)
+            MainVideo(controller)
+                .opacity(controller.isCleared ? 0 : 1)
+        }
+    }
+}
+
+fileprivate struct MainVideo: UIViewRepresentable {
+    typealias UIViewType = VideoView
 
     @ObservedObject private var controller: VideoController
 
@@ -13,25 +41,11 @@ public struct Video: UIViewRepresentable {
     }
 
     public func makeUIView(context: Context) -> VideoView {
-        let view = VideoView()
-        context.coordinator.video.controller.videoView = view
-        view.start()
-        return view
+        controller.videoView
     }
 
     public func updateUIView(_ uiView: VideoView, context: Context) {}
 
-    public func makeCoordinator() -> Coordinator {
-        Coordinator(self)
-    }
-
-    public final class Coordinator {
-        var video: Video
-
-        init(_ video: Video) {
-            self.video = video
-        }
-    }
 }
 
 public class VideoController: ObservableObject {
@@ -43,43 +57,44 @@ public class VideoController: ObservableObject {
 
     public var connectionMode: VideoViewConnectionMode = .autoClear {
         didSet {
-            videoView?.connectionMode = connectionMode
+            videoView.connectionMode = connectionMode
         }
     }
 
     public var debugMode: Bool = false {
         didSet {
-            videoView?.debugMode = debugMode
-        }
-    }
-
-    public var backgroundView: UIView? {
-        didSet {
-            videoView?.backgroundView = backgroundView
+            videoView.debugMode = debugMode
         }
     }
 
     public var currentVideoFrameSize: CGSize? {
-        videoView?.currentVideoFrameSize
+        videoView.currentVideoFrameSize
     }
 
-    public var videoView: VideoView?
+    public internal(set) var videoView: VideoView
 
-    @Published public var isRendering: Bool = true
+    public private(set) var isRendering: Bool = true
 
-    public init() {}
+    @Published var isCleared = false
+
+    public init() {
+        videoView = VideoView()
+        videoView.start()
+    }
 
     public func start() {
-        videoView?.start()
+        videoView.start()
         isRendering = true
+        isCleared = false
     }
 
     public func stop() {
-        videoView?.stop()
+        videoView.stop()
         isRendering = false
     }
 
     public func clear() {
-        videoView?.clear()
+        videoView.clear()
+        isCleared = true
     }
 }

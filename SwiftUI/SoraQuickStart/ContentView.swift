@@ -10,8 +10,8 @@ struct ContentView: View {
     // 接続試行中にキャンセルするためのオブジェクトです。
     @State private var connectionTask: ConnectionTask?
 
-    @ObservedObject private var senderVideoModel = VideoController()
-    @ObservedObject private var receiverVideoModel = VideoController()
+    private var senderVideoModel = VideoController()
+    private var receiverVideoModel = VideoController()
 
     // 接続時のエラーです。
     @State private var connectionError: Error?
