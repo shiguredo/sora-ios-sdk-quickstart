@@ -10,8 +10,8 @@ struct ContentView: View {
     // 接続試行中にキャンセルするためのオブジェクトです。
     @State private var connectionTask: ConnectionTask?
 
-    private var senderVideoController = VideoController()
-    private var receiverVideoController = VideoController()
+    @State private var senderStream: MediaStream?
+    @State private var receiverStream: MediaStream?
 
     // 接続時のエラーです。
     @State private var connectionError: Error?
@@ -30,14 +30,14 @@ struct ContentView: View {
         VStack {
             // 受信映像の上に小さいサイズの配信映像を重ねて表示します。
             ZStack {
-                Video(receiverVideoController)
+                Video($receiverStream)
 
                 VStack {
                     // スペースを上と左にいれて右下に映像ビューを配置します。
                     Spacer()
                     HStack {
                         Spacer()
-                        Video(senderVideoController)
+                        Video($senderStream)
                             .frame(width: 110, height: 170)
                             .border(Color.white, width: 2)
                             .padding(.trailing, 20)
@@ -117,7 +117,7 @@ struct ContentView: View {
         let senderStreamId = config.publisherStreamId
         config.mediaChannelHandlers.onAddStream = { stream in
             if stream.streamId != senderStreamId {
-                self.receiverVideoController.stream = stream
+                self.receiverStream = stream
             }
         }
 
@@ -130,7 +130,7 @@ struct ContentView: View {
                 showAlert = true
                 connectionError = error
             }
-            self.receiverVideoController.stream = nil
+            self.receiverStream = nil
         }
 
         // 接続します。
@@ -153,7 +153,7 @@ struct ContentView: View {
             // 接続できたら配信ストリームを senderStream プロパティにセットします。
             // 配信用の Video ビューは senderStream プロパティを参照しているので、
             // 同プロパティにストリームをセットすると映像が表示されます。
-            senderVideoController.stream = mediaChannel!.senderStream
+            self.senderStream = mediaChannel!.senderStream
         }
     }
 
