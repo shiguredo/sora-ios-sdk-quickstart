@@ -30,14 +30,14 @@ struct ContentView: View {
         VStack {
             // 受信映像の上に小さいサイズの配信映像を重ねて表示します。
             ZStack {
-                Video($receiverStream)
+                Video(receiverStream)
 
                 VStack {
                     // スペースを上と左にいれて右下に映像ビューを配置します。
                     Spacer()
                     HStack {
                         Spacer()
-                        Video($senderStream)
+                        Video(senderStream)
                             .frame(width: 110, height: 170)
                             .border(Color.white, width: 2)
                             .padding(.trailing, 20)
