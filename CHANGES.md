@@ -11,6 +11,11 @@
 
 ## develop
 
+## sora-ios-sdk-2022.3.0
+
+- [ADD] 接続失敗時とサーバーによる切断時にエラー内容をアラートで表示する 
+    - @szktty
+
 ## sora-ios-sdk-2022.2.0
 
 - [UPDATE] Environment.example.swift に signalingConnectMetadata を追加する 

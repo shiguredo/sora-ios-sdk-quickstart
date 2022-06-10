@@ -85,6 +85,13 @@ class ViewController: UIViewController {
             }
             if let error = error {
                 NSLog(error.localizedDescription)
+                DispatchQueue.main.async {
+                    let alertController = UIAlertController(title: "接続に失敗しました",
+                                                            message: error.localizedDescription,
+                                                            preferredStyle: .alert)
+                    alertController.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
+                    self?.present(alertController, animated: true, completion: nil)
+                }
             }
             strongSelf.updateUI(false)
         }
@@ -96,6 +103,13 @@ class ViewController: UIViewController {
             // 接続に失敗するとエラーが渡されます。
             if let error = error {
                 NSLog(error.localizedDescription)
+                DispatchQueue.main.async { [weak self] in
+                    let alertController = UIAlertController(title: "接続に失敗しました",
+                                                            message: error.localizedDescription,
+                                                            preferredStyle: .alert)
+                    alertController.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
+                    self?.present(alertController, animated: true, completion: nil)
+                }
                 self.updateUI(false)
                 return
             }
