@@ -11,6 +11,13 @@
 
 ## develop
 
+## sora-ios-sdk-2022.4.0
+
+- [UPDATE] システム条件を変更する
+    - macOS 12.3 以降
+    - WebRTC SFU Sora 2022.1 以降
+    - @miosakuma
+    
 ## sora-ios-sdk-2022.3.0
 
 - [ADD] 接続失敗時とサーバーによる切断時にエラー内容をアラートで表示する 
