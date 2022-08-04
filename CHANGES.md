@@ -11,6 +11,13 @@
 
 ## develop
 
+## sora-ios-sdk-2022.5.0
+
+- [UPDATE] システム条件を変更する
+    - macOS 12.3 以降
+    - Xcode 13.4.1
+    - @miosakuma
+
 ## sora-ios-sdk-2022.4.0
 
 - [UPDATE] システム条件を変更する
