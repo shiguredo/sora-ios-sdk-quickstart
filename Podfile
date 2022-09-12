@@ -13,17 +13,8 @@ target 'SoraQuickStart' do
 end
 
 post_install do |installer|
-    target_names = ["Sora", "Pods-SoraQuickStart", "WebRTC"]
-
-    target_names.each do |target_name|
-        # 変更対象のターゲット を探す
-        pods_target = installer.pods_project.targets.find{ |target| target.name == target_name }
-        unless pods_target
-            raise ::Pod::Informative, "Failed to find '" << target_name << "' target"
-        end
-
-        # ビルド設定を追加
-        pods_target.build_configurations.each do |config|
+    installer.pods_project.targets.each do |target|
+        target.build_configurations.each do |config|
             config.build_settings['ENABLE_BITCODE'] = 'NO'
         end
     end
