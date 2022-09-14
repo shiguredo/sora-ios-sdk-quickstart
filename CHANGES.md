@@ -11,6 +11,16 @@
 
 ## develop
 
+## sora-ios-sdk-2022.6.0
+
+- [UPDATE] システム条件を変更する
+    - アーキテクチャ から x86_64 を削除
+    - macOS 12.6 以降
+    - Xcode 14.0
+    - Swift 5.7
+    - CocoaPods 1.11.3 以降
+    - @miosakuma
+
 ## sora-ios-sdk-2022.5.0
 
 - [UPDATE] システム条件を変更する
