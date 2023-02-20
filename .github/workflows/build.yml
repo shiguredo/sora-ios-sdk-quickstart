@@ -24,7 +24,7 @@ jobs:
     - name: Show CocoaPods Version
       run: pod --version
     - name: Restore Pods
-      uses: actions/cache@v2
+      uses: actions/cache@v3
       with:
         path: Pods
         key: ${{ runner.os }}-pods-${{ hashFiles('**/Podfile.lock') }}
