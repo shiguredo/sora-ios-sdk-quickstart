@@ -11,6 +11,8 @@
 
 ## develop
 
+## sora-ios-sdk-2023.2.0
+
 - [UPDATE] システム条件を変更する
     - macOS 13.4.1 以降
     - Xcode 14.3.1
