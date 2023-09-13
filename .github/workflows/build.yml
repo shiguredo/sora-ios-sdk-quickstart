@@ -58,7 +58,7 @@ jobs:
   release:
     if: contains(github.ref, 'tags/v')
     needs: [build]
-    runs-on: macOS-latest
+    runs-on: macos-latest
     steps:
     - name: Checkout code
       uses: actions/checkout@v3
