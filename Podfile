@@ -5,8 +5,9 @@ platform :ios, '13.0'
 
 target 'SoraQuickStart' do
   use_frameworks!
-  pod 'Sora', '2023.2.0'
-  pod 'SwiftLint'
-  pod 'SwiftFormat/CLI'
+  pod 'Sora', '2023.3.0'
+#  SwiftLint, SwiftFormat/CLI が Swift 5.8 に対応していないため一時的にコメントアウトする
+#  pod 'SwiftLint'
+#  pod 'SwiftFormat/CLI'
 
 end
