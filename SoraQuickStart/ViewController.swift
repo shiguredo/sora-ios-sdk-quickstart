@@ -63,7 +63,8 @@ class ViewController: UIViewController {
                                    channelId: Environment.channelId,
                                    role: .sendrecv,
                                    multistreamEnabled: true)
-
+        config.videoCodec = VideoCodec.h265
+        
         // 接続時に指定したいオプションを以下のように設定します。
         config.signalingConnectMetadata = Environment.signalingConnectMetadata
 
