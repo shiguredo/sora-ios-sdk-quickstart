@@ -1,5 +1,6 @@
 import Sora
 import UIKit
+import AVFoundation
 
 class ViewController: UIViewController {
     @IBOutlet weak var senderVideoView: VideoView!
@@ -22,6 +23,23 @@ class ViewController: UIViewController {
         Logger.shared.level = .debug
 
         navigationItem.title = "\(Environment.channelId)"
+        // ビデオをキャプチャするためのデフォルトデバイスを取得
+        guard let captureDevice = AVCaptureDevice.default(for: AVMediaType.video) else {
+            print("ビデオデバイスを取得できませんでした")
+            return
+        }
+        // サポートされているフォーマットを取得
+        let formats = captureDevice.formats
+        for format in formats {
+            print("Format: \(format)")
+            
+            // このフォーマットでサポートされているフレームレートの範囲を取得
+            let frameRateRanges = format.videoSupportedFrameRateRanges
+            for range in frameRateRanges {
+                print("Min Frame Rate: \(range.minFrameRate)")
+                print("Max Frame Rate: \(range.maxFrameRate)")
+            }
+        }
     }
 
     // 接続ボタンの UI を更新します。
