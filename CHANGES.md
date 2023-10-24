@@ -11,6 +11,11 @@
 
 ## develop
 
+## sora-ios-sdk-2023.3.1
+
+- [UPDATE] Sora iOS SDK を 2023.3.1 にあげる
+  - @miosakuma
+
 ## sora-ios-sdk-2023.3.0
 
 - [UPDATE] SwiftLint, SwiftFormat/CLI を一時的にコメントアウトする
