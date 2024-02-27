@@ -41,3 +41,7 @@ Xcode と Swift のバージョンによっては、 CocoaPods で取得でき�
    ```
 
 3. ``SoraQuickStart.xcworkspace`` を Xcode で開いてビルドします。
+
+## ライセンス
+
+このリポジトリに含まれるすべてのアプリアイコン画像（すべての PNG 形式ファイル）のライセンスは [CC BY-NC-ND 4.0](https://creativecommons.org/licenses/by-nc-nd/4.0/deed.ja) です。
