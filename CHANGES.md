@@ -11,6 +11,8 @@
 
 ## develop
 
+- [UPDATE] Github Actions を actions/cache@v4 にあげる
+  - @miosakuma
 - [UPDATE] Github Actions を macos-14  にあげる
   - @miosakuma
 - [UPDATE] Github Actions を Xcode 15.2, iphoneos17.2 にあげる
