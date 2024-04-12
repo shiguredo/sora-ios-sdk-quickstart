@@ -83,7 +83,7 @@ class ViewController: UIViewController {
             guard let strongSelf = self else {
                 return
             }
-            if let error = error {
+            if let error {
                 NSLog(error.localizedDescription)
                 DispatchQueue.main.async {
                     let alertController = UIAlertController(title: "接続に失敗しました",
@@ -101,7 +101,7 @@ class ViewController: UIViewController {
         // 接続試行中の状態を強制的に終了させることができます。
         connectionTask = Sora.shared.connect(configuration: config) { mediaChannel, error in
             // 接続に失敗するとエラーが渡されます。
-            if let error = error {
+            if let error {
                 NSLog(error.localizedDescription)
                 DispatchQueue.main.async { [weak self] in
                     let alertController = UIAlertController(title: "接続に失敗しました",
