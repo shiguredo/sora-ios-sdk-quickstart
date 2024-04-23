@@ -11,10 +11,10 @@ on:
 
 jobs:
   build:
-    runs-on: macos-13
+    runs-on: macos-14
     env:
-      XCODE: /Applications/Xcode_14.3.1.app
-      XCODE_SDK: iphoneos16.4
+      XCODE: /Applications/Xcode_15.2.app
+      XCODE_SDK: iphoneos17.2
     steps:
     - uses: actions/checkout@v4
     - name: Select Xcode Version
@@ -24,7 +24,7 @@ jobs:
     - name: Show CocoaPods Version
       run: pod --version
     - name: Restore Pods
-      uses: actions/cache@v3
+      uses: actions/cache@v4
       with:
         path: Pods
         key: ${{ runner.os }}-pods-${{ hashFiles('**/Podfile.lock') }}
@@ -50,7 +50,8 @@ jobs:
             CODE_SIGNING_REQUIRED=NO \
             CODE_SIGNING_ALLOWED=NO \
             CODE_SIGN_IDENTITY= \
-            PROVISIONING_PROFILE=
+            PROVISIONING_PROFILE= \
+            ASSETCATALOG_COMPILER_GENERATE_ASSET_SYMBOLS=NO
     - name: Check uncommitted unformatted code
       run: |
         ./lint-format.sh
