@@ -11,7 +11,8 @@
 
 ## develop
 
-- [UPDATE] libwebrtc のログレベルを INFO にする
+- [UPDATE] libwebrtc のログレベルを RTCLoggingSeverityNone から RTCLoggingSeverityInfo にする
+  - libwebrtc のログを INFO レベルで出力するようにする
   - @zztkm
 
 ## sora-ios-sdk-2024.2.0
