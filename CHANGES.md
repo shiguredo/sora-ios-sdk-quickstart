@@ -11,6 +11,9 @@
 
 ## develop
 
+- [UPDATE] libwebrtc のログレベルを INFO にする
+  - @zztkm
+
 ## sora-ios-sdk-2024.2.0
 
 - [UPDATE] Github Actions を actions/cache@v4 にあげる
