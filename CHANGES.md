@@ -14,6 +14,9 @@
 - [UPDATE] libwebrtc のログレベルを RTCLoggingSeverityNone から RTCLoggingSeverityInfo にする
   - libwebrtc のログを INFO レベルで出力するようにする
   - @zztkm
+- [UPDATE] GitHub Actions の Xcode のバージョンを 15.4 にあげる
+  - 合わせて iOS の SDK を iphoneos17.5 にあげる
+  - @miosakuma
 
 ## sora-ios-sdk-2024.2.0
 
