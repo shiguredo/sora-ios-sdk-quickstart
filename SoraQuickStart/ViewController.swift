@@ -20,6 +20,7 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         Logger.shared.level = .debug
+        Sora.setWebRTCLogLevel(.info)
 
         navigationItem.title = "\(Environment.channelId)"
     }
