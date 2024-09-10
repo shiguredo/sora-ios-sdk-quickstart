@@ -1,5 +1,6 @@
 import Sora
 import UIKit
+import AVFAudio
 
 class ViewController: UIViewController {
     @IBOutlet weak var senderVideoView: VideoView!
@@ -122,6 +123,30 @@ class ViewController: UIViewController {
             if let stream = mediaChannel!.senderStream {
                 stream.videoRenderer = self.senderVideoView
             }
+        }
+        // AVAudioSession の設定を行います。
+        Sora.shared.configureAudioSession(block: configureStereoAudio)
+    }
+
+    func configureStereoAudio() -> Void {
+        let audioSession = AVAudioSession.sharedInstance()
+
+        if (audioSession.maximumInputNumberOfChannels < 2) {
+            print("オーディオルートで使用可能な入力チャンネルの最大数が 2 未満でした: \(audioSession.maximumInputNumberOfChannels)")
+            return
+        }
+
+        // 入力チャンネル数を 2 に設定する
+        do {
+            try audioSession.setPreferredInputNumberOfChannels(2)
+            // 設定が変更されたかチェック
+            if (audioSession.inputNumberOfChannels != 2) {
+                print("入力チャンネル数が 2 に設定されませんでした: \(audioSession.inputNumberOfChannels)")
+                return
+            }
+            print("入力チャンネル数を 2 に設定しました")
+        } catch {
+            print("エラー発生: \(error.localizedDescription)")
         }
     }
 }
