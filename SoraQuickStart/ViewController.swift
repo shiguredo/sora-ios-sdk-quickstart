@@ -1,6 +1,6 @@
+import AVFAudio
 import Sora
 import UIKit
-import AVFAudio
 
 class ViewController: UIViewController {
     @IBOutlet weak var senderVideoView: VideoView!
@@ -128,25 +128,69 @@ class ViewController: UIViewController {
         Sora.shared.configureAudioSession(block: configureStereoAudio)
     }
 
-    func configureStereoAudio() -> Void {
+    func configureStereoAudio() {
         let audioSession = AVAudioSession.sharedInstance()
 
-        if (audioSession.maximumInputNumberOfChannels < 2) {
-            print("オーディオルートで使用可能な入力チャンネルの最大数が 2 未満でした: \(audioSession.maximumInputNumberOfChannels)")
+        guard let availableInputs = audioSession.availableInputs,
+              let builtInMicInput = availableInputs.first(where: { $0.portType == .builtInMic })
+        else {
+            print("kensaku: the device must have a built-in mic")
+            return
+        }
+        do {
+            // オーディオルーティングの優先入力ポートを設定
+            try audioSession.setPreferredInput(builtInMicInput)
+            try audioSession.setCategory(.playAndRecord, mode: .videoChat)
+            try audioSession.setActive(true)
+        } catch {
+            print("kensaku: エラーが発生しました: \(error.localizedDescription)")
+        }
+
+        // TODO(zztkm): set したと思った preferredInput が null になる原因がわからないので要調査
+        guard let preferredInput = audioSession.preferredInput else {
+            print("kensaku: preferredInput ならず...")
+            return
+        }
+        guard let dataSources = preferredInput.dataSources else {
+            print("kensaku: dataSources ならず...")
+            return
+        }
+        for ds in dataSources {
+            print("kensaku: datasource: \(ds.dataSourceName)")
+            guard let sp = ds.supportedPolarPatterns else {
+                print("kensaku: sp not found")
+                return
+            }
+            for s in sp {
+                print("kensaku: show sp: \(s)")
+            }
+        }
+
+        if #available(iOS 15.0, *) {
+            print("kensaku: \(audioSession.supportsMultichannelContent)")
+            // try! audioSession.setSupportsMultichannelContent(true)
+            print("kensaku: \(audioSession.supportsMultichannelContent)")
+        } else {
+            // Fallback on earlier versions
+        }
+
+        if audioSession.maximumInputNumberOfChannels < 2 {
+            print("kensaku: オーディオルートで使用可能な入力チャンネルの最大数が 2 未満でした: \(audioSession.maximumInputNumberOfChannels)")
             return
         }
 
+        // ステレオ関連設定: https://developer.apple.com/documentation/avfaudio/avaudiosession#3591409
         // 入力チャンネル数を 2 に設定する
         do {
             try audioSession.setPreferredInputNumberOfChannels(2)
             // 設定が変更されたかチェック
-            if (audioSession.inputNumberOfChannels != 2) {
-                print("入力チャンネル数が 2 に設定されませんでした: \(audioSession.inputNumberOfChannels)")
+            if audioSession.inputNumberOfChannels != 2 {
+                print("kensaku: 入力チャンネル数が 2 に設定されませんでした: \(audioSession.inputNumberOfChannels)")
                 return
             }
-            print("入力チャンネル数を 2 に設定しました")
+            print("kensaku: 入力チャンネル数を 2 に設定しました")
         } catch {
-            print("エラー発生: \(error.localizedDescription)")
+            print("kensaku: エラー発生: \(error.localizedDescription)")
         }
     }
 }
