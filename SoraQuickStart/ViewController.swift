@@ -55,6 +55,19 @@ class ViewController: UIViewController {
             // 未接続なら接続します。
             connect()
             updateUI(true)
+
+            // mediaChannel が入ってくるまでに時間がかかるので sleep する (2s は適当)
+            Thread.sleep(forTimeInterval: 2)
+            guard let codecs = mediaChannel?.native?.senders.first?.parameters.codecs else {
+                print("kensaku: codecs を取得できませんでした")
+                return
+            }
+            print("kensaku: codecs count\(codecs.count)")
+            for c in codecs {
+                // numChannels の定義: https://source.chromium.org/chromium/chromium/src/+/c545e8eabc20c86c6ea327be6119dd361184a5a8:third_party/webrtc/sdk/objc/api/peerconnection/RTCRtpCodecCapability.h;l=42-46
+                let count = c.numChannels
+                print("kensaku: channelCount:  \(count)")
+            }
         }
     }
 
