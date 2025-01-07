@@ -17,9 +17,6 @@ class ViewController: UIViewController {
         mediaChannel?.isAvailable == true
     }
 
-    /// dataChannels の label ごとにヘッダーの長さを保持するための変数
-    var headerLengths: [String: Int] = [:]
-
     override func viewDidLoad() {
         super.viewDidLoad()
         Logger.shared.level = .debug
@@ -72,23 +69,20 @@ class ViewController: UIViewController {
         config.signalingConnectMetadata = Environment.signalingConnectMetadata
 
         // DataChannel 経由のシグナリングを有効にする
-        config.dataChannelSignaling = true
+        // config.dataChannelSignaling = true
 
-        // メッセージング機能に利用する DataChannel を指定する
-        config.dataChannels = [[
-            "label": "#spam",
-            "direction": "recvonly",
-        ], [
-            "label": "#egg",
-            "max_retransmits": 0,
-            "ordered": false,
-            "protocol": "abc",
-            "compress": false,
-            "direction": "recvonly",
-            "header": [
-                ["type": "sender_connection_id"],
-            ],
-        ]]
+        // forwarding_filters
+        let filter_1 = ForwardingFilter(
+            action: .block,
+            rules: [
+                [
+                    ForwardingFilterRule(field: .clientId,
+                                         operator: .isIn,
+                                         values: ["block_saremasu"]),
+                ],
+            ]
+        )
+        config.forwardingFilters = [filter_1]
 
         // ストリームが追加されたら受信用の VideoView をストリームにセットします。
         // このアプリでは、複数のユーザーが接続した場合は最後のユーザーの映像のみ描画します。
@@ -117,63 +111,6 @@ class ViewController: UIViewController {
                 }
             }
             strongSelf.updateUI(false)
-        }
-
-        // offer で入ってくる data channel header の長さを取得する
-        config.mediaChannelHandlers.onReceiveSignaling = { [weak self] signaling in
-            guard let self else {
-                return
-            }
-            switch signaling {
-            case let .offer(offer):
-                guard let dataChannels = offer.dataChannels else {
-                    return
-                }
-                for dataChannel in dataChannels {
-                    // ラベルが "#" で始まる場合のみ処理する
-                    let label: String = dataChannel["label"] as! String
-                    guard label.starts(with: "#") else {
-                        continue
-                    }
-
-                    // dataChannel["header"] が nil ではない場合のみ後続処理を行う
-                    guard let headers = dataChannel["header"] as? [[String: Any]] else {
-                        continue
-                    }
-                    for header in headers {
-                        if header["type"] as! String == "sender_connection_id" {
-                            let length = header["length"] as! Double
-                            headerLengths[label] = Int(length)
-                            print("kensaku: \(label) \(Int(length))")
-                        }
-                    }
-                }
-            default:
-                break
-            }
-        }
-        // メッセージ受信時の挙動を定義します。
-        config.mediaChannelHandlers.onDataChannelMessage = { [weak self] _, label, data in
-            guard let weakSelf = self else {
-                return
-            }
-
-            // "#" で始まるラベル以外は無視します
-            guard label.starts(with: "#") else {
-                return
-            }
-
-            // ヘッダーの長さを取得し、ヘッダーとメッセージを分離します
-            let headerLength = weakSelf.headerLengths[label] ?? 0
-            if headerLength == 0 {
-                print(String(data: data, encoding: .utf8) ?? data.map(\.description).joined(separator: ", "))
-                return
-            }
-
-            let header = data.prefix(headerLength)
-            let message = data.suffix(from: headerLength)
-            print("kensaku: \(String(data: header, encoding: .utf8) ?? header.map(\.description).joined(separator: ", "))")
-            print("kensaku: \(String(data: message, encoding: .utf8) ?? message.map(\.description).joined(separator: ", "))")
         }
 
         // 接続します。
