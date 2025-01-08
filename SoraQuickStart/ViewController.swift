@@ -68,6 +68,14 @@ class ViewController: UIViewController {
         // 接続時に指定したいオプションを以下のように設定します。
         config.signalingConnectMetadata = Environment.signalingConnectMetadata
 
+        // スポットライト設定
+        config.simulcastEnabled = true
+        config.spotlightEnabled = .enabled
+        config.videoCodec = .vp9
+
+        // 音声ストリーミング設定
+        config.audioStreamingLanguageCode = "ja-JP"
+
         // ストリームが追加されたら受信用の VideoView をストリームにセットします。
         // このアプリでは、複数のユーザーが接続した場合は最後のユーザーの映像のみ描画します。
         let publisherStreamId = config.publisherStreamId
@@ -95,6 +103,27 @@ class ViewController: UIViewController {
                 }
             }
             strongSelf.updateUI(false)
+        }
+
+        config.mediaChannelHandlers.onReceiveSignaling = { signaling in
+            switch signaling {
+            case let .notify(notify):
+                switch notify.eventType {
+                case "connection.created":
+                    print("kensaku: connection.created: timestamp = \(notify.timestamp)")
+                case "spotlight.focused":
+                    print("kensaku: spotlight.focused: spotlight_number = \(notify.spotlightNumber)")
+                case "audio-streaming.failed":
+                    print("kensaku: audio-streaming.failed: failed_connection_id = \(notify.failedConnectionId)")
+                case "ice-connection-state.changed":
+                    print("kensaku: ice-connection-state.changed: current_state = \(notify.currentState)")
+                    print("kensaku: ice-connection-state.changed: previous_state = \(notify.previousState)")
+                default:
+                    return
+                }
+            default:
+                return
+            }
         }
 
         // 接続します。
