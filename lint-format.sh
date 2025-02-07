@@ -4,19 +4,11 @@
 # 未フォーマットか lint でルール違反を検出したら終了ステータス 1 を返す
 # GitHub Actions では未フォーマット箇所の有無の確認に使う
 
-PODS_ROOT=Pods
-SRCROOT=.
-FORMAT=${PODS_ROOT}/SwiftFormat/CommandLineTool/swiftformat
-LINT=${PODS_ROOT}/SwiftLint/swiftlint
+# フォーマットリントは未フォーマットでもステータスコード 0 を返すので
+# ステータスコードチェックを行わない
+swift format lint -r Sora SoraTests
+swift format -i -r Sora SoraTests
 
-# フォーマットの必要性を確認する
-$FORMAT --lint $SRCROOT
-format=$?
+# TODO(zztkm): linter の実行どうしよう...
 
-$FORMAT $SRCROOT
-$LINT --fix $SRCROOT
-$LINT $SRCROOT
-lint=$?
-
-test $format -eq 0 -a $lint -eq 0
 exit $?
