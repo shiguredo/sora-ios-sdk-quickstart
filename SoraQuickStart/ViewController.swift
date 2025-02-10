@@ -60,10 +60,11 @@ class ViewController: UIViewController {
 
     func connect() {
         // 接続の設定を行います。
-        var config = Configuration(url: Environment.url,
-                                   channelId: Environment.channelId,
-                                   role: .sendrecv,
-                                   multistreamEnabled: true)
+        var config = Configuration(
+            url: Environment.url,
+            channelId: Environment.channelId,
+            role: .sendrecv,
+            multistreamEnabled: true)
 
         // 接続時に指定したいオプションを以下のように設定します。
         config.signalingConnectMetadata = Environment.signalingConnectMetadata
@@ -87,10 +88,12 @@ class ViewController: UIViewController {
             if let error {
                 NSLog(error.localizedDescription)
                 DispatchQueue.main.async {
-                    let alertController = UIAlertController(title: "接続に失敗しました",
-                                                            message: error.localizedDescription,
-                                                            preferredStyle: .alert)
-                    alertController.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
+                    let alertController = UIAlertController(
+                        title: "接続に失敗しました",
+                        message: error.localizedDescription,
+                        preferredStyle: .alert)
+                    alertController.addAction(
+                        UIAlertAction(title: "OK", style: .cancel, handler: nil))
                     self?.present(alertController, animated: true, completion: nil)
                 }
             }
@@ -105,10 +108,12 @@ class ViewController: UIViewController {
             if let error {
                 NSLog(error.localizedDescription)
                 DispatchQueue.main.async { [weak self] in
-                    let alertController = UIAlertController(title: "接続に失敗しました",
-                                                            message: error.localizedDescription,
-                                                            preferredStyle: .alert)
-                    alertController.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
+                    let alertController = UIAlertController(
+                        title: "接続に失敗しました",
+                        message: error.localizedDescription,
+                        preferredStyle: .alert)
+                    alertController.addAction(
+                        UIAlertAction(title: "OK", style: .cancel, handler: nil))
                     self?.present(alertController, animated: true, completion: nil)
                 }
                 self.updateUI(false)
