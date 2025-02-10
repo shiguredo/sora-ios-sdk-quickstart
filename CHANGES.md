@@ -11,6 +11,8 @@
 
 ## develop
 
+- [CHANGE] フォーマッターを SwiftFormat から swift-format に変更する
+  - @zztkm
 - [UPDATE] リンターの実行をシェルスクリプトではなく、Xcode の Build Phases に設定する
   - @zztkm
 - [UPDATE] 依存管理を CocoaPods から Xcode の Swift Package Manager に移行する
@@ -22,6 +24,13 @@
 - [UPDATE] プロジェクト設定を Xcode のアップグレードチェック機能で自動更新
   - `BuildIndependentTargetsInParallel` の有効化
   - `ENABLE_USER_SCRIPT_SANDBOXING` の有効化
+  - @zztkm
+- [UPDATE] GitHub Actions のビルド環境を更新する
+  - runner を macos-15 に変更
+  - Xcode の version を 16.2 に変更
+  - SDK を iOS 18.2 に変更
+  - @zztkm
+- [UPDATE] GitHub Actions での format check をやめる
   - @zztkm
 
 ## sora-ios-sdk-2025.1.1
