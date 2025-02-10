@@ -40,9 +40,6 @@ jobs:
             CODE_SIGN_IDENTITY= \
             PROVISIONING_PROFILE= \
             ASSETCATALOG_COMPILER_GENERATE_ASSET_SYMBOLS=NO
-    # - name: Check uncommitted unformatted code
-    #   run: |
-    #     ./format.sh
   release:
     if: contains(github.ref, 'tags/v')
     needs: [build]
