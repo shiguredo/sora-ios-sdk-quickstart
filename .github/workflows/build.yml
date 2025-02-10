@@ -27,7 +27,7 @@ jobs:
       run: |
         set -o pipefail && \
           xcodebuild \
-            -workspace 'SoraQuickStart.xcworkspace' \
+            -project 'SoraQuickStart.xcodeproj'
             -scheme 'SoraQuickStart' \
             -sdk ${{ env.XCODE_SDK }} \
             -arch arm64 \
@@ -41,7 +41,7 @@ jobs:
             ASSETCATALOG_COMPILER_GENERATE_ASSET_SYMBOLS=NO
     - name: Check uncommitted unformatted code
       run: |
-        ./lint-format.sh
+        ./format.sh
   release:
     if: contains(github.ref, 'tags/v')
     needs: [build]

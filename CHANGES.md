@@ -11,6 +11,8 @@
 
 ## develop
 
+- [CHANGE] フォーマッターを SwiftFormat から swift-format に変更する
+  - @zztkm
 - [UPDATE] 依存管理を CocoaPods から Xcode の Swift Package Manager に移行する
   - Sora iOS SDK と SwiftLint を Swift Package Manager 管理に移行
   - Podfile を削除
