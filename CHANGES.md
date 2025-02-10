@@ -32,6 +32,8 @@
   - @zztkm
 - [UPDATE] GitHub Actions での format check をやめる
   - @zztkm
+- [UPDATE] GitHub Actions の定期ビルドをやめる
+  - @zztkm
 
 ## sora-ios-sdk-2025.1.1
 
