@@ -19,7 +19,7 @@
   - 不要な buildPhases を削除
     - SwfitFormat と SwiftLint を自動実行するためのものだったが利用していないため削除
   - @zztkm
-- [UPDATE] プロジェクト設定を Xcode で自動更新
+- [UPDATE] プロジェクト設定を Xcode のアップグレードチェック機能で自動更新
   - `BuildIndependentTargetsInParallel` の有効化
   - `ENABLE_USER_SCRIPT_SANDBOXING` の有効化
   - @zztkm
