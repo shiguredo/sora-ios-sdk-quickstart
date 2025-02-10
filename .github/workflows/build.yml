@@ -27,7 +27,7 @@ jobs:
       run: |
         set -o pipefail && \
           xcodebuild \
-            -project 'SoraQuickStart.xcodeproj'
+            -project 'SoraQuickStart.xcodeproj' \
             -scheme 'SoraQuickStart' \
             -sdk ${{ env.XCODE_SDK }} \
             -arch arm64 \
