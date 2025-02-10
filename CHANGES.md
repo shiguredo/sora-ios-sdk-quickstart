@@ -11,8 +11,6 @@
 
 ## develop
 
-- [CHANGE] フォーマッターを SwiftFormat から swift-format に変更する
-  - @zztkm
 - [UPDATE] リンターの実行をシェルスクリプトではなく、Xcode の Build Phases に設定する
   - @zztkm
 - [UPDATE] 依存管理を CocoaPods から Xcode の Swift Package Manager に移行する
