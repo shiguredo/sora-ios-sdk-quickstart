@@ -30,6 +30,8 @@
   - Xcode の version を 16.2 に変更
   - SDK を iOS 18.2 に変更
   - @zztkm
+- [UPDATE] GitHub Actions での format check をやめる
+  - @zztkm
 
 ## sora-ios-sdk-2025.1.1
 
