@@ -25,6 +25,11 @@
   - `BuildIndependentTargetsInParallel` の有効化
   - `ENABLE_USER_SCRIPT_SANDBOXING` の有効化
   - @zztkm
+- [UPDATE] GitHub Actions のビルド環境を更新する
+  - runner を macos-15 に変更
+  - Xcode の version を 16.2 に変更
+  - SDK を iOS 18.2 に変更
+  - @zztkm
 
 ## sora-ios-sdk-2025.1.1
 
