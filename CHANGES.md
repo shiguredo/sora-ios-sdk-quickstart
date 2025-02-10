@@ -11,6 +11,19 @@
 
 ## develop
 
+- [UPDATE] リンターの実行をシェルスクリプトではなく、Xcode の Build Phases に設定する
+  - @zztkm
+- [UPDATE] 依存管理を CocoaPods から Xcode の Swift Package Manager に移行する
+  - Sora iOS SDK と SwiftLint を Swift Package Manager 管理に移行
+  - Podfile を削除
+  - 不要な buildPhases を削除
+    - SwfitFormat と SwiftLint を自動実行するためのものだったが利用していないため削除
+  - @zztkm
+- [UPDATE] プロジェクト設定を Xcode のアップグレードチェック機能で自動更新
+  - `BuildIndependentTargetsInParallel` の有効化
+  - `ENABLE_USER_SCRIPT_SANDBOXING` の有効化
+  - @zztkm
+
 ## sora-ios-sdk-2025.1.1
 
 **リリース日**: 2025-01-23

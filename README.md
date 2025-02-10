@@ -19,19 +19,17 @@ Please read https://github.com/shiguredo/oss before use.
 - macOS 15.0 以降
 - Xcode 16.2
 - Swift 5.10
-- CocoaPods 1.15.2 以降
 - WebRTC SFU Sora 2024.2.0 以降
 
-Xcode と Swift のバージョンによっては、 CocoaPods で取得できるバイナリに互換性がない可能性があります。詳しくは[Sora iOS SDK ドキュメント](https://sora-ios-sdk.shiguredo.jp/) を参照してください。
+Xcode と Swift のバージョンによっては、 取得できるバイナリに互換性がない可能性があります。詳しくは[Sora iOS SDK ドキュメント](https://sora-ios-sdk.shiguredo.jp/) を参照してください。
 
 ## ビルド
 
-1. クローンし、 CocoaPods でライブラリを取得します。
+1. クローンします
 
    ```
    $ git clone https://github.com/shiguredo/sora-ios-sdk-quickstart
    $ cd sora-ios-sdk-quickstart
-   $ pod install
    ```
 
 2. ``SoraQuickStart/Environment.example.swift`` のファイル名を ``SoraQuickStart/Environment.swift`` に変更し、接続情報を設定します。
@@ -40,7 +38,15 @@ Xcode と Swift のバージョンによっては、 CocoaPods で取得でき�
    $ cp SoraQuickStart/Environment.example.swift SoraQuickStart/Environment.swift
    ```
 
-3. ``SoraQuickStart.xcworkspace`` を Xcode で開いてビルドします。
+3. ``SoraQuickStart.xcodeproj`` を Xcode で開いてビルドします。
+
+   ```
+   $ open SoraQuickStart.xcodeproj
+   ```
+
+> [!TIP]
+> はじめてビルドを行う場合、 ビルドに失敗し `SwfitLintBuildToolPlugin (SwiftLintPlugin)` に関するプロンプトが表示されたら
+> 必ずプラグインを信頼して有効にしてください。そうすることで次回以降ビルドを正常に実行できます。
 
 ## ライセンス
 
