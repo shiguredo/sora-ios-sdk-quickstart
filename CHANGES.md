@@ -11,6 +11,8 @@
 
 ## develop
 
+### misc
+
 - [CHANGE] フォーマッターを SwiftFormat から swift-format に変更する
   - @zztkm
 - [UPDATE] リンターの実行をシェルスクリプトではなく、Xcode の Build Phases に設定する
