@@ -38,6 +38,9 @@
   - @zztkm
 - [UPDATE] GitHub Actions の定期ビルドをやめる
   - @zztkm
+- [ADD] swift-format と SwiftLint 実行用の Makefile を追加する
+  - format.sh で一括実行していたコマンドを個別に実行できるようにした
+  - @zztkm
 
 ## sora-ios-sdk-2025.1.1
 
