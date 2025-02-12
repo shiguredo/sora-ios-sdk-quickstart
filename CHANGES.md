@@ -14,6 +14,8 @@
 ### misc
 
 - [CHANGE] フォーマッターを SwiftFormat から swift-format に変更する
+  - SwiftFormat のための設定ファイルである .swiftformat と .swift-version を削除
+  - フォーマット設定はデフォルトを採用したため、.swift-format は利用しない
   - @zztkm
 - [UPDATE] リンターの実行をシェルスクリプトではなく、Xcode の Build Phases に設定する
   - @zztkm
