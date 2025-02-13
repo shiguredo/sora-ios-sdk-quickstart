@@ -18,6 +18,7 @@
   - フォーマット設定はデフォルトを採用したため、.swift-format は利用しない
   - @zztkm
 - [UPDATE] リンターの実行をシェルスクリプトではなく、Xcode の Build Phases に設定する
+  - lint-format.sh から lint の機能を削除したので、format.sh に改名
   - @zztkm
 - [UPDATE] 依存管理を CocoaPods から Xcode の Swift Package Manager に移行する
   - Sora iOS SDK と SwiftLint を Swift Package Manager 管理に移行
@@ -34,9 +35,10 @@
   - Xcode の version を 16.2 に変更
   - SDK を iOS 18.2 に変更
   - @zztkm
-- [UPDATE] GitHub Actions での format check をやめる
-  - @zztkm
 - [UPDATE] GitHub Actions の定期ビルドをやめる
+  - @zztkm
+- [UPDATE] GitHub Actions での Format Lint で Makefile を利用するように変更
+  - CI でも Makefile を利用するようになったために format.sh は利用しなくなったので削除
   - @zztkm
 - [ADD] swift-format 実行用の Makefile を追加する
   - format.sh で一括実行していたコマンドを個別に実行できるようにした

@@ -38,6 +38,8 @@ jobs:
             CODE_SIGN_IDENTITY= \
             PROVISIONING_PROFILE= \
             ASSETCATALOG_COMPILER_GENERATE_ASSET_SYMBOLS=NO
+    - name: Format Lint
+      run: make fmt-lint
   release:
     if: contains(github.ref, 'tags/v')
     needs: [build]
