@@ -36,6 +36,9 @@
   - @zztkm
 - [UPDATE] GitHub Actions の定期ビルドをやめる
   - @zztkm
+- [UPDATE] GitHub Actions での Format Lint で Makefile を利用するように変更
+  - format.sh は利用しなくなったので削除
+  - @zztkm
 - [ADD] swift-format 実行用の Makefile を追加する
   - format.sh で一括実行していたコマンドを個別に実行できるようにした
   - @zztkm
