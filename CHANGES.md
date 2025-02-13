@@ -34,8 +34,6 @@
   - Xcode の version を 16.2 に変更
   - SDK を iOS 18.2 に変更
   - @zztkm
-- [UPDATE] GitHub Actions での format check をやめる
-  - @zztkm
 - [UPDATE] GitHub Actions の定期ビルドをやめる
   - @zztkm
 - [ADD] swift-format 実行用の Makefile を追加する
