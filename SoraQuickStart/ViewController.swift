@@ -87,10 +87,11 @@ class ViewController: UIViewController {
       }
       if let error {
         NSLog(error.localizedDescription)
+          let errorMessage = self?.handleErrorMessage(error)
         DispatchQueue.main.async {
           let alertController = UIAlertController(
-            title: "接続に失敗しました",
-            message: error.localizedDescription,
+            title: errorMessage?.title,
+            message: errorMessage?.message,
             preferredStyle: .alert)
           alertController.addAction(
             UIAlertAction(title: "OK", style: .cancel, handler: nil))
@@ -128,5 +129,26 @@ class ViewController: UIViewController {
         stream.videoRenderer = self.senderVideoView
       }
     }
+  }
+
+  private func handleErrorMessage(_ error: Error) -> (
+    title: String, message: String
+  ) {
+    var title: String
+    var message: String
+    if let soraError = error as? SoraError {
+      switch soraError {
+      case .webSocketClosed(let code, let reason):
+        title = "Sora から切断されました"
+          message = "ステータスコード: \(code.intValue()), 理由: \(reason ?? "不明")"
+      default:
+        title = "接続に失敗しました"
+        message = error.localizedDescription
+      }
+    } else {
+      title = "接続に失敗しました"
+      message = error.localizedDescription
+    }
+    return (title, message)
   }
 }
