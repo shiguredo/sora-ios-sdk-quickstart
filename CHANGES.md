@@ -11,6 +11,9 @@
 
 ## develop
 
+- [UPDATE] エラーの種類に応じてアラートのタイトルとメッセージを設定する処理を追加する
+  - @zztkm
+
 ### misc
 
 - [CHANGE] フォーマッターを SwiftFormat から swift-format に変更する
