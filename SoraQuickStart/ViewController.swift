@@ -87,7 +87,7 @@ class ViewController: UIViewController {
       }
       if let error {
         NSLog(error.localizedDescription)
-          let errorMessage = self?.handleErrorMessage(error)
+        let errorMessage = self?.handleErrorMessage(error)
         DispatchQueue.main.async {
           let alertController = UIAlertController(
             title: errorMessage?.title,
@@ -140,7 +140,7 @@ class ViewController: UIViewController {
       switch soraError {
       case .webSocketClosed(let code, let reason):
         title = "Sora から切断されました"
-          message = "ステータスコード: \(code.intValue()), 理由: \(reason ?? "不明")"
+        message = "ステータスコード: \(code.intValue()), 理由: \(reason ?? "不明")"
       default:
         title = "接続に失敗しました"
         message = error.localizedDescription
