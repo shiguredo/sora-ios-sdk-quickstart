@@ -80,25 +80,43 @@ class ViewController: UIViewController {
         stream.videoRenderer = strongSelf.receiverVideoView
       }
     }
-    // 接続先から接続を解除されたときに行う処理です。
-    config.mediaChannelHandlers.onDisconnect = { [weak self] error in
-      guard let strongSelf = self else {
+
+    config.mediaChannelHandlers.onRemoveStream = { [weak self] stream in
+      guard let self = self else {
         return
       }
-      if let error {
-        NSLog(error.localizedDescription)
-        let errorMessage = self?.handleErrorMessage(error)
+      if stream.streamId != publisherStreamId {
+        self.receiverVideoView.stop()
+        self.receiverVideoView.clear()
+      }
+    }
+
+    config.mediaChannelHandlers.onConnect = { error in
+      if let error = error {
+        print(error.localizedDescription)
+      }
+    }
+    // 接続先から接続を解除されたときに行う処理です。
+    config.mediaChannelHandlers.onDisconnect = { [weak self] event in
+      guard let self = self else {
+        return
+      }
+      switch event {
+      case .ok(let code, let reason):
+        print("code: \(code), reason: \(reason)")
+      case .error(let error):
         DispatchQueue.main.async {
           let alertController = UIAlertController(
-            title: errorMessage?.title,
-            message: errorMessage?.message,
+            title: "接続に失敗しました",
+            message: error.localizedDescription,
             preferredStyle: .alert)
           alertController.addAction(
             UIAlertAction(title: "OK", style: .cancel, handler: nil))
-          self?.present(alertController, animated: true, completion: nil)
+          self.present(alertController, animated: true, completion: nil)
         }
       }
-      strongSelf.updateUI(false)
+      mediaChannel = nil
+      self.updateUI(false)
     }
 
     // 接続します。
@@ -129,26 +147,5 @@ class ViewController: UIViewController {
         stream.videoRenderer = self.senderVideoView
       }
     }
-  }
-
-  private func handleErrorMessage(_ error: Error) -> (
-    title: String, message: String
-  ) {
-    var title: String
-    var message: String
-    if let soraError = error as? SoraError {
-      switch soraError {
-      case .webSocketClosed(let code, let reason):
-        title = "Sora から切断されました"
-        message = "ステータスコード: \(code.intValue()), 理由: \(reason ?? "不明")"
-      default:
-        title = "接続に失敗しました"
-        message = error.localizedDescription
-      }
-    } else {
-      title = "接続に失敗しました"
-      message = error.localizedDescription
-    }
-    return (title, message)
   }
 }
