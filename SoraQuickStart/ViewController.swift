@@ -65,9 +65,19 @@ class ViewController: UIViewController {
       channelId: Environment.channelId,
       role: .sendrecv,
       multistreamEnabled: true)
-
-    // 接続時に指定したいオプションを以下のように設定します。
-    config.signalingConnectMetadata = Environment.signalingConnectMetadata
+      // Configured with the specified settings
+      config.connectionTimeout = 60
+      config.cameraSettings.isEnabled = false
+      config.cameraSettings.resolution = .hd720p
+      config.cameraSettings.frameRate = 30
+      config.videoBitRate = 3_000
+      config.webRTCConfiguration.degradationPreference = .maintainResolution
+      config.videoCodec = .vp9
+      config.audioEnabled = true
+      config.audioCodec = .opus
+      config.audioBitRate = 384
+      config.signalingConnectMetadata = ["access_token": "MyAccessToken"]
+      config.clientId = "iphone-\(UIDevice.current.identifierForVendor?.uuidString ?? "")"
 
     // ストリームが追加されたら受信用の VideoView をストリームにセットします。
     // このアプリでは、複数のユーザーが接続した場合は最後のユーザーの映像のみ描画します。
