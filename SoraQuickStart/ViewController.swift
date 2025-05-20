@@ -89,16 +89,16 @@ class ViewController: UIViewController {
       case .ok(let code, let reason):
         NSLog("接続解除: ステータスコード: \(code), 理由: \(reason)")
       case .error(let error):
-          NSLog(error.localizedDescription)
-          DispatchQueue.main.async {
-            let alertController = UIAlertController(
-              title: "接続エラーが発生しました",
-              message: error.localizedDescription,
-              preferredStyle: .alert)
-            alertController.addAction(
-              UIAlertAction(title: "OK", style: .cancel, handler: nil))
-            self?.present(alertController, animated: true, completion: nil)
-          }
+        NSLog(error.localizedDescription)
+        DispatchQueue.main.async {
+          let alertController = UIAlertController(
+            title: "接続エラーが発生しました",
+            message: error.localizedDescription,
+            preferredStyle: .alert)
+          alertController.addAction(
+            UIAlertAction(title: "OK", style: .cancel, handler: nil))
+          self?.present(alertController, animated: true, completion: nil)
+        }
         strongSelf.updateUI(false)
       }
     }
