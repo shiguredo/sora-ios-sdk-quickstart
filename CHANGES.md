@@ -11,6 +11,8 @@
 
 ## 2025.2
 
+- [UPDATE] Sora iOS SDK を 2025.2.0 にあげる
+  - @zztkm
 - [UPDATE] エラーの種類に応じてアラートのタイトルとメッセージを設定する処理を追加する
   - @zztkm
 - [UPDATE] `MediaChannelHandlers` の `onDisconnect: ((Error?) -> Void)?` から `onDisconnect: ((SoraCloseEvent) -> Void)?` に移行する
