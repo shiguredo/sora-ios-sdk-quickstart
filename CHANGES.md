@@ -9,9 +9,12 @@
 - FIX
   - バグ修正
 
-## develop
+## 2025.2
 
 - [UPDATE] エラーの種類に応じてアラートのタイトルとメッセージを設定する処理を追加する
+  - @zztkm
+- [UPDATE] `MediaChannelHandlers` の `onDisconnect: ((Error?) -> Void)?` から `onDisconnect: ((SoraCloseEvent) -> Void)?` に移行する
+  - この移行により、Sora との接続が終了した時の理由やステータスコードを取得することが可能になる
   - @zztkm
 
 ### misc
