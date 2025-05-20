@@ -81,24 +81,26 @@ class ViewController: UIViewController {
       }
     }
     // 接続先から接続を解除されたときに行う処理です。
-    config.mediaChannelHandlers.onDisconnect = { [weak self] error in
+    config.mediaChannelHandlers.onDisconnect = { [weak self] event in
       guard let strongSelf = self else {
         return
       }
-      if let error {
-        NSLog(error.localizedDescription)
-        let errorMessage = self?.handleErrorMessage(error)
-        DispatchQueue.main.async {
-          let alertController = UIAlertController(
-            title: errorMessage?.title,
-            message: errorMessage?.message,
-            preferredStyle: .alert)
-          alertController.addAction(
-            UIAlertAction(title: "OK", style: .cancel, handler: nil))
-          self?.present(alertController, animated: true, completion: nil)
-        }
+      switch event {
+      case .ok(let code, let reason):
+        NSLog("接続解除: ステータスコード: \(code), 理由: \(reason)")
+      case .error(let error):
+          NSLog(error.localizedDescription)
+          DispatchQueue.main.async {
+            let alertController = UIAlertController(
+              title: "接続エラーが発生しました",
+              message: error.localizedDescription,
+              preferredStyle: .alert)
+            alertController.addAction(
+              UIAlertAction(title: "OK", style: .cancel, handler: nil))
+            self?.present(alertController, animated: true, completion: nil)
+          }
+        strongSelf.updateUI(false)
       }
-      strongSelf.updateUI(false)
     }
 
     // 接続します。
@@ -129,26 +131,5 @@ class ViewController: UIViewController {
         stream.videoRenderer = self.senderVideoView
       }
     }
-  }
-
-  private func handleErrorMessage(_ error: Error) -> (
-    title: String, message: String
-  ) {
-    var title: String
-    var message: String
-    if let soraError = error as? SoraError {
-      switch soraError {
-      case .webSocketClosed(let code, let reason):
-        title = "Sora から切断されました"
-        message = "ステータスコード: \(code.intValue()), 理由: \(reason ?? "不明")"
-      default:
-        title = "接続に失敗しました"
-        message = error.localizedDescription
-      }
-    } else {
-      title = "接続に失敗しました"
-      message = error.localizedDescription
-    }
-    return (title, message)
   }
 }
