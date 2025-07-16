@@ -58,6 +58,41 @@ class ViewController: UIViewController {
     }
   }
 
+  func loadCACertificateFromBundle(filename: String) -> SecCertificate? {
+    // 1. Bundleからファイルパスを取得
+    guard let certPath = Bundle.main.path(forResource: filename, ofType: "pem") else {
+      print("Certificate file not found")
+      return nil
+    }
+
+    // 2. ファイル内容を文字列として読み込み
+    guard let pemString = try? String(contentsOfFile: certPath) else {
+      print("Failed to read certificate file")
+      return nil
+    }
+
+    // 3. PEM形式からDER形式に変換
+    guard let derData = convertPEMToDER(pemString: pemString) else {
+      print("Failed to convert PEM to DER")
+      return nil
+    }
+
+    // 4. SecCertificateを作成
+    return SecCertificateCreateWithData(nil, derData as CFData)
+  }
+
+  func convertPEMToDER(pemString: String) -> Data? {
+    // PEMヘッダーとフッターを除去
+    let lines = pemString.components(separatedBy: .newlines)
+    let base64Lines = lines.filter { line in
+      !line.hasPrefix("-----BEGIN") && !line.hasPrefix("-----END")
+        && !line.trimmingCharacters(in: .whitespaces).isEmpty
+    }
+
+    let base64String = base64Lines.joined()
+    return Data(base64Encoded: base64String)
+  }
+
   func connect() {
     // 接続の設定を行います。
     var config = Configuration(
@@ -68,6 +103,11 @@ class ViewController: UIViewController {
 
     // 接続時に指定したいオプションを以下のように設定します。
     config.signalingConnectMetadata = Environment.signalingConnectMetadata
+
+    if let caCertificate = loadCACertificateFromBundle(filename: Environment.caCertFilename) {
+      NSLog("CA 証明書の読み込みに成功しました")
+      config.caCertificate = caCertificate
+    }
 
     // ストリームが追加されたら受信用の VideoView をストリームにセットします。
     // このアプリでは、複数のユーザーが接続した場合は最後のユーザーの映像のみ描画します。

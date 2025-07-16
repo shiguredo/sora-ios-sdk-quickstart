@@ -9,4 +9,8 @@ enum Environment {
 
   // type: connect に含めるメタデータ
   static let signalingConnectMetadata: Encodable? = nil
+
+  // CA 証明書のファイル名 (拡張子なし)
+  // PEM ファイルであることを期待します
+  static let caCertFilename = ""
 }
