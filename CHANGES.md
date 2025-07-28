@@ -54,6 +54,20 @@
 - [ADD] .github ディレクトリに copilot-instructions.md を追加
   - @torikizi
 
+## sora-ios-sdk-2025.1.3
+
+**リリース日**: 2025-07-28
+
+- [UPDATE] Sora iOS SDK を 2025.1.3 にあげる
+  - @zztkm
+
+## sora-ios-sdk-2025.1.2
+
+**リリース日**: 2025-05-07
+
+- [UPDATE] Sora iOS SDK を 2025.1.2 にあげる
+  - @zztkm
+
 ## sora-ios-sdk-2025.1.1
 
 **リリース日**: 2025-01-23
