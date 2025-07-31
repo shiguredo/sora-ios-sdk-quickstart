@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 54;
+	objectVersion = 60;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -16,6 +16,9 @@
 		91A4844E26F9BB5100C18B76 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 91A4844C26F9BB5100C18B76 /* LaunchScreen.storyboard */; };
 		B36C6DF92D55D52A00DC4F4D /* Sora in Frameworks */ = {isa = PBXBuildFile; productRef = B36C6DF82D55D52A00DC4F4D /* Sora */; };
 		B36C6DFB2D55D52A00DC4F4D /* WebRTC in Frameworks */ = {isa = PBXBuildFile; productRef = B36C6DFA2D55D52A00DC4F4D /* WebRTC */; };
+		B3A2EC3C2E277A8A009AF037 /* Sora in Frameworks */ = {isa = PBXBuildFile; productRef = B3A2EC3B2E277A8A009AF037 /* Sora */; };
+		B3A2EC3E2E277A8A009AF037 /* WebRTC in Frameworks */ = {isa = PBXBuildFile; productRef = B3A2EC3D2E277A8A009AF037 /* WebRTC */; };
+		B3A2EC442E2A5713009AF037 /* root_ca_cert.pem in Resources */ = {isa = PBXBuildFile; fileRef = B3A2EC432E2A5713009AF037 /* root_ca_cert.pem */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +31,7 @@
 		91A4844A26F9BB5100C18B76 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		91A4844D26F9BB5100C18B76 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		91A4844F26F9BB5100C18B76 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B3A2EC432E2A5713009AF037 /* root_ca_cert.pem */ = {isa = PBXFileReference; lastKnownFileType = text; path = root_ca_cert.pem; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -36,6 +40,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				B36C6DF92D55D52A00DC4F4D /* Sora in Frameworks */,
+				B3A2EC3E2E277A8A009AF037 /* WebRTC in Frameworks */,
+				B3A2EC3C2E277A8A009AF037 /* Sora in Frameworks */,
 				B36C6DFB2D55D52A00DC4F4D /* WebRTC in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -48,6 +54,7 @@
 			children = (
 				91A4844026F9BB5100C18B76 /* SoraQuickStart */,
 				91A4843F26F9BB5100C18B76 /* Products */,
+				B3A2EC432E2A5713009AF037 /* root_ca_cert.pem */,
 			);
 			sourceTree = "<group>";
 		};
@@ -120,8 +127,8 @@
 			);
 			mainGroup = 91A4843526F9BB5000C18B76;
 			packageReferences = (
-				B36C6DF72D55D52A00DC4F4D /* XCRemoteSwiftPackageReference "sora-ios-sdk" */,
 				B36C6DFD2D55D9B800DC4F4D /* XCRemoteSwiftPackageReference "SwiftLintPlugins" */,
+				B3A2EC3A2E277A8A009AF037 /* XCLocalSwiftPackageReference "../sora-ios-sdk" */,
 			);
 			productRefGroup = 91A4843F26F9BB5100C18B76 /* Products */;
 			projectDirPath = "";
@@ -138,6 +145,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				91A4844E26F9BB5100C18B76 /* LaunchScreen.storyboard in Resources */,
+				B3A2EC442E2A5713009AF037 /* root_ca_cert.pem in Resources */,
 				91A4844B26F9BB5100C18B76 /* Assets.xcassets in Resources */,
 				91A4844926F9BB5100C18B76 /* Main.storyboard in Resources */,
 			);
@@ -311,13 +319,13 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = DQ232CBKHS;
+				DEVELOPMENT_TEAM = D7MQUAK3LC;
 				INFOPLIST_FILE = SoraQuickStart/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = jp.shiguredo.sora.SoraQuickStart;
+				PRODUCT_BUNDLE_IDENTIFIER = "jp.shiguredo.sora.SoraQuickStart-zztkm";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -366,6 +374,13 @@
 		};
 /* End XCConfigurationList section */
 
+/* Begin XCLocalSwiftPackageReference section */
+		B3A2EC3A2E277A8A009AF037 /* XCLocalSwiftPackageReference "../sora-ios-sdk" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = "../sora-ios-sdk";
+		};
+/* End XCLocalSwiftPackageReference section */
+
 /* Begin XCRemoteSwiftPackageReference section */
 		B36C6DF72D55D52A00DC4F4D /* XCRemoteSwiftPackageReference "sora-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
@@ -400,6 +415,14 @@
 			isa = XCSwiftPackageProductDependency;
 			package = B36C6DFD2D55D9B800DC4F4D /* XCRemoteSwiftPackageReference "SwiftLintPlugins" */;
 			productName = "plugin:SwiftLintBuildToolPlugin";
+		};
+		B3A2EC3B2E277A8A009AF037 /* Sora */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Sora;
+		};
+		B3A2EC3D2E277A8A009AF037 /* WebRTC */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = WebRTC;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

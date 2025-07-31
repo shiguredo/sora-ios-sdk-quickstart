@@ -58,7 +58,7 @@ class ViewController: UIViewController {
     }
   }
 
-  func loadCACertificateFromBundle(filename: String) -> SecCertificate? {
+  func loadCACertificate(fromBundle filename: String) -> SecCertificate? {
     // 1. Bundleからファイルパスを取得
     guard let certPath = Bundle.main.path(forResource: filename, ofType: "pem") else {
       print("Certificate file not found")
@@ -104,9 +104,9 @@ class ViewController: UIViewController {
     // 接続時に指定したいオプションを以下のように設定します。
     config.signalingConnectMetadata = Environment.signalingConnectMetadata
 
-    if let caCertificate = loadCACertificateFromBundle(filename: Environment.caCertFilename) {
+    if let caCertificate = loadCACertificate(fromBundle: Environment.caCertFilename) {
       NSLog("CA 証明書の読み込みに成功しました")
-      config.caCertificate = caCertificate
+      //config.caCertificate = caCertificate
     }
 
     // ストリームが追加されたら受信用の VideoView をストリームにセットします。
