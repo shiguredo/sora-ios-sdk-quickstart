@@ -14,6 +14,7 @@
 		91A4844926F9BB5100C18B76 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 91A4844726F9BB5100C18B76 /* Main.storyboard */; };
 		91A4844B26F9BB5100C18B76 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 91A4844A26F9BB5100C18B76 /* Assets.xcassets */; };
 		91A4844E26F9BB5100C18B76 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 91A4844C26F9BB5100C18B76 /* LaunchScreen.storyboard */; };
+		B33BEBA32E4DE00F009A19B0 /* AudioPipeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = B33BEBA22E4DE00F009A19B0 /* AudioPipeline.swift */; };
 		B36C6DF92D55D52A00DC4F4D /* Sora in Frameworks */ = {isa = PBXBuildFile; productRef = B36C6DF82D55D52A00DC4F4D /* Sora */; };
 		B36C6DFB2D55D52A00DC4F4D /* WebRTC in Frameworks */ = {isa = PBXBuildFile; productRef = B36C6DFA2D55D52A00DC4F4D /* WebRTC */; };
 		B3A2EC3C2E277A8A009AF037 /* Sora in Frameworks */ = {isa = PBXBuildFile; productRef = B3A2EC3B2E277A8A009AF037 /* Sora */; };
@@ -31,6 +32,7 @@
 		91A4844A26F9BB5100C18B76 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		91A4844D26F9BB5100C18B76 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		91A4844F26F9BB5100C18B76 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B33BEBA22E4DE00F009A19B0 /* AudioPipeline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPipeline.swift; sourceTree = "<group>"; };
 		B3A2EC432E2A5713009AF037 /* root_ca_cert.pem */ = {isa = PBXFileReference; lastKnownFileType = text; path = root_ca_cert.pem; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -71,6 +73,7 @@
 			children = (
 				91A4844126F9BB5100C18B76 /* AppDelegate.swift */,
 				91A4844326F9BB5100C18B76 /* SceneDelegate.swift */,
+				B33BEBA22E4DE00F009A19B0 /* AudioPipeline.swift */,
 				91A4844526F9BB5100C18B76 /* ViewController.swift */,
 				91A4844726F9BB5100C18B76 /* Main.storyboard */,
 				91A4844A26F9BB5100C18B76 /* Assets.xcassets */,
@@ -159,6 +162,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				91A4844626F9BB5100C18B76 /* ViewController.swift in Sources */,
+				B33BEBA32E4DE00F009A19B0 /* AudioPipeline.swift in Sources */,
 				91169197273126A80098FBFF /* Environment.swift in Sources */,
 				91A4844226F9BB5100C18B76 /* AppDelegate.swift in Sources */,
 				91A4844426F9BB5100C18B76 /* SceneDelegate.swift in Sources */,
