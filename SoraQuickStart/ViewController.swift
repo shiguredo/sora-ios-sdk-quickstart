@@ -17,12 +17,24 @@ class ViewController: UIViewController {
     mediaChannel?.isAvailable == true
   }
 
+  // 音声メトリクス表示用
+  private let audioManager = SoraAudioManager()
+  private let metricsLabel = UILabel()
+  private var metricsTimer: Timer?
+
   override func viewDidLoad() {
     super.viewDidLoad()
     Logger.shared.level = .debug
     Sora.setWebRTCLogLevel(.info)
 
     navigationItem.title = "\(Environment.channelId)"
+
+    setupMetricsLabel()
+    startMetricsTimer()
+  }
+
+  deinit {
+    metricsTimer?.invalidate()
   }
 
   // 接続ボタンの UI を更新します。
@@ -94,6 +106,7 @@ class ViewController: UIViewController {
   }
 
   func connect() {
+    
     // 接続の設定を行います。
     var config = Configuration(
       url: Environment.url,
@@ -166,10 +179,90 @@ class ViewController: UIViewController {
       // 接続に成功した MediaChannel を保持しておきます。
       self.mediaChannel = mediaChannel
 
+      // 音声処理をセットアップ（AudioSink の追加など）
+      if let mc = mediaChannel {
+        self.audioManager.setupWithMediaChannel(mc)
+      }
+
       // 接続できたら配信用の VideoView をストリームにセットします。
       if let stream = mediaChannel!.senderStream {
         stream.videoRenderer = self.senderVideoView
       }
     }
+  }
+
+  // MARK: - Metrics UI
+
+  private func setupMetricsLabel() {
+    metricsLabel.translatesAutoresizingMaskIntoConstraints = false
+    metricsLabel.numberOfLines = 0
+    metricsLabel.textColor = .white
+    metricsLabel.backgroundColor = UIColor.black.withAlphaComponent(0.5)
+    metricsLabel.font = UIFont.monospacedSystemFont(ofSize: 12, weight: .regular)
+    metricsLabel.textAlignment = .left
+    metricsLabel.layer.cornerRadius = 6
+    metricsLabel.clipsToBounds = true
+    metricsLabel.text = "metrics: --"
+    view.addSubview(metricsLabel)
+
+    // 左上に配置
+    NSLayoutConstraint.activate([
+      metricsLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 8),
+      metricsLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 8)
+    ])
+  }
+
+  private func startMetricsTimer() {
+    metricsTimer?.invalidate()
+    metricsTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { [weak self] _ in
+      self?.updateMetricsUI()
+    }
+  }
+
+  private func updateMetricsUI() {
+    let m = audioManager.getMetrics()
+    let recv = formatBytes(m.receivedBytes)
+    let proc = formatBytes(m.processedBytes)
+    let avgMs = Int(m.averageLatency * 1000)
+    let peakMs = Int(m.peakLatency * 1000)
+    let text = "Recv: \(recv)  Proc: \(proc)\nDrop: \(m.droppedFrames)  API: \(m.apiCallCount)\nLat(ms): avg \(avgMs) / peak \(peakMs)"
+    metricsLabel.text = text
+  }
+
+  private func formatBytes(_ bytes: Int64) -> String {
+    let kb = Double(bytes) / 1024.0
+    if kb < 1024 { return String(format: "%.1fKB", kb) }
+    let mb = kb / 1024.0
+    return String(format: "%.2fMB", mb)
+  }
+}
+
+class SoraAudioManager {
+  private let audioPipeline = HighPerformanceAudioPipeline()
+  
+  func setupWithMediaChannel(_ channel: MediaChannel) {
+    // 既存の onAddStream を保持して連結する
+    let previous = channel.handlers.onAddStream
+    channel.handlers.onAddStream = { [weak self] stream in
+      previous?(stream)
+      self?.handleStreamAdded(stream)
+    }
+  }
+  
+  private func handleStreamAdded(_ stream: MediaStream) {
+      // 各トラックに個別にAudioSinkを追加
+      stream.addAudioSink(audioPipeline)
+      print("Audio capture started for track: \(stream.streamId)")
+  }
+
+  // メトリクスの公開
+  func getMetrics() -> HighPerformanceAudioPipeline.AudioProcessingMetrics {
+    return audioPipeline.getMetrics()
+  }
+  func resetMetrics() {
+    audioPipeline.resetMetrics()
+  }
+  func shutdown() {
+    audioPipeline.shutdown()
   }
 }
