@@ -63,8 +63,7 @@ class ViewController: UIViewController {
     var config = Configuration(
       url: Environment.url,
       channelId: Environment.channelId,
-      role: .sendrecv,
-      multistreamEnabled: true)
+      role: .sendrecv)
 
     // 接続時に指定したいオプションを以下のように設定します。
     config.signalingConnectMetadata = Environment.signalingConnectMetadata
