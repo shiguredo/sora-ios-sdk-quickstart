@@ -9,7 +9,54 @@
 - FIX
   - バグ修正
 
-## develop
+## 2025.2
+
+## sora-ios-sdk-2025.2.0
+
+**リリース日**: 2025-09-18
+
+- [UPDATE] Sora iOS SDK を 2025.2.0 にあげる
+  - @zztkm
+- [UPDATE] エラーの種類に応じてアラートのタイトルとメッセージを設定する処理を追加する
+  - @zztkm
+- [UPDATE] `MediaChannelHandlers` の `onDisconnect: ((Error?) -> Void)?` から `onDisconnect: ((SoraCloseEvent) -> Void)?` に移行する
+  - この移行により、Sora との接続が終了した時の理由やステータスコードを取得することが可能になる
+  - @zztkm
+
+### misc
+
+- [CHANGE] フォーマッターを SwiftFormat から swift-format に変更する
+  - SwiftFormat のための設定ファイルである .swiftformat と .swift-version を削除
+  - フォーマット設定はデフォルトを採用したため、.swift-format は利用しない
+  - @zztkm
+- [UPDATE] リンターの実行をシェルスクリプトではなく、Xcode の Build Phases に設定する
+  - lint-format.sh から lint の機能を削除したので、format.sh に改名
+  - @zztkm
+- [UPDATE] 依存管理を CocoaPods から Xcode の Swift Package Manager に移行する
+  - Sora iOS SDK と SwiftLint を Swift Package Manager 管理に移行
+  - Podfile を削除
+  - 不要な buildPhases を削除
+    - SwfitFormat と SwiftLint を自動実行するためのものだったが利用していないため削除
+  - @zztkm
+- [UPDATE] プロジェクト設定を Xcode のアップグレードチェック機能で自動更新
+  - `BuildIndependentTargetsInParallel` の有効化
+  - `ENABLE_USER_SCRIPT_SANDBOXING` の有効化
+  - @zztkm
+- [UPDATE] GitHub Actions のビルド環境を更新する
+  - runner を macos-15 に変更
+  - Xcode の version を 16.2 に変更
+  - SDK を iOS 18.2 に変更
+  - @zztkm
+- [UPDATE] GitHub Actions の定期ビルドをやめる
+  - @zztkm
+- [UPDATE] GitHub Actions での Format Lint で Makefile を利用するように変更
+  - CI でも Makefile を利用するようになったために format.sh は利用しなくなったので削除
+  - @zztkm
+- [ADD] swift-format 実行用の Makefile を追加する
+  - format.sh で一括実行していたコマンドを個別に実行できるようにした
+  - @zztkm
+- [ADD] .github ディレクトリに copilot-instructions.md を追加
+  - @torikizi
 
 ## sora-ios-sdk-2025.1.3
 
