@@ -44,8 +44,8 @@
   - @zztkm
 - [UPDATE] GitHub Actions のビルド環境を更新する
   - runner を macos-15 に変更
-  - Xcode の version を 16.2 に変更
-  - SDK を iOS 18.2 に変更
+  - Xcode の version を 16.3 に変更
+  - XCODE_SDK を iphoneos18.4 に変更
   - @zztkm
 - [UPDATE] GitHub Actions の定期ビルドをやめる
   - @zztkm
