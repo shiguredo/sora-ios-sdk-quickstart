@@ -3,7 +3,7 @@ import UIKit
 
 class ViewController: UIViewController {
   @IBOutlet weak var senderVideoView: VideoView!
-  @IBOutlet weak var receiverVideoView: VideoView!
+  @IBOutlet weak var remoteVideoContainerView: UIView!
   @IBOutlet weak var connectImageView: UIImageView!
 
   // 接続済みの MediaChannel です。
@@ -21,6 +21,8 @@ class ViewController: UIViewController {
   private let audioManager = SoraAudioManager()
   private let metricsLabel = UILabel()
   private var metricsTimer: Timer?
+  private var remoteVideoViews: [String: VideoView] = [:]
+  private var remoteStreamOrder: [String] = []
 
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -29,8 +31,14 @@ class ViewController: UIViewController {
 
     navigationItem.title = "\(Environment.channelId)"
 
+    remoteVideoContainerView.clipsToBounds = true
     setupMetricsLabel()
     startMetricsTimer()
+  }
+
+  override func viewDidLayoutSubviews() {
+    super.viewDidLayoutSubviews()
+    layoutRemoteVideoViews()
   }
 
   deinit {
@@ -106,7 +114,7 @@ class ViewController: UIViewController {
   }
 
   func connect() {
-    
+
     // 接続の設定を行います。
     var config = Configuration(
       url: Environment.url,
@@ -117,20 +125,30 @@ class ViewController: UIViewController {
     // 接続時に指定したいオプションを以下のように設定します。
     config.signalingConnectMetadata = Environment.signalingConnectMetadata
 
+    clearRemoteVideoViews()
+
     if let caCertificate = loadCACertificate(fromBundle: Environment.caCertFilename) {
       NSLog("CA 証明書の読み込みに成功しました")
       //config.caCertificate = caCertificate
     }
 
     // ストリームが追加されたら受信用の VideoView をストリームにセットします。
-    // このアプリでは、複数のユーザーが接続した場合は最後のユーザーの映像のみ描画します。
+    // 複数ユーザーが接続された場合でも、それぞれの映像を専用の VideoView に割り当てます。
     let publisherStreamId = config.publisherStreamId
     config.mediaChannelHandlers.onAddStream = { [weak self] stream in
       guard let strongSelf = self else {
         return
       }
       if stream.streamId != publisherStreamId {
-        stream.videoRenderer = strongSelf.receiverVideoView
+        strongSelf.attachRemoteVideo(stream)
+      }
+    }
+    config.mediaChannelHandlers.onRemoveStream = { [weak self] stream in
+      guard let strongSelf = self else {
+        return
+      }
+      if stream.streamId != publisherStreamId {
+        strongSelf.detachRemoteVideo(stream)
       }
     }
     // 接続先から接続を解除されたときに行う処理です。
@@ -154,6 +172,7 @@ class ViewController: UIViewController {
         }
         strongSelf.updateUI(false)
       }
+      self?.clearRemoteVideoViews()
     }
 
     // 接続します。
@@ -173,6 +192,7 @@ class ViewController: UIViewController {
           self?.present(alertController, animated: true, completion: nil)
         }
         self.updateUI(false)
+        self.clearRemoteVideoViews()
         return
       }
 
@@ -187,6 +207,86 @@ class ViewController: UIViewController {
       // 接続できたら配信用の VideoView をストリームにセットします。
       if let stream = mediaChannel!.senderStream {
         stream.videoRenderer = self.senderVideoView
+      }
+    }
+  }
+
+  private func attachRemoteVideo(_ stream: MediaStream) {
+    let streamId = stream.streamId
+    DispatchQueue.main.async {
+      if let existingView = self.remoteVideoViews[streamId] {
+        stream.videoRenderer = existingView
+        return
+      }
+
+      let videoView = VideoView(frame: self.remoteVideoContainerView.bounds)
+      videoView.autoresizingMask = []
+      videoView.clipsToBounds = true
+      self.remoteVideoContainerView.addSubview(videoView)
+      self.remoteVideoViews[streamId] = videoView
+      self.remoteStreamOrder.append(streamId)
+      stream.videoRenderer = videoView
+      self.view.setNeedsLayout()
+      self.layoutRemoteVideoViews()
+    }
+  }
+
+  private func detachRemoteVideo(_ stream: MediaStream) {
+    let streamId = stream.streamId
+    DispatchQueue.main.async {
+      stream.videoRenderer = nil
+      if let videoView = self.remoteVideoViews.removeValue(forKey: streamId) {
+        videoView.removeFromSuperview()
+      }
+      if let index = self.remoteStreamOrder.firstIndex(of: streamId) {
+        self.remoteStreamOrder.remove(at: index)
+      }
+      self.view.setNeedsLayout()
+      self.layoutRemoteVideoViews()
+    }
+  }
+
+  private func clearRemoteVideoViews() {
+    DispatchQueue.main.async {
+      for videoView in self.remoteVideoViews.values {
+        videoView.removeFromSuperview()
+      }
+      self.remoteVideoViews.removeAll()
+      self.remoteStreamOrder.removeAll()
+      self.view.setNeedsLayout()
+      self.layoutRemoteVideoViews()
+    }
+  }
+
+  private func layoutRemoteVideoViews() {
+    let containerBounds = remoteVideoContainerView.bounds
+    guard containerBounds.width > 0, containerBounds.height > 0 else {
+      return
+    }
+
+    let views = remoteStreamOrder.compactMap { remoteVideoViews[$0] }
+
+    guard !views.isEmpty else {
+      return
+    }
+
+    let count = views.count
+    let columns = Int(ceil(sqrt(Double(count))))
+    let rows = Int(ceil(Double(count) / Double(columns)))
+    let spacing: CGFloat = 4.0
+    let totalSpacingX = spacing * CGFloat(max(columns - 1, 0))
+    let totalSpacingY = spacing * CGFloat(max(rows - 1, 0))
+    let cellWidth = (containerBounds.width - totalSpacingX) / CGFloat(columns)
+    let cellHeight = (containerBounds.height - totalSpacingY) / CGFloat(rows)
+
+    for (index, view) in views.enumerated() {
+      let row = index / columns
+      let column = index % columns
+      let originX = CGFloat(column) * (cellWidth + spacing)
+      let originY = CGFloat(row) * (cellHeight + spacing)
+      let frame = CGRect(x: originX, y: originY, width: cellWidth, height: cellHeight)
+      if view.frame != frame {
+        view.frame = frame
       }
     }
   }

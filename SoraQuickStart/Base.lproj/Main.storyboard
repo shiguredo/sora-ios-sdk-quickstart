@@ -19,7 +19,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="yEk-wo-i1h" customClass="VideoView" customModule="Sora">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yEk-wo-i1h" userLabel="Remote Container">
                                 <rect key="frame" x="0.0" y="88" width="375" height="517"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
@@ -82,7 +82,7 @@
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="connectImageView" destination="Pnc-ij-UF5" id="wwy-dX-JPE"/>
-                        <outlet property="receiverVideoView" destination="yEk-wo-i1h" id="aaS-gm-GWc"/>
+                        <outlet property="remoteVideoContainerView" destination="yEk-wo-i1h" id="aaS-gm-GWc"/>
                         <outlet property="senderVideoView" destination="2h7-KS-GO5" id="ZkD-WB-F3K"/>
                     </connections>
                 </viewController>
