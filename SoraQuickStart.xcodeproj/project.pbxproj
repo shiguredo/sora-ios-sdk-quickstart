@@ -20,6 +20,8 @@
 		B3A2EC3C2E277A8A009AF037 /* Sora in Frameworks */ = {isa = PBXBuildFile; productRef = B3A2EC3B2E277A8A009AF037 /* Sora */; };
 		B3A2EC3E2E277A8A009AF037 /* WebRTC in Frameworks */ = {isa = PBXBuildFile; productRef = B3A2EC3D2E277A8A009AF037 /* WebRTC */; };
 		B3A2EC442E2A5713009AF037 /* root_ca_cert.pem in Resources */ = {isa = PBXBuildFile; fileRef = B3A2EC432E2A5713009AF037 /* root_ca_cert.pem */; };
+		B3ED1D422E81423B007B4B92 /* TrackAudioRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3ED1D412E81423B007B4B92 /* TrackAudioRecorder.swift */; };
+		B3ED1D452E81488E007B4B92 /* RecordingListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3ED1D442E81488E007B4B92 /* RecordingListViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +36,8 @@
 		91A4844F26F9BB5100C18B76 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B33BEBA22E4DE00F009A19B0 /* AudioPipeline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPipeline.swift; sourceTree = "<group>"; };
 		B3A2EC432E2A5713009AF037 /* root_ca_cert.pem */ = {isa = PBXFileReference; lastKnownFileType = text; path = root_ca_cert.pem; sourceTree = "<group>"; };
+		B3ED1D412E81423B007B4B92 /* TrackAudioRecorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackAudioRecorder.swift; sourceTree = "<group>"; };
+		B3ED1D442E81488E007B4B92 /* RecordingListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingListViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -73,6 +77,8 @@
 			children = (
 				91A4844126F9BB5100C18B76 /* AppDelegate.swift */,
 				91A4844326F9BB5100C18B76 /* SceneDelegate.swift */,
+				B3ED1D412E81423B007B4B92 /* TrackAudioRecorder.swift */,
+				B3ED1D442E81488E007B4B92 /* RecordingListViewController.swift */,
 				B33BEBA22E4DE00F009A19B0 /* AudioPipeline.swift */,
 				91A4844526F9BB5100C18B76 /* ViewController.swift */,
 				91A4844726F9BB5100C18B76 /* Main.storyboard */,
@@ -161,6 +167,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B3ED1D422E81423B007B4B92 /* TrackAudioRecorder.swift in Sources */,
+				B3ED1D452E81488E007B4B92 /* RecordingListViewController.swift in Sources */,
 				91A4844626F9BB5100C18B76 /* ViewController.swift in Sources */,
 				B33BEBA32E4DE00F009A19B0 /* AudioPipeline.swift in Sources */,
 				91169197273126A80098FBFF /* Environment.swift in Sources */,

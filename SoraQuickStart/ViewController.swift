@@ -23,6 +23,7 @@ class ViewController: UIViewController {
   private var metricsTimer: Timer?
   private var remoteVideoViews: [String: VideoView] = [:]
   private var remoteStreamOrder: [String] = []
+  private var recordingSessionObserver: NSObjectProtocol?
 
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -34,6 +35,14 @@ class ViewController: UIViewController {
     remoteVideoContainerView.clipsToBounds = true
     setupMetricsLabel()
     startMetricsTimer()
+
+    recordingSessionObserver = NotificationCenter.default.addObserver(
+      forName: .audioRecordingSessionEnded,
+      object: audioManager,
+      queue: .main
+    ) { [weak self] _ in
+      self?.navigateToRecordingListIfNeeded()
+    }
   }
 
   override func viewDidLayoutSubviews() {
@@ -43,6 +52,9 @@ class ViewController: UIViewController {
 
   deinit {
     metricsTimer?.invalidate()
+    if let observer = recordingSessionObserver {
+      NotificationCenter.default.removeObserver(observer)
+    }
   }
 
   // 接続ボタンの UI を更新します。
@@ -335,24 +347,133 @@ class ViewController: UIViewController {
     let mb = kb / 1024.0
     return String(format: "%.2fMB", mb)
   }
+
+  private func navigateToRecordingListIfNeeded() {
+    guard let nav = navigationController else { return }
+    if nav.topViewController is RecordingListViewController {
+      return
+    }
+
+    let storyboard = UIStoryboard(name: "Main", bundle: nil)
+    guard
+      let controller = storyboard.instantiateViewController(
+        withIdentifier: "RecordingListViewController"
+      ) as? RecordingListViewController
+    else {
+      assertionFailure("RecordingListViewController is not set in storyboard")
+      return
+    }
+
+    controller.audioManager = audioManager
+    nav.pushViewController(controller, animated: true)
+  }
 }
 
 class SoraAudioManager {
   private let audioPipeline = HighPerformanceAudioPipeline()
-  
+  private var recorders: [String: TrackAudioRecorder] = [:]
+  private var finishedRecordings: [RecordedAudio] = []
+  private let recorderLock = NSLock()
+
   func setupWithMediaChannel(_ channel: MediaChannel) {
-    // 既存の onAddStream を保持して連結する
-    let previous = channel.handlers.onAddStream
+    let previousAdd = channel.handlers.onAddStream
     channel.handlers.onAddStream = { [weak self] stream in
-      previous?(stream)
+      previousAdd?(stream)
       self?.handleStreamAdded(stream)
     }
+
+    let previousRemove = channel.handlers.onRemoveStream
+    channel.handlers.onRemoveStream = { [weak self] stream in
+      previousRemove?(stream)
+      self?.handleStreamRemoved(stream)
+    }
+
+    let previousDisconnect = channel.handlers.onDisconnect
+    channel.handlers.onDisconnect = { [weak self] error in
+      previousDisconnect?(error)
+      self?.handleDisconnect()
+    }
   }
-  
+
+  func recordedFileURLs() -> [URL] {
+    recorderLock.lock()
+    let urls = finishedRecordings.map { $0.url }
+    recorderLock.unlock()
+    return urls
+  }
+
+  func recordings() -> [RecordedAudio] {
+    recorderLock.lock()
+    defer { recorderLock.unlock() }
+    return finishedRecordings
+  }
+
   private func handleStreamAdded(_ stream: MediaStream) {
-      // 各トラックに個別にAudioSinkを追加
-      stream.addAudioSink(audioPipeline)
-      print("Audio capture started for track: \(stream.streamId)")
+    stream.addAudioSink(audioPipeline)
+
+    let recorder = TrackAudioRecorder(streamId: stream.streamId) { [weak self] url, startedAt, duration in
+      self?.storeFinishedRecording(url: url, streamId: stream.streamId, startedAt: startedAt, duration: duration)
+    }
+
+    recorderLock.lock()
+    let existingRecorder = recorders[stream.streamId]
+    recorders[stream.streamId] = recorder
+    recorderLock.unlock()
+
+    if let existingRecorder {
+      stream.removeAudioSink(existingRecorder)
+      existingRecorder.finishRecording()
+    }
+
+    stream.addAudioSink(recorder)
+    print("[kensaku] audio capture started stream=\(stream.streamId)")
+  }
+
+  private func handleStreamRemoved(_ stream: MediaStream) {
+    stream.removeAudioSink(audioPipeline)
+
+    let recorder: TrackAudioRecorder?
+    recorderLock.lock()
+    recorder = recorders.removeValue(forKey: stream.streamId)
+    recorderLock.unlock()
+
+    if let recorder {
+      stream.removeAudioSink(recorder)
+      recorder.finishRecording()
+    }
+  }
+
+  private func handleDisconnect() {
+    let currentRecorders: [TrackAudioRecorder]
+    recorderLock.lock()
+    currentRecorders = Array(recorders.values)
+    recorders.removeAll()
+    recorderLock.unlock()
+
+    currentRecorders.forEach { $0.finishRecording() }
+    NotificationCenter.default.post(
+      name: .audioRecordingSessionEnded,
+      object: self,
+      userInfo: nil
+    )
+  }
+
+  private func storeFinishedRecording(url: URL, streamId: String, startedAt: Date, duration: TimeInterval) {
+    let recording = RecordedAudio(streamId: streamId, url: url, startedAt: startedAt, duration: duration)
+    recorderLock.lock()
+    finishedRecordings.append(recording)
+    recorderLock.unlock()
+    print("[kensaku] recorded audio saved path=\(url.path)")
+    NotificationCenter.default.post(
+      name: .audioRecordingSaved,
+      object: self,
+      userInfo: [
+        "streamId": streamId,
+        "url": url,
+        "startedAt": startedAt,
+        "duration": duration
+      ]
+    )
   }
 
   // メトリクスの公開
@@ -363,6 +484,19 @@ class SoraAudioManager {
     audioPipeline.resetMetrics()
   }
   func shutdown() {
+    handleDisconnect()
     audioPipeline.shutdown()
   }
+}
+
+struct RecordedAudio {
+  let streamId: String
+  let url: URL
+  let startedAt: Date
+  let duration: TimeInterval
+}
+
+extension Notification.Name {
+  static let audioRecordingSaved = Notification.Name("audioRecordingSaved")
+  static let audioRecordingSessionEnded = Notification.Name("audioRecordingSessionEnded")
 }

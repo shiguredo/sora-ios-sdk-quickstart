@@ -146,7 +146,7 @@ class HighPerformanceAudioPipeline: NSObject {
         let chunkSize: Int = 48000 * 2             // 1秒分のデータ
         let maxConcurrentAPICalls: Int = 3
         let vadThreshold: Double = 1000.0
-        let enableRecording: Bool = true
+        let enableRecording: Bool = false
         let enableVAD: Bool = true
         let enableRealtimeTranscription: Bool = true
     }

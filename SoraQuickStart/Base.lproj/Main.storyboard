@@ -111,11 +111,38 @@
             </objects>
             <point key="canvasLocation" x="-1406" y="-532"/>
         </scene>
+        <!--Recording List View Controller-->
+        <scene sceneID="3mC-Qv-Pv7">
+            <objects>
+                <tableViewController storyboardIdentifier="RecordingListViewController" id="gZ3-Uv-hzk" customClass="RecordingListViewController" customModule="SoraQuickStart" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="56" estimatedRowHeight="56" sectionHeaderHeight="28" sectionFooterHeight="28" id="Yh1-hM-OxL">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <prototypes>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="RecordingCell" textLabel="6jT-4Z-CLH" detailTextLabel="xpO-kw-Mp1" style="IBUITableViewCellStyleSubtitle" id="wZb-j0-JO8">
+                                <rect key="frame" x="0.0" y="50" width="375" height="56"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="wZb-j0-JO8" id="KZB-dW-mBg">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="55.666666666666664"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="録音リスト" id="9sS-vP-iVd"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="8VO-zN-w2T" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1368" y="254"/>
+        </scene>
     </scenes>
     <resources>
         <image name="play.circle.fill" catalog="system" width="128" height="121"/>
         <systemColor name="systemGreenColor">
             <color red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
     </resources>
 </document>
