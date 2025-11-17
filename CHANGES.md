@@ -9,7 +9,12 @@
 - FIX
   - バグ修正
 
-## 2025.2
+## 2025.3
+
+### misc
+
+- [UPDATE] `Claude Assistant` を `shiguredo/claude-code-action` を使うように更新する
+  - @zztkm
 
 ## sora-ios-sdk-2025.2.0
 
