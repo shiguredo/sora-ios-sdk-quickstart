@@ -11,6 +11,9 @@
 
 ## 2025.3
 
+- [UPDATE] NSLog を os.Logger に置き換える
+  - @t-miya
+
 ### misc
 
 - [UPDATE] actions/checkout を v5 に上げる

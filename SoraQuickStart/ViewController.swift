@@ -1,5 +1,11 @@
+import os
 import Sora
 import UIKit
+
+private let logger = Logger(
+    subsystem: "jp.shiguredo.sora-ios-sdk-quickstart",
+    category: "ViewController"
+  )
 
 class ViewController: UIViewController {
   @IBOutlet weak var senderVideoView: VideoView!
@@ -86,9 +92,9 @@ class ViewController: UIViewController {
       }
       switch event {
       case .ok(let code, let reason):
-        NSLog("接続解除: ステータスコード: \(code), 理由: \(reason)")
+        logger.info("接続解除: ステータスコード: \(code), 理由: \(reason)")
       case .error(let error):
-        NSLog(error.localizedDescription)
+        logger.error("接続エラー: \(error.localizedDescription)")
         DispatchQueue.main.async {
           let alertController = UIAlertController(
             title: "接続エラーが発生しました",
@@ -108,7 +114,7 @@ class ViewController: UIViewController {
     connectionTask = Sora.shared.connect(configuration: config) { mediaChannel, error in
       // 接続に失敗するとエラーが渡されます。
       if let error {
-        NSLog(error.localizedDescription)
+        logger.error("接続失敗: \(error.localizedDescription)")
         DispatchQueue.main.async { [weak self] in
           let alertController = UIAlertController(
             title: "接続に失敗しました",
