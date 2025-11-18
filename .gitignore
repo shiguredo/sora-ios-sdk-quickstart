@@ -67,3 +67,4 @@ fastlane/screenshots
 doc
 *.xcworkspace
 Environment.swift
+.DS_Store
