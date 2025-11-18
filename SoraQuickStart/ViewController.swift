@@ -1,11 +1,11 @@
-import os
 import Sora
 import UIKit
+import os
 
 private let logger = Logger(
-    subsystem: "jp.shiguredo.sora-ios-sdk-quickstart",
-    category: "ViewController"
-  )
+  subsystem: "jp.shiguredo.sora-ios-sdk-quickstart",
+  category: "ViewController"
+)
 
 class ViewController: UIViewController {
   @IBOutlet weak var senderVideoView: VideoView!
