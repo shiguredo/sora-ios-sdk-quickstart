@@ -16,6 +16,9 @@
 
 ### misc
 
+- [UPDATE] Github Actions のビルド環境を更新する
+  - Xcode の version を 26.2 に変更
+  - SDK を iOS 26.2 に変更
 - [UPDATE] actions/checkout を v5 に上げる
   - @miosakuma
 
