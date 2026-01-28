@@ -11,6 +11,9 @@
 
 ## 2025.3
 
+- [UPDATE] Sora 接続/切断を DispatchQueue 上で実行するようにする
+  - 接続/切断ボタンが連打された場合に処理を順次実行するようにしてクラッシュしないようにする
+  - @t-miya
 - [UPDATE] NSLog を os.Logger に置き換える
   - @t-miya
 

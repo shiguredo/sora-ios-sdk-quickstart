@@ -82,6 +82,7 @@
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="connectImageView" destination="Pnc-ij-UF5" id="wwy-dX-JPE"/>
+                        <outlet property="connectTapGestureRecognizer" destination="ZgX-8n-0vR" id="IuB-L1-Nm5"/>
                         <outlet property="receiverVideoView" destination="yEk-wo-i1h" id="aaS-gm-GWc"/>
                         <outlet property="senderVideoView" destination="2h7-KS-GO5" id="ZkD-WB-F3K"/>
                     </connections>
