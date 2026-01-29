@@ -113,6 +113,8 @@ class ViewController: UIViewController {
         return
       }
       if stream.streamId != publisherStreamId {
+        // onAddStream はメインスレッドで呼ばれる保証がないため、
+        // UIKit に紐づく VideoView を videoRenderer として設定する処理はメインスレッドに寄せます。
         DispatchQueue.main.async {
           stream.videoRenderer = strongSelf.receiverVideoView
         }
@@ -125,8 +127,14 @@ class ViewController: UIViewController {
       }
       strongSelf.connectionQueue.async { [weak self] in
         guard let self else { return }
-        guard self.connectionState != .idle else {
-          return
+        // 既に後片付け済み (idle) なら何もしません
+        guard self.connectionState != .idle else { return }
+
+        defer {
+          self.connectionTask = nil
+          self.mediaChannel = nil
+          self.connectionState = .idle
+          self.updateUIForState()
         }
 
         self.cancelConnectTimeoutOnConnectionQueue()
@@ -147,11 +155,6 @@ class ViewController: UIViewController {
             self?.present(alertController, animated: true, completion: nil)
           }
         }
-
-        self.connectionTask = nil
-        self.mediaChannel = nil
-        self.connectionState = .idle
-        self.updateUIForState()
       }
     }
 
@@ -162,7 +165,9 @@ class ViewController: UIViewController {
       guard let self else { return }
       self.connectionQueue.async { [weak self] in
         guard let self else { return }
-        // タイムアウトで .idle に戻った後、遅れて成功が返ってきた場合は採用せず切断します
+        // タイムアウトで .idle に戻った後、遅れて成功が返ってきた場合は採用せず切断します。
+        // SDK 側で切断処理の直列化/遅延実行（PeerChannel の lock）により後片付けされるため、
+        // disconnect の完了待ちはしません。
         guard self.connectionState == .connecting else {
           if let mediaChannel {
             mediaChannel.disconnect(error: nil)
