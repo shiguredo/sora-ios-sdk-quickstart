@@ -249,7 +249,6 @@ class ViewController: UIViewController {
       self.connectionState = .idle
       self.connectionTask = nil
       self.mediaChannel = nil
-      self.connectTimeoutWorkItem = nil
       self.updateUIForState()
 
       // Sora SDK 側の connect 処理をキャンセルします
@@ -260,6 +259,9 @@ class ViewController: UIViewController {
         title: "接続に失敗しました",
         message: "接続がタイムアウトしました（\(seconds)秒）。"
       )
+
+      // タイムアウトが発火したため、予約への参照をクリアします
+      self.connectTimeoutWorkItem = nil
     }
 
     connectTimeoutWorkItem = workItem
