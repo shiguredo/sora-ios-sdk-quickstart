@@ -65,6 +65,19 @@ class ViewController: UIViewController {
     }
   }
 
+  // アラートメッセージのポップアップを表示します。
+  // UI 操作のためメインスレッドで実行します
+  private func presentAlertMessage(title: String, message: String) {
+    DispatchQueue.main.async { [weak self] in
+      let alertController = UIAlertController(
+        title: title,
+        message: message,
+        preferredStyle: .alert)
+      alertController.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
+      self?.present(alertController, animated: true, completion: nil)
+    }
+  }
+
   @IBAction func connect(_ sender: AnyObject) {
     connectionQueue.async { [weak self] in
       guard let self else { return }
@@ -130,13 +143,6 @@ class ViewController: UIViewController {
         // 既に後片付け済み (idle) なら何もしません
         guard self.connectionState != .idle else { return }
 
-        defer {
-          self.connectionTask = nil
-          self.mediaChannel = nil
-          self.connectionState = .idle
-          self.updateUIForState()
-        }
-
         self.cancelConnectTimeoutOnConnectionQueue()
 
         switch event {
@@ -145,16 +151,13 @@ class ViewController: UIViewController {
         case .error(let error):
           let message = error.localizedDescription
           logger.error("接続エラー: \(message)")
-          DispatchQueue.main.async { [weak self] in
-            let alertController = UIAlertController(
-              title: "接続エラーが発生しました",
-              message: message,
-              preferredStyle: .alert)
-            alertController.addAction(
-              UIAlertAction(title: "OK", style: .cancel, handler: nil))
-            self?.present(alertController, animated: true, completion: nil)
-          }
+          self.presentAlertMessage(title: "接続エラーが発生しました", message: message)
         }
+
+        self.connectionTask = nil
+        self.mediaChannel = nil
+        self.connectionState = .idle
+        self.updateUIForState()
       }
     }
 
@@ -183,15 +186,7 @@ class ViewController: UIViewController {
         if let error {
           let message = error.localizedDescription
           logger.error("接続失敗: \(message)")
-          DispatchQueue.main.async { [weak self] in
-            let alertController = UIAlertController(
-              title: "接続に失敗しました",
-              message: message,
-              preferredStyle: .alert)
-            alertController.addAction(
-              UIAlertAction(title: "OK", style: .cancel, handler: nil))
-            self?.present(alertController, animated: true, completion: nil)
-          }
+          self.presentAlertMessage(title: "接続に失敗しました", message: message)
           self.connectionState = .idle
           self.updateUIForState()
           return
@@ -249,28 +244,22 @@ class ViewController: UIViewController {
       // connecting 以外なら何もしない
       guard self.connectionState == .connecting else { return }
 
-      // タイムアウト確定のため、接続に関するリソースをリセットします
-      self.connectTimeoutWorkItem = nil
-
-      let task = self.connectionTask
+      // タイムアウト確定のため、状態遷移→リソース解放→UI 更新の順で処理します
+      let connectionTaskToCancel = self.connectionTask
+      self.connectionState = .idle
       self.connectionTask = nil
       self.mediaChannel = nil
-      self.connectionState = .idle
+      self.connectTimeoutWorkItem = nil
       self.updateUIForState()
 
       // Sora SDK 側の connect 処理をキャンセルします
-      task?.cancel()
+      connectionTaskToCancel?.cancel()
 
       // 接続失敗のポップアップを表示します
-      // UI 操作のためメインスレッドで実行します
-      DispatchQueue.main.async { [weak self] in
-        let alertController = UIAlertController(
-          title: "接続に失敗しました",
-          message: "接続がタイムアウトしました（\(seconds)秒）。",
-          preferredStyle: .alert)
-        alertController.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
-        self?.present(alertController, animated: true, completion: nil)
-      }
+      self.presentAlertMessage(
+        title: "接続に失敗しました",
+        message: "接続がタイムアウトしました（\(seconds)秒）。"
+      )
     }
 
     connectTimeoutWorkItem = workItem
