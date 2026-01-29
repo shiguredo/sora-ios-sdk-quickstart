@@ -29,8 +29,11 @@ class ViewController: UIViewController {
 
   private var connectionState: ConnectionState = .idle
   private var connectTimeoutWorkItem: DispatchWorkItem?
+  private var disconnectTimeoutWorkItem: DispatchWorkItem?
   // quickstart 側での Sora 接続試行のタイムアウト (秒) です
   private let connectTimeoutSeconds: TimeInterval = 15
+  // quickstart 側での Sora 切断待ちのタイムアウト (秒) です
+  private let disconnectTimeoutSeconds: TimeInterval = 10
 
   // 接続済みの MediaChannel です。
   var mediaChannel: MediaChannel?
@@ -68,14 +71,32 @@ class ViewController: UIViewController {
   // アラートメッセージのポップアップを表示します。
   // UI 操作のためメインスレッドで実行します
   private func presentAlertMessage(title: String, message: String) {
-    DispatchQueue.main.async { [weak self] in
+    DispatchQueue.main.async {
       let alertController = UIAlertController(
         title: title,
         message: message,
         preferredStyle: .alert)
       alertController.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
-      self?.present(alertController, animated: true, completion: nil)
+      self.present(alertController, animated: true, completion: nil)
     }
+  }
+
+  // connectionQueue 上でのみ呼び出す前提の汎用タイムアウト処理です。
+  private func scheduleTimeoutOnConnectionQueue(
+    seconds: TimeInterval,
+    workItem: inout DispatchWorkItem?,
+    action: @escaping () -> Void
+  ) {
+    cancelTimeoutOnConnectionQueue(workItem: &workItem)
+    let item = DispatchWorkItem(block: action)
+    workItem = item
+    connectionQueue.asyncAfter(deadline: .now() + seconds, execute: item)
+  }
+
+  // connectionQueue 上でのみ呼び出す前提の汎用タイムアウトキャンセル処理です。
+  private func cancelTimeoutOnConnectionQueue(workItem: inout DispatchWorkItem?) {
+    workItem?.cancel()
+    workItem = nil
   }
 
   @IBAction func connect(_ sender: AnyObject) {
@@ -144,6 +165,7 @@ class ViewController: UIViewController {
         guard self.connectionState != .idle else { return }
 
         self.cancelConnectTimeoutOnConnectionQueue()
+        self.cancelDisconnectTimeoutOnConnectionQueue()
 
         switch event {
         case .ok(let code, let reason):
@@ -223,9 +245,17 @@ class ViewController: UIViewController {
       return
     }
 
+    guard mediaChannel != nil else {
+      // state と実体がズレている場合は復旧させます
+      connectionState = .idle
+      updateUIForState()
+      return
+    }
+
     connectionState = .disconnecting
     updateUIForState()
     cancelConnectTimeoutOnConnectionQueue()
+    scheduleDisconnectTimeoutOnConnectionQueue()
 
     mediaChannel?.disconnect(error: nil)
     mediaChannel = nil
@@ -234,25 +264,23 @@ class ViewController: UIViewController {
   // quickstart 側の接続タイムアウトをスケジューリングします。
   // connectionQueue 上で実行されます。
   private func scheduleConnectTimeoutOnConnectionQueue() {
-    // 古いタイムアウト予約をキャンセルします
-    cancelConnectTimeoutOnConnectionQueue()
-
     let seconds = Int(connectTimeoutSeconds)
-    // connectTimeoutSeconds 秒後に実行される DispatchWorkItem を作成します
-    let workItem = DispatchWorkItem { [weak self] in
+    scheduleTimeoutOnConnectionQueue(
+      seconds: connectTimeoutSeconds, workItem: &connectTimeoutWorkItem
+    ) { [weak self] in
       guard let self else { return }
       // connecting 以外なら何もしない
       guard self.connectionState == .connecting else { return }
 
       // タイムアウト確定のため、状態遷移→リソース解放→UI 更新の順で処理します
-      let connectionTaskToCancel = self.connectionTask
+      let taskToCancel = self.connectionTask
       self.connectionState = .idle
       self.connectionTask = nil
       self.mediaChannel = nil
       self.updateUIForState()
 
       // Sora SDK 側の connect 処理をキャンセルします
-      connectionTaskToCancel?.cancel()
+      taskToCancel?.cancel()
 
       // 接続失敗のポップアップを表示します
       self.presentAlertMessage(
@@ -263,17 +291,38 @@ class ViewController: UIViewController {
       // タイムアウトが発火したため、予約への参照をクリアします
       self.connectTimeoutWorkItem = nil
     }
-
-    connectTimeoutWorkItem = workItem
-    // connectTimeoutSeconds 秒後に実行するように asyncAfter で予約します
-    connectionQueue.asyncAfter(deadline: .now() + connectTimeoutSeconds, execute: workItem)
   }
 
   // タイムアウト予約をキャンセルします。
   // 古いタイムアウト予約が残ってしまうような場合に関係のないタイムアウトポップアップ表示を防ぎます。
   // connectionQueue 上で実行されます。
   private func cancelConnectTimeoutOnConnectionQueue() {
-    connectTimeoutWorkItem?.cancel()
-    connectTimeoutWorkItem = nil
+    cancelTimeoutOnConnectionQueue(workItem: &connectTimeoutWorkItem)
+  }
+
+  // quickstart 側の切断タイムアウトをスケジューリングします。
+  // connectionQueue 上で実行されます。
+  private func scheduleDisconnectTimeoutOnConnectionQueue() {
+    scheduleTimeoutOnConnectionQueue(
+      seconds: disconnectTimeoutSeconds,
+      workItem: &disconnectTimeoutWorkItem
+    ) { [weak self] in
+      guard let self else { return }
+      guard self.connectionState == .disconnecting else { return }
+
+      // onDisconnect が届かないケースに備えて復旧します
+      self.connectionTask = nil
+      self.mediaChannel = nil
+      self.connectionState = .idle
+      self.updateUIForState()
+
+      self.disconnectTimeoutWorkItem = nil
+    }
+  }
+
+  // 切断タイムアウト予約をキャンセルします。
+  // connectionQueue 上で実行されます。
+  private func cancelDisconnectTimeoutOnConnectionQueue() {
+    cancelTimeoutOnConnectionQueue(workItem: &disconnectTimeoutWorkItem)
   }
 }
