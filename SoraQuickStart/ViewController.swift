@@ -159,6 +159,8 @@ class ViewController: UIViewController {
       guard let strongSelf = self else {
         return
       }
+      // onDisconnect はメインスレッド/特定のキューで呼ばれる保証がないため、
+      // quickstart 側の状態 (connectionState 等) は connectionQueue で直列化して扱います。
       strongSelf.connectionQueue.async { [weak self] in
         guard let self else { return }
         // 既に後片付け済み (idle) なら何もしません
