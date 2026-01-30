@@ -310,12 +310,18 @@ class ViewController: UIViewController {
       guard self.connectionState == .disconnecting else { return }
 
       logger.error("切断タイムアウト: onDisconnect が届かなかったため復旧します")
+      let seconds = Int(self.disconnectTimeoutSeconds)
 
       // onDisconnect が届かないケースに備えて復旧します
       self.connectionTask = nil
       self.mediaChannel = nil
       self.connectionState = .idle
       self.updateUIForState()
+
+      self.presentAlertMessage(
+        title: "切断に失敗しました",
+        message: "切断がタイムアウトしました（\(seconds)秒）。"
+      )
     }
   }
 
