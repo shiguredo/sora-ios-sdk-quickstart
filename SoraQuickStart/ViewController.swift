@@ -257,8 +257,8 @@ class ViewController: UIViewController {
     cancelConnectTimeoutOnConnectionQueue()
     scheduleDisconnectTimeoutOnConnectionQueue()
 
+    // MediaChannel の破棄 (self.mediaChannel = nil) は onDisconnect 側で一元的に行います。
     mediaChannel?.disconnect(error: nil)
-    mediaChannel = nil
   }
 
   // quickstart 側の接続タイムアウトをスケジューリングします。
