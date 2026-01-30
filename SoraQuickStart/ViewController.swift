@@ -287,9 +287,6 @@ class ViewController: UIViewController {
         title: "接続に失敗しました",
         message: "接続がタイムアウトしました（\(seconds)秒）。"
       )
-
-      // タイムアウトが発火したため、予約への参照をクリアします
-      self.connectTimeoutWorkItem = nil
     }
   }
 
@@ -310,13 +307,13 @@ class ViewController: UIViewController {
       guard let self else { return }
       guard self.connectionState == .disconnecting else { return }
 
+      logger.error("切断タイムアウト: onDisconnect が届かなかったため復旧します")
+
       // onDisconnect が届かないケースに備えて復旧します
       self.connectionTask = nil
       self.mediaChannel = nil
       self.connectionState = .idle
       self.updateUIForState()
-
-      self.disconnectTimeoutWorkItem = nil
     }
   }
 
