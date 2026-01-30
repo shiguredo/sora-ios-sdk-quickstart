@@ -71,7 +71,8 @@ class ViewController: UIViewController {
   // アラートメッセージのポップアップを表示します。
   // UI 操作のためメインスレッドで実行します
   private func presentAlertMessage(title: String, message: String) {
-    DispatchQueue.main.async {
+    DispatchQueue.main.async { [weak self] in
+      guard let self else { return }
       let alertController = UIAlertController(
         title: title,
         message: message,
