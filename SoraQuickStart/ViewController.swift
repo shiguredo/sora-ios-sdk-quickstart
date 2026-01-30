@@ -47,16 +47,16 @@ class ViewController: UIViewController {
     Sora.setWebRTCLogLevel(.info)
 
     navigationItem.title = "\(Environment.channelId)"
-    updateUIForState()
+    updateUIForState(connectionState)
   }
 
   // 接続ボタンの UI を更新します。
-  private func updateUIForState() {
+  private func updateUIForState(_ state: ConnectionState) {
     DispatchQueue.main.async {
-      let isInteractive = self.connectionState == .idle || self.connectionState == .connected
+      let isInteractive = state == .idle || state == .connected
       self.connectTapGestureRecognizer?.isEnabled = isInteractive
 
-      if self.connectionState == .idle {
+      if state == .idle {
         // 未接続時の処理です。
         self.connectImageView.image = UIImage(systemName: "play.circle.fill")
         self.connectImageView.tintColor = .systemGreen
@@ -128,7 +128,7 @@ class ViewController: UIViewController {
     }
 
     connectionState = .connecting
-    updateUIForState()
+    updateUIForState(connectionState)
     scheduleConnectTimeoutOnConnectionQueue()
 
     // 接続の設定を行います。
@@ -182,7 +182,7 @@ class ViewController: UIViewController {
         self.connectionTask = nil
         self.mediaChannel = nil
         self.connectionState = .idle
-        self.updateUIForState()
+        self.updateUIForState(self.connectionState)
       }
     }
 
@@ -213,21 +213,21 @@ class ViewController: UIViewController {
           logger.error("接続失敗: \(message)")
           self.presentAlertMessage(title: "接続に失敗しました", message: message)
           self.connectionState = .idle
-          self.updateUIForState()
+          self.updateUIForState(self.connectionState)
           return
         }
 
         guard let mediaChannel else {
           logger.error("接続失敗: MediaChannel が nil です")
           self.connectionState = .idle
-          self.updateUIForState()
+          self.updateUIForState(self.connectionState)
           return
         }
 
         // 接続に成功した MediaChannel を保持しておきます。
         self.mediaChannel = mediaChannel
         self.connectionState = .connected
-        self.updateUIForState()
+        self.updateUIForState(self.connectionState)
 
         // 接続できたら配信用の VideoView をストリームにセットします。
         if let stream = mediaChannel.senderStream {
@@ -251,12 +251,12 @@ class ViewController: UIViewController {
     guard mediaChannel != nil else {
       // state と実体がズレている場合は復旧させます
       connectionState = .idle
-      updateUIForState()
+      updateUIForState(connectionState)
       return
     }
 
     connectionState = .disconnecting
-    updateUIForState()
+    updateUIForState(connectionState)
     cancelConnectTimeoutOnConnectionQueue()
     scheduleDisconnectTimeoutOnConnectionQueue()
 
@@ -280,7 +280,7 @@ class ViewController: UIViewController {
       self.connectionState = .idle
       self.connectionTask = nil
       self.mediaChannel = nil
-      self.updateUIForState()
+      self.updateUIForState(self.connectionState)
 
       // Sora SDK 側の connect 処理をキャンセルします
       taskToCancel?.cancel()
@@ -317,7 +317,7 @@ class ViewController: UIViewController {
       self.connectionTask = nil
       self.mediaChannel = nil
       self.connectionState = .idle
-      self.updateUIForState()
+      self.updateUIForState(self.connectionState)
 
       self.presentAlertMessage(
         title: "切断に失敗しました",
