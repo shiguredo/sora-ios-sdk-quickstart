@@ -9,9 +9,7 @@
 - FIX
   - バグ修正
 
-## sora-ios-sdk-2026.1.0
-
-**リリース日**: 2026-02-20
+## 2026.1
 
 - [UPDATE] Sora 接続/切断を DispatchQueue 上で実行するようにする
   - 接続/切断ボタンが連打された場合に処理を順次実行するようにしてクラッシュしないようにする
@@ -31,9 +29,7 @@
 - [UPDATE] `Claude Assistant` を `shiguredo/claude-code-action` を使うように更新する
   - @zztkm
 
-## sora-ios-sdk-2025.2.0
-
-**リリース日**: 2025-09-18
+## 2025.2
 
 - [UPDATE] Sora iOS SDK を 2025.2.0 にあげる
   - @zztkm
