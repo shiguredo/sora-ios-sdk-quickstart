@@ -9,10 +9,25 @@
 - FIX
   - バグ修正
 
-## 2025.3
+## sora-ios-sdk-2026.1.0
+
+**リリース日**: 2026-02-20
+
+- [UPDATE] Sora 接続/切断を DispatchQueue 上で実行するようにする
+  - 接続/切断ボタンが連打された場合に処理を順次実行するようにしてクラッシュしないようにする
+  - Sora 接続/切断時にタイムアウトとなった際にポップアップでエラーメッセージを表示するようにする
+  - @t-miya
+- [UPDATE] NSLog を os.Logger に置き換える
+  - @t-miya
 
 ### misc
 
+- [UPDATE] Github Actions のビルド環境を更新する
+  - Xcode の version を 26.2 に変更
+  - SDK を iOS 26.2 に変更
+  - @t-miya
+- [UPDATE] actions/checkout を v5 に上げる
+  - @miosakuma
 - [UPDATE] `Claude Assistant` を `shiguredo/claude-code-action` を使うように更新する
   - @zztkm
 
