@@ -9,7 +9,9 @@
 - FIX
   - バグ修正
 
-## 2026.1
+## sora-ios-sdk-2026.1.0
+
+**リリース日**: 2026-02-20
 
 - [UPDATE] Sora 接続/切断を DispatchQueue 上で実行するようにする
   - 接続/切断ボタンが連打された場合に処理を順次実行するようにしてクラッシュしないようにする
@@ -25,8 +27,6 @@
   - SDK を iOS 26.2 に変更
 - [UPDATE] actions/checkout を v5 に上げる
   - @miosakuma
-
-## 2025.2
 
 ## sora-ios-sdk-2025.2.0
 
