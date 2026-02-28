@@ -1,4 +1,4 @@
-import Sora
+@preconcurrency import Sora
 import UIKit
 import os
 
