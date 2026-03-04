@@ -155,6 +155,11 @@ class ViewController: UIViewController {
         }
       }
     }
+    // シグナリングメッセージ受信時の処理です。
+    // Sora iOS SDK 2026.2 以降では onReceiveSignalingJSON を利用します。
+    config.mediaChannelHandlers.onReceiveSignalingJSON = { json in
+      logger.debug("シグナリング受信: \(json, privacy: .public)")
+    }
     // 切断通知（onDisconnect）を受けたときの処理です
     config.mediaChannelHandlers.onDisconnect = { [weak self] event in
       guard let strongSelf = self else {

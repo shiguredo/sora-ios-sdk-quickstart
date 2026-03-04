@@ -11,6 +11,12 @@
 
 ## 2026.2
 
+- [UPDATE] Sora iOS SDK を 2026.2.0-canary.2 にあげる
+  - @zztkm
+- [UPDATE] MediaChannelHandlers の onReceiveSignalingJSON を実装する
+  - シグナリングメッセージを JSON 文字列で受け取ってログに出力する
+  - @zztkm
+
 ## 2026.1
 
 - [UPDATE] Sora 接続/切断を DispatchQueue 上で実行するようにする
