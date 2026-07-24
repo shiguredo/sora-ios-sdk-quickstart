@@ -14,7 +14,7 @@ jobs:
       XCODE: /Applications/Xcode_26.2.app
       XCODE_SDK: iphoneos26.2
     steps:
-    - uses: actions/checkout@v5
+    - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
     - name: Select Xcode Version
       run: sudo xcode-select -s '${{ env.XCODE }}/Contents/Developer'
     - name: Show Xcode Version
@@ -46,10 +46,10 @@ jobs:
     runs-on: macos-latest
     steps:
     - name: Checkout code
-      uses: actions/checkout@v5
+      uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
     - name: Create Release
       id: create_release
-      uses: actions/create-release@v1.1.4
+      uses: actions/create-release@0cb9c9b65d5d1901c1f53e5e66eaf4afd303e70e # v1.1.4
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
@@ -57,4 +57,20 @@ jobs:
         release_name: Release ${{ github.ref }}
         draft: false
         prerelease: false
-
+  slack_notify:
+    needs: [build, release]
+    runs-on: ubuntu-slim
+    if: ${{ always() }}
+    timeout-minutes: 5
+    permissions:
+      actions: read
+    steps:
+      - name: Slack Notification
+        uses: shiguredo/github-actions/.github/actions/slack-notify@main
+        with:
+          status: ${{ job.status }}
+          slack_webhook: ${{ secrets.SLACK_WEBHOOK }}
+          slack_channel: sora-ios-sdk
+          notify_mode: failure_and_fixed
+        env:
+          GH_TOKEN: ${{ github.token }}
