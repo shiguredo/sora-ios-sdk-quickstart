@@ -1,4 +1,4 @@
-import Sora
+@preconcurrency import Sora
 import UIKit
 import os
 
@@ -6,6 +6,19 @@ private let logger = Logger(
   subsystem: "jp.shiguredo.sora-ios-sdk-quickstart",
   category: "ViewController"
 )
+
+// @MainActor な ViewController のメソッド内で生成したクロージャリテラルは
+// @MainActor 隔離を継承する。シグナリングスレッドから呼び出されると
+// Swift 6 ランタイムが EXC_BREAKPOINT を発生させるため、
+// ファイルスコープ（非隔離）でクロージャを事前生成する。
+nonisolated(unsafe) private let soraConnectHandler: (MediaChannel?, Error?) -> Void = {
+  mediaChannel, error in
+  guard let vc = _currentViewController else { return }
+  _currentViewController = nil
+  vc.handleConnectCompletion(mediaChannel: mediaChannel, error: error)
+}
+
+nonisolated(unsafe) private weak var _currentViewController: ViewController?
 
 class ViewController: UIViewController {
   @IBOutlet weak var senderVideoView: VideoView!
@@ -23,7 +36,7 @@ class ViewController: UIViewController {
   }
 
   // 接続処理の直列化用の DispatchQueue です。
-  private let connectionQueue = DispatchQueue(
+  let connectionQueue = DispatchQueue(
     label: "jp.shiguredo.sora-ios-sdk-quickstart.connectionQueue"
   )
 
@@ -194,53 +207,62 @@ class ViewController: UIViewController {
     // Sora へ接続します。
     // connect() の戻り値 ConnectionTask を使うと
     // 接続試行中の状態を強制的に終了させることができます。
-    connectionTask = Sora.shared.connect(configuration: config) { [weak self] mediaChannel, error in
+    // 注: クロージャリテラルは @MainActor 隔離を継承するため、
+    // Sora.shared.connect() へのハンドラに直接リテラルを渡さず、
+    // ファイルスコープの非隔離クロージャ soraConnectHandler を指定する。
+    _currentViewController = self
+    connectionTask = Sora.shared.connect(
+      configuration: config,
+      handler: soraConnectHandler
+    )
+  }
+
+  // ファイルスコープの soraConnectHandler から呼び出される。
+  // signaling_thread 上で実行される。
+  nonisolated fileprivate func handleConnectCompletion(mediaChannel: MediaChannel?, error: Error?) {
+    connectionQueue.async { [weak self] in
       guard let self else { return }
-      self.connectionQueue.async { [weak self] in
+      self._handleConnectCompletion(mediaChannel: mediaChannel, error: error)
+    }
+  }
+
+  // connectionQueue 上で実行される。
+  nonisolated private func _handleConnectCompletion(mediaChannel: MediaChannel?, error: Error?) {
+    // タイムアウトで .idle に戻った後、遅れて成功が返ってきた場合は採用せず切断します。
+    guard connectionState == .connecting else {
+      if let mediaChannel {
+        mediaChannel.disconnect(error: nil)
+      }
+      return
+    }
+
+    cancelConnectTimeoutOnConnectionQueue()
+    connectionTask = nil
+
+    if let error {
+      let message = error.localizedDescription
+      logger.error("接続失敗: \(message)")
+      presentAlertMessage(title: "接続に失敗しました", message: message)
+      connectionState = .idle
+      updateUIForState(connectionState)
+      return
+    }
+
+    guard let mediaChannel else {
+      logger.error("接続失敗: MediaChannel が nil です")
+      connectionState = .idle
+      updateUIForState(connectionState)
+      return
+    }
+
+    self.mediaChannel = mediaChannel
+    connectionState = .connected
+    updateUIForState(connectionState)
+
+    if let stream = mediaChannel.senderStream {
+      DispatchQueue.main.async { [weak self] in
         guard let self else { return }
-        // タイムアウトで .idle に戻った後、遅れて成功が返ってきた場合は採用せず切断します。
-        // SDK 側で切断処理の直列化/遅延実行（PeerChannel の lock）により後片付けされるため、
-        // disconnect の完了待ちはしません。
-        guard self.connectionState == .connecting else {
-          if let mediaChannel {
-            mediaChannel.disconnect(error: nil)
-          }
-          return
-        }
-
-        // 接続処理結果が返ってきたためタイムアウト予約をキャンセルします
-        self.cancelConnectTimeoutOnConnectionQueue()
-        self.connectionTask = nil
-
-        // 接続に失敗するとエラーが渡されます。
-        if let error {
-          let message = error.localizedDescription
-          logger.error("接続失敗: \(message)")
-          self.presentAlertMessage(title: "接続に失敗しました", message: message)
-          self.connectionState = .idle
-          self.updateUIForState(self.connectionState)
-          return
-        }
-
-        guard let mediaChannel else {
-          logger.error("接続失敗: MediaChannel が nil です")
-          self.connectionState = .idle
-          self.updateUIForState(self.connectionState)
-          return
-        }
-
-        // 接続に成功した MediaChannel を保持しておきます。
-        self.mediaChannel = mediaChannel
-        self.connectionState = .connected
-        self.updateUIForState(self.connectionState)
-
-        // 接続できたら配信用の VideoView をストリームにセットします。
-        if let stream = mediaChannel.senderStream {
-          DispatchQueue.main.async { [weak self] in
-            guard let self else { return }
-            stream.videoRenderer = self.senderVideoView
-          }
-        }
+        stream.videoRenderer = self.senderVideoView
       }
     }
   }
