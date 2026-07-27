@@ -11,7 +11,8 @@ private let logger = Logger(
 // @MainActor 隔離を継承する。シグナリングスレッドから呼び出されると
 // Swift 6 ランタイムが EXC_BREAKPOINT を発生させるため、
 // ファイルスコープ（非隔離）でクロージャを事前生成する。
-nonisolated(unsafe) private let soraConnectHandler: (MediaChannel?, Error?) -> Void = { mediaChannel, error in
+nonisolated(unsafe) private let soraConnectHandler:
+  (MediaChannel?, Error?) -> Void = { mediaChannel, error in
   guard let vc = _currentViewController else { return }
   _currentViewController = nil
   vc.handleConnectCompletion(mediaChannel: mediaChannel, error: error)
