@@ -319,7 +319,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = jp.shiguredo.sora.SoraQuickStart;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -338,7 +338,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = jp.shiguredo.sora.SoraQuickStart;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
@@ -372,7 +372,7 @@
 			repositoryURL = "https://github.com/shiguredo/sora-ios-sdk";
 			requirement = {
 				kind = exactVersion;
-				version = "2026.1.0";
+				version = 2026.2.0;
 			};
 		};
 		B36C6DFD2D55D9B800DC4F4D /* XCRemoteSwiftPackageReference "SwiftLintPlugins" */ = {

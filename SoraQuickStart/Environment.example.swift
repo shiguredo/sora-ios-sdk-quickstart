@@ -8,5 +8,5 @@ enum Environment {
   static let channelId = "sora"
 
   // type: connect に含めるメタデータ
-  static let signalingConnectMetadata: Encodable? = nil
+  static let signalingConnectMetadata: (any Encodable & Sendable)? = nil
 }
