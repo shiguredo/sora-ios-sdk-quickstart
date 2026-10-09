@@ -9,6 +9,24 @@
 - FIX
   - バグ修正
 
+## develop
+
+- [CHANGE] システム条件を変更する
+  - Sora iOS SDK が SwiftPM 6.3 以降を必要とするため、Xcode 26.6 以降とする
+    - SwiftPM 6.3 未満 (Xcode 26.6 未満) ではパッケージを解決できない
+  - macOS は Xcode 26.6 の動作要件に合わせて 26.2 以降とする
+  - @t-miya
+- [UPDATE] Sora iOS SDK を 2026.4.0-canary.2 にあげる
+  - Swift 6 言語モードの暫定対応 (`@preconcurrency import Sora` とファイルスコープの `nonisolated(unsafe)` 宣言) を撤去し、イベント購読 API (`subscribeEvents`) を利用するようにする
+  - @t-miya
+
+### misc
+
+- [UPDATE] GitHub Actions のビルド環境を更新する
+  - XCODE を Xcode 26.6 に変更
+  - XCODE_SDK を iphoneos26.5 に変更
+  - @t-miya
+
 ## 2026.3
 
 - [UPDATE] Sora iOS SDK を 2026.3.0 にあげる
