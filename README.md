@@ -14,11 +14,12 @@ Please read https://github.com/shiguredo/oss before use.
 
 ## システム条件
 
-- iOS 14 以降
+- iOS 14.1 以降
 - アーキテクチャ arm64 (シミュレーターの動作は未保証)
-- macOS 15.0 以降
-- Xcode 26.2
-  - Swift 5
+- macOS 26.2 以降 (Xcode 26.6 の動作要件)
+- Xcode 26.6 以降
+  - Swift 6 言語モードでビルドしています
+  - SwiftPM 6.3 以降が必要です (Xcode 26.6 に同梱)
 - WebRTC SFU Sora 2025.2.0 以降
 
 Xcode と Swift のバージョンによっては、 取得できるバイナリに互換性がない可能性があります。詳しくは[Sora iOS SDK ドキュメント](https://sora-ios-sdk.shiguredo.jp/) を参照してください。
@@ -45,7 +46,7 @@ Xcode と Swift のバージョンによっては、 取得できるバイナリ
    ```
 
 > [!TIP]
-> はじめてビルドを行う場合、 ビルドに失敗し `SwfitLintBuildToolPlugin (SwiftLintPlugin)` に関するプロンプトが表示されたら
+> はじめてビルドを行う場合、 ビルドに失敗し `SwiftLintBuildToolPlugin` (SwiftLintPlugins) に関するプロンプトが表示されたら
 > 必ずプラグインを信頼して有効にしてください。そうすることで次回以降ビルドを正常に実行できます。
 
 ## ライセンス
