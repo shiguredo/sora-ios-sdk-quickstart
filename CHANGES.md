@@ -11,6 +11,9 @@
 
 ## develop
 
+- [UPDATE] Sora iOS SDK を 2026.5.0-canary.0 にあげる
+  - @t-miya
+
 ## 2026.4
 
 - [CHANGE] システム条件を変更する
