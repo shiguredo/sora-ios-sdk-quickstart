@@ -47,7 +47,9 @@ private final class ConnectionController: @unchecked Sendable {
 @MainActor
 class ViewController: UIViewController {
   @IBOutlet weak var senderVideoView: VideoView!
-  @IBOutlet weak var receiverVideoView: VideoView!
+  // 受信映像の表示領域です。中に受信ストリームごとの VideoView を並べる UIStackView を持ちます。
+  @IBOutlet weak var receiverVideoView: UIView!
+  @IBOutlet weak var receiverVideoStackView: UIStackView!
   @IBOutlet weak var connectImageView: UIImageView!
   // 接続/切断処理中はタップを無効化するための Gesture Recognizer (タッチ処理制御)です
   @IBOutlet private weak var connectTapGestureRecognizer: UITapGestureRecognizer?
@@ -65,8 +67,8 @@ class ViewController: UIViewController {
 
   // MARK: - main actor が所有する状態
 
-  // 受信映像を描画している MediaStream です (描画対象の追跡と、描画を止めるために保持します)。
-  private var displayedReceiverStream: MediaStream?
+  // 受信ストリームごとの VideoView です (streamId をキーに保持します)。
+  private var receiverVideoViews: [String: VideoView] = [:]
   // MediaChannel のイベント購読タスクです。接続ごとに作り直します。
   private var mediaChannelEventTask: Task<Void, Never>?
 
@@ -136,12 +138,12 @@ class ViewController: UIViewController {
         case .streamAdded:
           self.handleStreamAdded(mediaChannel, streamId: event.streamId)
         case .streamRemoved:
-          self.handleStreamRemoved(mediaChannel, streamId: event.streamId)
+          self.handleStreamRemoved(streamId: event.streamId)
         case .signalingReceivedJSON:
           logger.debug("シグナリング受信: \(event.signalingJSON ?? "", privacy: .public)")
         case .disconnected:
-          // 切断時は描画対象を手放します (描画の停止はストリームの終了で行われます)。
-          self.detachReceiverVideoView()
+          // 切断時は受信映像の VideoView をすべて手放します (描画の停止はストリームの終了で行われます)。
+          self.removeAllReceiverVideoViews()
           self.connection.queue.async { [weak self] in
             guard let self else { return }
             self.handleDisconnectOnConnectionQueue(closeEvent: event.closeEvent)
@@ -166,46 +168,57 @@ class ViewController: UIViewController {
   // .streamAdded を処理します。
   private func handleStreamAdded(_ mediaChannel: MediaChannel, streamId: String?) {
     guard let streamId else { return }
-    // 送信ストリーム (自分の映像) は受信用 VideoView の対象外です。
-    guard streamId != mediaChannel.configuration.publisherStreamId else { return }
 
-    // イベントはストリーム ID だけを運ぶため、MediaChannel.streams から実体を解決します。
-    guard let stream = mediaChannel.streams.first(where: { $0.streamId == streamId }) else {
+    // イベントはストリーム ID だけを運ぶため、MediaChannel.receiverStreams から実体を解決します。
+    // 送信ストリーム (自分の映像) は受信映像の対象外です。
+    guard let stream = mediaChannel.receiverStreams.first(where: { $0.streamId == streamId }) else {
       return
     }
 
-    attachReceiverVideoView(to: stream)
+    registerReceiverVideoView(for: stream)
   }
 
   // .streamRemoved を処理します。
   // ストリームの削除では renderer の callback は配送されないため、描画を止めるかは
   // アプリ側で判断します。
-  private func handleStreamRemoved(_ mediaChannel: MediaChannel, streamId: String?) {
-    // 削除されたストリームは既に MediaChannel.streams に無いため、保持している参照で判定します。
-    guard let streamId, displayedReceiverStream?.streamId == streamId else { return }
-
-    // 表示対象が削除された場合は、残っている受信ストリームへ描画対象を移します
-    // (残っている限り描画は止めません)。
-    if let stream = mediaChannel.receiverStreams.last {
-      attachReceiverVideoView(to: stream)
+  private func handleStreamRemoved(streamId: String?) {
+    // 削除されたストリームは既に MediaChannel.streams に無いため、登録時に保持した
+    // streamId の VideoView を辞書から取り出して取り除きます。
+    guard let streamId, let videoView = receiverVideoViews.removeValue(forKey: streamId) else {
       return
     }
 
-    detachReceiverVideoView()
+    receiverVideoStackView.removeArrangedSubview(videoView)
+    videoView.removeFromSuperview()
   }
 
-  // 受信ストリームを VideoView に描画します。
-  private func attachReceiverVideoView(to stream: MediaStream) {
-    // 複数の受信ストリームがある場合は同じ VideoView を共有するため、最後に設定した
-    // ストリームを描画対象として追跡します (表示される frame は各ストリームの到着順です)。
-    displayedReceiverStream = stream
-    stream.videoRenderer = receiverVideoView
+  // 受信ストリームの VideoView を登録します。
+  // .streamAdded と接続完了時の受信ストリームの走査の両方から呼びます。
+  private func registerReceiverVideoView(for stream: MediaStream) {
+    let streamId = stream.streamId
+
+    // 登録済みのストリームでは VideoView を作り直しません
+    // (接続完了時の再走査と .streamAdded の重複で冪等にします)。
+    if let videoView = receiverVideoViews[streamId] {
+      stream.videoRenderer = videoView
+      return
+    }
+
+    let videoView = VideoView(frame: .zero)
+    videoView.contentMode = .scaleAspectFit
+    videoView.translatesAutoresizingMaskIntoConstraints = false
+    receiverVideoStackView.addArrangedSubview(videoView)
+    receiverVideoViews[streamId] = videoView
+    stream.videoRenderer = videoView
   }
 
-  // 受信映像の描画を止めます。
-  private func detachReceiverVideoView() {
-    displayedReceiverStream?.videoRenderer = nil
-    displayedReceiverStream = nil
+  // 受信映像の VideoView をすべて取り除きます。
+  private func removeAllReceiverVideoViews() {
+    for videoView in receiverVideoViews.values {
+      receiverVideoStackView.removeArrangedSubview(videoView)
+      videoView.removeFromSuperview()
+    }
+    receiverVideoViews.removeAll()
   }
 
   // MARK: - UI
@@ -318,14 +331,14 @@ class ViewController: UIViewController {
       presentAlertMessage(title: "接続に失敗しました", message: message)
       connection.state = .idle
       updateUIForState(connection.state)
-      detachReceiverVideoViewOnMainActor()
+      removeAllReceiverVideoViewsOnMainActor()
     case .connected(let connectionId):
       guard let mediaChannel = mediaChannelForConnectionId(connectionId) else {
         // 接続は確立していますが、接続を操作できないため状態を戻します
         logger.error("MediaChannel を取得できません: connectionId=\(connectionId, privacy: .public)")
         connection.state = .idle
         updateUIForState(connection.state)
-        detachReceiverVideoViewOnMainActor()
+        removeAllReceiverVideoViewsOnMainActor()
         return
       }
 
@@ -360,9 +373,9 @@ class ViewController: UIViewController {
     nonisolated(unsafe) let channel = mediaChannel
     Task { @MainActor [weak self] in
       guard let self else { return }
-      // 受信ストリームは main actor で読み直します (削除済みのストリームを設定しないため)。
+      // 受信ストリームは main actor で読み直します (削除済みのストリームを登録しないため)。
       for stream in channel.receiverStreams {
-        self.attachReceiverVideoView(to: stream)
+        self.registerReceiverVideoView(for: stream)
       }
     }
   }
@@ -414,11 +427,11 @@ class ViewController: UIViewController {
     mediaChannel.disconnect(error: nil)
   }
 
-  // 描画中の受信ストリームを手放します。
+  // 受信映像の VideoView をすべて手放します。
   // connection.queue 上から呼ぶため nonisolated にし、後始末は main actor へ束ねます。
-  nonisolated private func detachReceiverVideoViewOnMainActor() {
+  nonisolated private func removeAllReceiverVideoViewsOnMainActor() {
     Task { @MainActor [weak self] in
-      self?.detachReceiverVideoView()
+      self?.removeAllReceiverVideoViews()
     }
   }
 
@@ -438,7 +451,7 @@ class ViewController: UIViewController {
       connection.connectionTask = nil
       connection.mediaChannel = nil
       self.updateUIForState(connection.state)
-      self.detachReceiverVideoViewOnMainActor()
+      self.removeAllReceiverVideoViewsOnMainActor()
 
       // Sora SDK 側の connect 処理をキャンセルします
       taskToCancel?.cancel()
@@ -473,7 +486,7 @@ class ViewController: UIViewController {
       connection.mediaChannel = nil
       connection.state = .idle
       self.updateUIForState(connection.state)
-      self.detachReceiverVideoViewOnMainActor()
+      self.removeAllReceiverVideoViewsOnMainActor()
 
       self.presentAlertMessage(
         title: "切断に失敗しました",

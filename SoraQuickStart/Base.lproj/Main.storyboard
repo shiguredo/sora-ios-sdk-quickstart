@@ -19,9 +19,20 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="yEk-wo-i1h" customClass="VideoView" customModule="Sora">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yEk-wo-i1h">
                                 <rect key="frame" x="0.0" y="88" width="375" height="517"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="sTk-Vw-9Qa">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="517"/>
+                                    </stackView>
+                                </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstItem="sTk-Vw-9Qa" firstAttribute="leading" secondItem="yEk-wo-i1h" secondAttribute="leading" id="lSt-Vw-9Qb"/>
+                                    <constraint firstItem="sTk-Vw-9Qa" firstAttribute="top" secondItem="yEk-wo-i1h" secondAttribute="top" id="tSt-Vw-9Qc"/>
+                                    <constraint firstAttribute="trailing" secondItem="sTk-Vw-9Qa" secondAttribute="trailing" id="rSt-Vw-9Qd"/>
+                                    <constraint firstAttribute="bottom" secondItem="sTk-Vw-9Qa" secondAttribute="bottom" id="bSt-Vw-9Qe"/>
+                                </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="h7L-ZK-wCL">
                                 <rect key="frame" x="247" y="413" width="120" height="180"/>
@@ -83,6 +94,7 @@
                     <connections>
                         <outlet property="connectImageView" destination="Pnc-ij-UF5" id="wwy-dX-JPE"/>
                         <outlet property="connectTapGestureRecognizer" destination="ZgX-8n-0vR" id="IuB-L1-Nm5"/>
+                        <outlet property="receiverVideoStackView" destination="sTk-Vw-9Qa" id="oSt-Vw-9Qf"/>
                         <outlet property="receiverVideoView" destination="yEk-wo-i1h" id="aaS-gm-GWc"/>
                         <outlet property="senderVideoView" destination="2h7-KS-GO5" id="ZkD-WB-F3K"/>
                     </connections>
