@@ -13,7 +13,7 @@
 
 - [ADD] 複数のクライアントから受信した映像を同時に表示できるようにする
   - @t-miya
-- [UPDATE] Sora iOS SDK を 2026.5.0 にあげる
+- [UPDATE] Sora iOS SDK を 2026.5.1 にあげる
   - @t-miya
 
 ## 2026.4
